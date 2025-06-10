@@ -1,37 +1,43 @@
 {
   "name": "webgamemulti",
   "version": "1.0.0",
-  "description": "一个聚合多款网页小游戏的站点，支持自动发现和展示`games`目录下的所有小游戏。",
-  "main": ".eslintrc.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "description": "A platform for showcasing and playing web games",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --write \"src/**/*.{js,jsx,css}\""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chengms/WebGameMulti.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "web",
+    "games",
+    "react",
+    "platform"
+  ],
+  "author": "WebGameMulti Team",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/chengms/WebGameMulti/issues"
   },
   "homepage": "https://github.com/chengms/WebGameMulti#readme",
   "dependencies": {
     "@vitejs/plugin-react": "^4.5.2",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.2",
-    "vite": "^6.3.5"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.0",
+    "vite": "^5.0.10"
   },
   "devDependencies": {
-    "eslint": "^9.28.0",
+    "eslint": "^8.55.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "prettier": "^3.5.3"
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.1.0"
   }
 }
