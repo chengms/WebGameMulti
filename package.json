@@ -1,0 +1,37 @@
+{
+  "name": "webgamemulti",
+  "version": "1.0.0",
+  "description": "一个聚合多款网页小游戏的站点，支持自动发现和展示`games`目录下的所有小游戏。",
+  "main": ".eslintrc.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengms/WebGameMulti.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chengms/WebGameMulti/issues"
+  },
+  "homepage": "https://github.com/chengms/WebGameMulti#readme",
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.5.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2",
+    "vite": "^6.3.5"
+  },
+  "devDependencies": {
+    "eslint": "^9.28.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "prettier": "^3.5.3"
+  }
+}
