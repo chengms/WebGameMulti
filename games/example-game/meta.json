@@ -1,0 +1,13 @@
+{
+  "name": "示例游戏",
+  "description": "这是一个示例游戏，展示如何将游戏集成到WebGameMulti平台。",
+  "author": "WebGameMulti团队",
+  "version": "1.0.0",
+  "tags": ["示例", "教程"],
+  "thumbnail": "image/cover.png",
+  "controls": "点击按钮进行互动",
+  "minWidth": 800,
+  "minHeight": 600,
+  "createdAt": "2023-06-10",
+  "updatedAt": "2023-06-10"
+} 
