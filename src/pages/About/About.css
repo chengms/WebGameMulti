@@ -12,20 +12,21 @@
 .about__title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #2c3e50;
+  color: var(--color-text);
   margin-bottom: 10px;
 }
 
 .about__subtitle {
   font-size: 1.2rem;
-  color: #7f8c8d;
+  color: var(--color-text-secondary);
 }
 
 .about__content {
-  background-color: white;
+  background-color: var(--color-background);
   border-radius: 8px;
   padding: 30px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-small);
+  border: 1px solid var(--color-border);
 }
 
 .about__section {
@@ -38,16 +39,16 @@
 
 .about__section-title {
   font-size: 1.8rem;
-  color: #3498db;
+  color: var(--color-primary);
   margin: 0 0 16px 0;
   padding-bottom: 10px;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .about__section p {
   font-size: 1rem;
   line-height: 1.6;
-  color: #4a5568;
+  color: var(--color-text);
   margin: 0 0 15px;
 }
 
@@ -59,7 +60,7 @@
 .about__list li {
   margin-bottom: 8px;
   line-height: 1.5;
-  color: #4a5568;
+  color: var(--color-text);
 }
 
 .about__list--contact {
@@ -72,14 +73,14 @@
 }
 
 .about__link {
-  color: #3498db;
+  color: var(--color-primary);
   text-decoration: none;
   margin-left: 5px;
   transition: color 0.2s ease;
 }
 
 .about__link:hover {
-  color: #2980b9;
+  color: var(--color-primary-dark);
   text-decoration: underline;
 }
 
