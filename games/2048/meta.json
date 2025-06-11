@@ -1,0 +1,17 @@
+{
+  "name": "2048",
+  "description": "Slide numbered tiles and combine matching values to reach the 2048 tile in this addictive puzzle game.",
+  "fullDescription": "<p>2048 is an addictive sliding puzzle game that challenges your strategic thinking. The rules are simple: slide tiles on a grid to combine matching numbers, doubling their value each time they merge. Starting with 2s and 4s, you need to create a tile with the number 2048.</p><p>Every move spawns a new tile (usually a 2, sometimes a 4), gradually filling up the board. Plan your moves carefully to avoid running out of space. Can you reach 2048, or even beyond?</p>",
+  "author": "WebGameMulti Team",
+  "version": "1.0.0",
+  "lastUpdated": "2023-07-18",
+  "thumbnailUrl": "image/thumbnail.jpg",
+  "tags": ["puzzle", "strategy", "logic", "number"],
+  "controls": "Use arrow keys to slide tiles in that direction. On mobile, swipe to move tiles.",
+  "difficulty": "Medium",
+  "ageRating": "Everyone",
+  "screenshots": [
+    "image/screenshot1.jpg",
+    "image/screenshot2.jpg"
+  ]
+} 

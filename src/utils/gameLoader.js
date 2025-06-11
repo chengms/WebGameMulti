@@ -13,6 +13,8 @@ export const loadGames = async () => {
     // For now, we'll simulate a network request with a delay
     await new Promise(resolve => setTimeout(resolve, 1000));
     
+    console.log('Loading games data...');
+    
     // Get games data (in a production app, this would be loaded dynamically from the server)
     const games = [
       {
@@ -41,9 +43,37 @@ export const loadGames = async () => {
         tags: ['Puzzle', 'Memory', 'Casual'],
         author: 'WebGameMulti Team',
         createdAt: '2023-06-25'
+      },
+      {
+        id: 'tetris',
+        name: 'Tetris',
+        description: 'The classic puzzle game where you arrange falling blocks to create complete lines.',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="%234a6ea9"/><text x="50%" y="50%" font-family="Arial" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle">Tetris</text></svg>',
+        tags: ['Puzzle', 'Classic', 'Arcade', 'Strategy'],
+        author: 'WebGameMulti Team',
+        createdAt: '2023-07-15'
+      },
+      {
+        id: '2048',
+        name: '2048',
+        description: 'Slide numbered tiles and combine matching values to reach the 2048 tile in this addictive puzzle game.',
+        thumbnail: '/games/2048/image/thumbnail.jpg',
+        tags: ['Puzzle', 'Strategy', 'Logic', 'Number'],
+        author: 'WebGameMulti Team',
+        createdAt: '2023-07-18'
+      },
+      {
+        id: 'tic-tac-toe',
+        name: 'Tic Tac Toe',
+        description: 'The classic game of X\'s and O\'s with three difficulty levels of AI opponents.',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="%23a6824a"/><text x="50%" y="50%" font-family="Arial" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle">Tic Tac Toe</text></svg>',
+        tags: ['Board', 'Strategy', 'Classic', 'Puzzle'],
+        author: 'WebGameMulti Team',
+        createdAt: '2023-07-20'
       }
     ];
     
+    console.log(`Loaded ${games.length} games:`, games);
     return games;
   } catch (error) {
     console.error('Error loading games:', error);
@@ -146,6 +176,60 @@ export const loadGameDetails = async (gameId) => {
         createdAt: '2023-06-25',
         lastUpdated: '2023-06-25',
         gameUrl: '/games/memory-match/index.html'
+      },
+      'tetris': {
+        id: 'tetris',
+        name: 'Tetris',
+        description: 'The classic puzzle game where you arrange falling blocks to create complete lines.',
+        fullDescription: `<p>Tetris is one of the most iconic puzzle games of all time. The goal is simple: rotate and arrange falling blocks (tetrominoes) to create complete horizontal lines. When a line is complete, it disappears, and you earn points.</p><p>The game gets progressively faster as you level up, testing your reflexes and strategic thinking. How long can you last before the blocks stack up to the top?</p>`,
+        thumbnail: '/games/tetris/image/thumbnail.jpg',
+        screenshots: [
+          '/games/tetris/image/screenshot1.jpg',
+          '/games/tetris/image/screenshot2.jpg'
+        ],
+        tags: ['Puzzle', 'Classic', 'Arcade', 'Strategy'],
+        author: 'WebGameMulti Team',
+        version: '1.0.0',
+        controls: 'Use arrow keys to move (←, →, ↓) and rotate (↑) the pieces. Press Space for hard drop.',
+        createdAt: '2023-07-15',
+        lastUpdated: '2023-07-15',
+        gameUrl: '/games/tetris/index.html'
+      },
+      '2048': {
+        id: '2048',
+        name: '2048',
+        description: 'Slide numbered tiles and combine matching values to reach the 2048 tile in this addictive puzzle game.',
+        fullDescription: `<p>2048 is an addictive sliding puzzle game that challenges your strategic thinking. The rules are simple: slide tiles on a grid to combine matching numbers, doubling their value each time they merge. Starting with 2s and 4s, you need to create a tile with the number 2048.</p><p>Every move spawns a new tile (usually a 2, sometimes a 4), gradually filling up the board. Plan your moves carefully to avoid running out of space. Can you reach 2048, or even beyond?</p>`,
+        thumbnail: '/games/2048/image/thumbnail.jpg',
+        screenshots: [
+          '/games/2048/image/screenshot1.jpg',
+          '/games/2048/image/screenshot2.jpg'
+        ],
+        tags: ['Puzzle', 'Strategy', 'Logic', 'Number'],
+        author: 'WebGameMulti Team',
+        version: '1.0.0',
+        controls: 'Use arrow keys to slide tiles in that direction. On mobile, swipe to move tiles.',
+        createdAt: '2023-07-18',
+        lastUpdated: '2023-07-18',
+        gameUrl: '/games/2048/index.html'
+      },
+      'tic-tac-toe': {
+        id: 'tic-tac-toe',
+        name: 'Tic Tac Toe',
+        description: 'The classic game of X\'s and O\'s with three difficulty levels of AI opponents.',
+        fullDescription: `<p>Tic Tac Toe is a classic paper-and-pencil game for two players who take turns marking X and O on a 3×3 grid. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner.</p><p>In this digital version, you play as X against a computer opponent (O) with three difficulty levels:</p><ul><li><strong>Easy:</strong> The computer makes random moves</li><li><strong>Medium:</strong> The computer can block your winning moves and make its own winning moves</li><li><strong>Hard:</strong> The computer uses the minimax algorithm to play perfectly</li></ul><p>Challenge yourself against the AI and see if you can outsmart it!</p>`,
+        thumbnail: '/games/tic-tac-toe/image/thumbnail.jpg',
+        screenshots: [
+          '/games/tic-tac-toe/image/screenshot1.jpg',
+          '/games/tic-tac-toe/image/screenshot2.jpg'
+        ],
+        tags: ['Board', 'Strategy', 'Classic', 'Puzzle'],
+        author: 'WebGameMulti Team',
+        version: '1.0.0',
+        controls: 'Click or tap on a cell to place your mark. Select difficulty from the dropdown menu.',
+        createdAt: '2023-07-20',
+        lastUpdated: '2023-07-20',
+        gameUrl: '/games/tic-tac-toe/index.html'
       }
     };
     

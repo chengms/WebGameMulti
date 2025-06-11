@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGames } from '../../contexts/GameContext';
 import GameCard from '../../components/game/GameCard';
@@ -11,6 +11,13 @@ import './Home.css';
 function Home() {
   const { filteredGames, loading, error } = useGames();
   const navigate = useNavigate();
+  
+  // 添加调试代码
+  useEffect(() => {
+    console.log('Home component - filteredGames:', filteredGames);
+    console.log('Home component - loading:', loading);
+    console.log('Home component - error:', error);
+  }, [filteredGames, loading, error]);
   
   const handleGameClick = (gameId) => {
     navigate(`/games/${gameId}`);
@@ -42,14 +49,17 @@ function Home() {
           {filteredGames.length === 0 ? (
             <p className="home__empty">No games available</p>
           ) : (
-            filteredGames.map(game => (
-              <div key={game.id} className="home__game-card">
-                <GameCard 
-                  game={game} 
-                  onClick={() => handleGameClick(game.id)} 
-                />
-              </div>
-            ))
+            <>
+              <p className="home__debug-info">Found {filteredGames.length} games</p>
+              {filteredGames.map(game => (
+                <div key={game.id} className="home__game-card">
+                  <GameCard 
+                    game={game} 
+                    onClick={() => handleGameClick(game.id)} 
+                  />
+                </div>
+              ))}
+            </>
           )}
         </div>
       )}
