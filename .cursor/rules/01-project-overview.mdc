@@ -1,0 +1,35 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# WebGameMulti Project Overview
+
+WebGameMulti is a web-based gaming platform that hosts and displays multiple web games in a unified interface. It allows users to browse, search, and play various HTML5 games.
+
+## Key Features
+
+- Game catalog with filtering by categories and search
+- Responsive design for various screen sizes
+- Individual game detail pages with metadata and game embedding
+- User settings and preferences system
+- Multiple integrated games with consistent UI
+
+## Key Technologies
+
+- **React**: Frontend framework
+- **React Router**: For navigation between pages
+- **Context API**: For state management
+- **CSS Modules**: For component styling
+- **HTML5 Games**: Individual games integrated into the platform
+
+## Main Entry Points
+
+- [index.html](mdc:index.html): HTML entry point
+- [src/main.jsx](mdc:src/main.jsx): JavaScript entry point
+- [src/App.jsx](mdc:src/App.jsx): Main application component with routing
+
+## Game Integration
+
+Games are integrated via the `games` directory and loaded through the game loader utility at [src/utils/gameLoader.js](mdc:src/utils/gameLoader.js).
+

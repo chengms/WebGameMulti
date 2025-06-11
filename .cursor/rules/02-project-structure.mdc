@@ -1,0 +1,64 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# WebGameMulti Project Structure
+
+This file explains the directory structure and key files in the WebGameMulti project.
+
+## Directory Structure
+
+```
+WebGameMulti/
+├── docs/              # Documentation files
+├── games/             # Individual game directories
+│   ├── example-game/  # Example game with implementation
+│   ├── memory-match/  # Memory matching game
+│   └── snake/         # Snake game
+├── public/            # Static assets for production
+├── src/               # Application source code
+│   ├── components/    # Reusable UI components
+│   ├── contexts/      # React context providers
+│   ├── pages/         # Page components
+│   ├── styles/        # Global styles
+│   └── utils/         # Utility functions
+└── index.html         # Main HTML file
+```
+
+## Key Directories
+
+### Games Directory
+
+The [games](mdc:games) directory contains individual game implementations. Each game has its own folder with:
+
+- `index.html`: The game implementation
+- `meta.json`: Game metadata (name, description, etc.)
+- `image/`: Directory for game images
+
+Example: [games/memory-match](mdc:games/memory-match)
+
+### Source Directory
+
+The [src](mdc:src) directory contains the React application code:
+
+- [components](mdc:src/components): Reusable UI components
+  - [layout](mdc:src/components/layout): Layout components (Header, Sidebar, etc.)
+  - [game](mdc:src/components/game): Game-related components (GameCard, etc.)
+  
+- [contexts](mdc:src/contexts): React context providers
+  - [GameContext.jsx](mdc:src/contexts/GameContext.jsx): Game data and filtering
+  - [UserSettingsContext.jsx](mdc:src/contexts/UserSettingsContext.jsx): User preferences
+  
+- [pages](mdc:src/pages): Page components
+  - [Home](mdc:src/pages/Home): Home page with game list
+  - [GameDetail](mdc:src/pages/GameDetail): Game detail page
+  - [Settings](mdc:src/pages/Settings): Settings page
+  - [About](mdc:src/pages/About): About page
+  
+- [utils](mdc:src/utils): Utility functions
+  - [gameLoader.js](mdc:src/utils/gameLoader.js): Game loading and filtering
+
+- [styles](mdc:src/styles): Global styles
+
+

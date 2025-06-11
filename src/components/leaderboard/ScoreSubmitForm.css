@@ -1,0 +1,142 @@
+.score-form {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+}
+
+.score-form__header {
+  background-color: #4a6ea9;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score-form__title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.score-form__close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.score-form__content {
+  padding: 20px;
+}
+
+.score-form__score-display {
+  background-color: #f5f7fa;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.score-form__score-label {
+  font-size: 1rem;
+  color: #666;
+  margin-right: 10px;
+}
+
+.score-form__score-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4a6ea9;
+}
+
+.score-form__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.score-form__field {
+  margin-bottom: 20px;
+}
+
+.score-form__label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #444;
+}
+
+.score-form__input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.2s;
+}
+
+.score-form__input:focus {
+  outline: none;
+  border-color: #4a6ea9;
+}
+
+.score-form__error {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  padding: 8px 12px;
+  background-color: #fdf3f2;
+  border-radius: 4px;
+  border-left: 4px solid #e74c3c;
+}
+
+.score-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.score-form__cancel-button,
+.score-form__submit-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.score-form__cancel-button {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.score-form__cancel-button:hover {
+  background-color: #d0d0d0;
+}
+
+.score-form__submit-button {
+  background-color: #4a6ea9;
+  color: white;
+}
+
+.score-form__submit-button:hover {
+  background-color: #3a5a89;
+}
+
+.score-form__submit-button:disabled,
+.score-form__cancel-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+} 

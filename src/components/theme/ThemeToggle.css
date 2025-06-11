@@ -1,0 +1,66 @@
+.theme-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.theme-toggle__buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.theme-toggle__button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-radius: var(--radius-medium);
+  background-color: var(--color-background-secondary);
+  color: var(--color-text);
+  border: 2px solid transparent;
+  transition: all var(--transition-speed);
+  flex: 1;
+}
+
+.theme-toggle__button:hover {
+  background-color: var(--color-background-tertiary);
+}
+
+.theme-toggle__button--active {
+  border-color: var(--color-primary);
+  background-color: var(--color-background-tertiary);
+}
+
+.theme-toggle__icon {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+.theme-toggle__text {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.theme-toggle__info {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin-top: 5px;
+}
+
+@media (max-width: 576px) {
+  .theme-toggle__buttons {
+    flex-direction: column;
+  }
+  
+  .theme-toggle__button {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 10px 15px;
+  }
+  
+  .theme-toggle__icon {
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+} 

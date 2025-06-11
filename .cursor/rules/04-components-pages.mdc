@@ -1,0 +1,48 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Components and Pages Guide
+
+This guide explains the structure of components and pages in the WebGameMulti platform.
+
+## Component Organization
+
+Components are organized in the [src/components](mdc:src/components) directory:
+
+- `layout/`: Layout components (Header, Sidebar, Layout)
+- `game/`: Game-related components (GameCard, GameControls)
+
+## Page Organization
+
+Pages are organized in the [src/pages](mdc:src/pages) directory:
+
+- `Home/`: Home page with game listing
+- `GameDetail/`: Game detail page for displaying and playing games
+- `Settings/`: User settings page
+- `About/`: About page with platform information
+- `NotFound/`: 404 page
+
+## Key Components
+
+### Layout Components
+
+- `Layout`: Main layout container with header, sidebar, and content area
+- `Header`: Top navigation bar with search and user controls
+- `Sidebar`: Side navigation with categories and filters
+
+### Game Components
+
+- `GameCard`: Card component for displaying game thumbnails and basic info
+- `GameDetail`: Detailed game information and game embedding
+
+## Routing
+
+Routing is managed in [App.jsx](mdc:src/App.jsx) using React Router. The main routes are:
+
+- `/`: Home page
+- `/games/:gameId`: Game detail page
+- `/settings`: Settings page
+- `/about`: About page
+

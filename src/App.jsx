@@ -4,7 +4,10 @@ import Layout from './components/layout/Layout';
 import Home from './pages/Home/Home';
 import GameDetail from './pages/GameDetail/GameDetail';
 import About from './pages/About/About';
+import Settings from './pages/Settings/Settings';
 import NotFound from './pages/NotFound/NotFound';
+import { GameProvider } from './contexts/GameContext';
+import { UserSettingsProvider } from './contexts/UserSettingsContext';
 import './styles/global.css';
 
 /**
@@ -13,16 +16,21 @@ import './styles/global.css';
  */
 function App() {
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/games/:gameId" element={<GameDetail />} />
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Layout>
-    </Router>
+    <UserSettingsProvider>
+      <GameProvider>
+        <Router>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/games/:gameId" element={<GameDetail />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/about" element={<About />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Layout>
+        </Router>
+      </GameProvider>
+    </UserSettingsProvider>
   );
 }
 

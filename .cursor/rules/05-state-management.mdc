@@ -1,0 +1,68 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# State Management Guide
+
+This guide explains how state is managed in the WebGameMulti platform.
+
+## Context API
+
+WebGameMulti uses React's Context API for state management. The main context providers are:
+
+- `GameContext`: Manages game data, filtering, and search
+- `UserSettingsContext`: Manages user preferences and settings
+
+## GameContext
+
+The [GameContext](mdc:src/contexts/GameContext.jsx) provides:
+
+- List of all games
+- Filtered games based on category and search
+- Game categories
+- Game loading and detail fetching
+- Game filtering functions
+
+Usage example:
+```jsx
+import { useGames } from '../contexts/GameContext';
+
+function MyComponent() {
+  const { games, filteredGames, loading, error } = useGames();
+  // Use the games data...
+}
+```
+
+## UserSettingsContext
+
+The [UserSettingsContext](mdc:src/contexts/UserSettingsContext.jsx) provides:
+
+- User theme preference
+- Sound and tutorial settings
+- Game-specific preferences
+- Functions to update settings
+
+Usage example:
+```jsx
+import { useUserSettings } from '../contexts/UserSettingsContext';
+
+function MyComponent() {
+  const { settings, updateSettings } = useUserSettings();
+  // Use and update settings...
+}
+```
+
+## Local Storage
+
+User settings are persisted in the browser's localStorage:
+
+- Global settings: Stored as `webgamemulti_settings`
+- Game-specific preferences: Stored with keys like `webgamemulti_pref_{gameId}`
+
+## State Flow
+
+1. Context providers are defined in [src/contexts](mdc:src/contexts)
+2. Providers are initialized in [App.jsx](mdc:src/App.jsx)
+3. Components access state via custom hooks (`useGames`, `useUserSettings`)
+4. State changes trigger re-renders of components that consume the context

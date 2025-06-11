@@ -9,13 +9,11 @@
  */
 export const loadGames = async () => {
   try {
-    // In a real implementation, this would be a server API call
-    // For this demo, we're hard-coding some sample games
-    
-    // Simulate network delay
+    // In a real implementation, this would fetch data from an API
+    // For now, we'll simulate a network request with a delay
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    // Sample games data (in a real app, this would come from the server)
+    // Get games data (in a production app, this would be loaded dynamically from the server)
     const games = [
       {
         id: 'example-game',
@@ -36,13 +34,13 @@ export const loadGames = async () => {
         createdAt: '2023-06-15'
       },
       {
-        id: 'tetris',
-        name: 'Tetris',
-        description: 'The classic Tetris game. Control falling blocks and clear as many lines as possible.',
-        thumbnail: '/games/tetris/image/cover.png',
-        tags: ['Puzzle', 'Classic'],
+        id: 'memory-match',
+        name: 'Memory Match',
+        description: 'Test your memory by matching pairs of cards. Find all matching pairs in the shortest time possible.',
+        thumbnail: '/games/memory-match/image/cover.png',
+        tags: ['Puzzle', 'Memory', 'Casual'],
         author: 'WebGameMulti Team',
-        createdAt: '2023-06-20'
+        createdAt: '2023-06-25'
       }
     ];
     
@@ -61,7 +59,7 @@ export const loadGames = async () => {
 export const loadGameDetails = async (gameId) => {
   try {
     // In a real implementation, this would be a server API call
-    // For this demo, we're hard-coding some sample game details
+    // For this demo, we're simulating a network request
     
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -120,32 +118,34 @@ export const loadGameDetails = async (gameId) => {
         lastUpdated: '2023-06-15',
         gameUrl: '/games/snake/index.html'
       },
-      'tetris': {
-        id: 'tetris',
-        name: 'Tetris',
-        description: 'The classic Tetris game. Control falling blocks and clear as many lines as possible.',
-        fullDescription: `<p>Tetris is a timeless puzzle game that has captivated players for decades.</p>
-          <p>The game involves manipulating different shaped blocks (tetrominoes) as they fall from the top of the screen. The goal is to create complete horizontal lines, which then disappear and award points.</p>
+      'memory-match': {
+        id: 'memory-match',
+        name: 'Memory Match',
+        description: 'Test your memory by matching pairs of cards. Find all matching pairs in the shortest time possible.',
+        fullDescription: `<p>Memory Match is a classic card matching game that tests your memory and concentration.</p>
+          <p>The game consists of a grid of face-down cards. Each card has a matching pair somewhere in the grid. Your goal is to find all matching pairs in the fewest moves and shortest time possible.</p>
           <h3>How to Play:</h3>
           <ul>
-            <li>Use arrow keys to move and rotate the falling blocks</li>
-            <li>Complete horizontal lines to clear them and score points</li>
-            <li>The game ends when the blocks reach the top of the screen</li>
-            <li>Try to clear multiple lines at once for bonus points</li>
+            <li>Click on a card to flip it over</li>
+            <li>Click on a second card to try to find a match</li>
+            <li>If the cards match, they stay face up</li>
+            <li>If they don't match, they flip back face down</li>
+            <li>Remember card positions to find matches more efficiently</li>
+            <li>Find all pairs to complete the game</li>
           </ul>
-          <p>Tetris is easy to learn but challenging to master. Can you keep up as the blocks fall faster?</p>`,
-        thumbnail: '/games/tetris/image/cover.png',
+          <p>Choose from three difficulty levels: Easy, Medium, and Hard.</p>`,
+        thumbnail: '/games/memory-match/image/cover.png',
         screenshots: [
-          '/games/tetris/image/screen1.png',
-          '/games/tetris/image/screen2.png'
+          '/games/memory-match/image/screen1.png',
+          '/games/memory-match/image/screen2.png'
         ],
-        tags: ['Puzzle', 'Classic'],
+        tags: ['Puzzle', 'Memory', 'Casual'],
         author: 'WebGameMulti Team',
         version: '1.0.0',
-        controls: 'Arrow keys, Space bar',
-        createdAt: '2023-06-20',
-        lastUpdated: '2023-06-20',
-        gameUrl: '/games/tetris/index.html'
+        controls: 'Mouse click',
+        createdAt: '2023-06-25',
+        lastUpdated: '2023-06-25',
+        gameUrl: '/games/memory-match/index.html'
       }
     };
     
@@ -171,14 +171,18 @@ export const getGameCategories = async () => {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 500));
     
-    // Sample categories (in a real app, this would be derived from game tags)
-    const categories = [
-      { id: 'action', name: 'Action' },
-      { id: 'puzzle', name: 'Puzzle' },
-      { id: 'strategy', name: 'Strategy' },
-      { id: 'arcade', name: 'Arcade' },
-      { id: 'casual', name: 'Casual' }
-    ];
+    // Get all unique tags from games and create categories
+    const games = await loadGames();
+    const allTags = games.flatMap(game => game.tags);
+    const uniqueTags = [...new Set(allTags)];
+    
+    const categories = uniqueTags.map(tag => ({
+      id: tag.toLowerCase(),
+      name: tag
+    }));
+    
+    // Add "All" category
+    categories.unshift({ id: 'all', name: 'All Games' });
     
     return categories;
   } catch (error) {
@@ -198,30 +202,15 @@ export const filterGamesByCategory = (games, categoryId) => {
     return games;
   }
   
-  // Map category IDs to corresponding tags
-  const categoryTagMap = {
-    'action': 'Action',
-    'puzzle': 'Puzzle',
-    'strategy': 'Strategy',
-    'arcade': 'Arcade',
-    'casual': 'Casual'
-  };
-  
-  const categoryTag = categoryTagMap[categoryId];
-  
-  if (!categoryTag) {
-    return games;
-  }
-  
   return games.filter(game => 
-    game.tags && game.tags.includes(categoryTag)
+    game.tags.some(tag => tag.toLowerCase() === categoryId)
   );
 };
 
 /**
  * Search games by keyword
  * @param {Array} games - Array of game objects
- * @param {string} keyword - Search keyword
+ * @param {string} keyword - Keyword to search for
  * @returns {Array} Filtered array of games
  */
 export const searchGames = (games, keyword) => {
@@ -229,14 +218,44 @@ export const searchGames = (games, keyword) => {
     return games;
   }
   
-  const normalizedKeyword = keyword.toLowerCase().trim();
+  const searchTerm = keyword.toLowerCase().trim();
   
-  return games.filter(game => {
-    const nameMatch = game.name && game.name.toLowerCase().includes(normalizedKeyword);
-    const descriptionMatch = game.description && game.description.toLowerCase().includes(normalizedKeyword);
-    const tagMatch = game.tags && game.tags.some(tag => tag.toLowerCase().includes(normalizedKeyword));
-    const authorMatch = game.author && game.author.toLowerCase().includes(normalizedKeyword);
-    
-    return nameMatch || descriptionMatch || tagMatch || authorMatch;
-  });
+  return games.filter(game => 
+    game.name.toLowerCase().includes(searchTerm) ||
+    game.description.toLowerCase().includes(searchTerm) ||
+    game.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
+    (game.author && game.author.toLowerCase().includes(searchTerm))
+  );
+};
+
+/**
+ * Save user game preferences
+ * @param {string} gameId - Game ID
+ * @param {Object} preferences - User preferences for the game
+ */
+export const saveGamePreferences = (gameId, preferences) => {
+  try {
+    const storageKey = `webgamemulti_pref_${gameId}`;
+    localStorage.setItem(storageKey, JSON.stringify(preferences));
+    return true;
+  } catch (error) {
+    console.error('Error saving game preferences:', error);
+    return false;
+  }
+};
+
+/**
+ * Load user game preferences
+ * @param {string} gameId - Game ID
+ * @returns {Object|null} User preferences for the game or null if not found
+ */
+export const loadGamePreferences = (gameId) => {
+  try {
+    const storageKey = `webgamemulti_pref_${gameId}`;
+    const data = localStorage.getItem(storageKey);
+    return data ? JSON.parse(data) : null;
+  } catch (error) {
+    console.error('Error loading game preferences:', error);
+    return null;
+  }
 }; 

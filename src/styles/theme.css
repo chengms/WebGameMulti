@@ -1,0 +1,108 @@
+/**
+ * 主题系统CSS变量
+ * 定义了明亮模式和暗黑模式的颜色变量
+ */
+
+:root {
+  /* 明亮主题变量 */
+  --color-primary: #4a6ea9;
+  --color-primary-light: #6987c0;
+  --color-primary-dark: #3a5a89;
+  
+  --color-accent: #f39c12;
+  --color-accent-light: #f8c471;
+  --color-accent-dark: #d68910;
+  
+  --color-background: #ffffff;
+  --color-background-secondary: #f8f9fa;
+  --color-background-tertiary: #f1f3f5;
+  
+  --color-text: #333333;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #999999;
+  
+  --color-border: #e9ecef;
+  --color-border-light: #f1f3f5;
+  --color-border-dark: #ced4da;
+  
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  --color-error: #dc3545;
+  --color-info: #17a2b8;
+  
+  --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1);
+  
+  --radius-small: 4px;
+  --radius-medium: 8px;
+  --radius-large: 12px;
+  
+  --transition-speed: 0.2s;
+}
+
+/* 暗黑主题变量 */
+[data-theme="dark"] {
+  --color-primary: #5d82c1;
+  --color-primary-light: #7c9ad2;
+  --color-primary-dark: #456db8;
+  
+  --color-accent: #f39c12;
+  --color-accent-light: #f8c471;
+  --color-accent-dark: #d68910;
+  
+  --color-background: #1a1a1a;
+  --color-background-secondary: #2a2a2a;
+  --color-background-tertiary: #333333;
+  
+  --color-text: #f1f3f5;
+  --color-text-secondary: #ced4da;
+  --color-text-tertiary: #adb5bd;
+  
+  --color-border: #444444;
+  --color-border-light: #555555;
+  --color-border-dark: #333333;
+  
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  --color-error: #dc3545;
+  --color-info: #17a2b8;
+  
+  --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 系统主题 */
+@media (prefers-color-scheme: dark) {
+  [data-theme="system"] {
+    --color-primary: #5d82c1;
+    --color-primary-light: #7c9ad2;
+    --color-primary-dark: #456db8;
+    
+    --color-accent: #f39c12;
+    --color-accent-light: #f8c471;
+    --color-accent-dark: #d68910;
+    
+    --color-background: #1a1a1a;
+    --color-background-secondary: #2a2a2a;
+    --color-background-tertiary: #333333;
+    
+    --color-text: #f1f3f5;
+    --color-text-secondary: #ced4da;
+    --color-text-tertiary: #adb5bd;
+    
+    --color-border: #444444;
+    --color-border-light: #555555;
+    --color-border-dark: #333333;
+    
+    --color-success: #28a745;
+    --color-warning: #ffc107;
+    --color-error: #dc3545;
+    --color-info: #17a2b8;
+    
+    --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.3);
+  }
+} 
