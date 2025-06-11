@@ -5,10 +5,10 @@ import Sidebar from './Sidebar';
 import './Layout.css';
 
 /**
- * 布局组件，包含顶部导航栏和侧边栏
- * @param {Object} props 组件属性
- * @param {React.ReactNode} props.children 子组件
- * @returns {JSX.Element} 布局组件
+ * Layout component with header and sidebar
+ * @param {Object} props Component props
+ * @param {React.ReactNode} props.children Child components
+ * @returns {JSX.Element} Layout component
  */
 function Layout({ children }) {
   return (

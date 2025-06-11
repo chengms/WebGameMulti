@@ -1,7 +1,7 @@
-/* 导入主题变量 */
+/* Import theme variables */
 @import './theme.css';
 
-/* 全局样式 */
+/* Global styles */
 :root {
   --header-height: 60px;
   --sidebar-width: 250px;
@@ -53,7 +53,7 @@ button:hover {
   padding: 0 20px;
 }
 
-/* 卡片样式 */
+/* Card styles */
 .card {
   background-color: var(--color-background);
   border-radius: var(--radius-medium);
@@ -66,7 +66,7 @@ button:hover {
   box-shadow: var(--shadow-medium);
 }
 
-/* 按钮样式 */
+/* Button styles */
 .btn {
   display: inline-block;
   padding: 0.5rem 1rem;
@@ -98,7 +98,7 @@ button:hover {
   background-color: var(--color-background-tertiary);
 }
 
-/* 通用样式类 */
+/* Utility classes */
 .flex {
   display: flex;
 }
@@ -135,7 +135,7 @@ button:hover {
   padding: 1rem;
 }
 
-/* 响应式样式 */
+/* Responsive styles */
 @media (max-width: 768px) {
   :root {
     --sidebar-width: 0px;

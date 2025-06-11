@@ -5,8 +5,8 @@ import { useUserSettings } from '../../contexts/UserSettingsContext';
 import './Sidebar.css';
 
 /**
- * 侧边栏组件，用于显示游戏分类和导航
- * @returns {JSX.Element} 侧边栏组件
+ * Sidebar component for displaying game categories and navigation
+ * @returns {JSX.Element} Sidebar component
  */
 function Sidebar() {
   const { 
@@ -39,9 +39,9 @@ function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar__content">
-        <h3 className="sidebar__title">游戏分类</h3>
+        <h3 className="sidebar__title">Game Categories</h3>
         
-        {categoriesLoading && <p className="sidebar__loading">加载中...</p>}
+        {categoriesLoading && <p className="sidebar__loading">Loading...</p>}
         
         {categoriesError && <p className="sidebar__error">{categoriesError}</p>}
         
@@ -56,7 +56,7 @@ function Sidebar() {
                 onClick={() => handleCategoryClick('all')}
                 end
               >
-                所有游戏
+                All Games
               </NavLink>
             </li>
             {categories.map(category => (
@@ -76,7 +76,7 @@ function Sidebar() {
         )}
         
         <div className="sidebar__nav">
-          <h3 className="sidebar__title">导航</h3>
+          <h3 className="sidebar__title">Navigation</h3>
           <ul className="sidebar__nav-list">
             <li className="sidebar__nav-item">
               <NavLink 
@@ -86,7 +86,7 @@ function Sidebar() {
                 }
                 end
               >
-                <i className="sidebar__icon">🏠</i> 首页
+                <i className="sidebar__icon">🏠</i> Home
               </NavLink>
             </li>
             <li className="sidebar__nav-item">
@@ -96,8 +96,8 @@ function Sidebar() {
                   isActive ? "sidebar__nav-link sidebar__nav-link--active" : "sidebar__nav-link"
                 }
               >
-                <i className="sidebar__icon">⚙️</i> 设置
-                <span className="sidebar__nav-badge" title={`当前主题: ${settings.theme}`}>
+                <i className="sidebar__icon">⚙️</i> Settings
+                <span className="sidebar__nav-badge" title={`Current theme: ${settings.theme}`}>
                   {getThemeIcon()}
                 </span>
               </NavLink>
@@ -109,7 +109,7 @@ function Sidebar() {
                   isActive ? "sidebar__nav-link sidebar__nav-link--active" : "sidebar__nav-link"
                 }
               >
-                <i className="sidebar__icon">ℹ️</i> 关于
+                <i className="sidebar__icon">ℹ️</i> About
               </NavLink>
             </li>
           </ul>

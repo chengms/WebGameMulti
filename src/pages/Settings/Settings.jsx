@@ -4,8 +4,8 @@ import ThemeToggle from '../../components/theme/ThemeToggle';
 import './Settings.css';
 
 /**
- * 设置页面组件
- * @returns {JSX.Element} 设置页面组件
+ * Settings page component
+ * @returns {JSX.Element} Settings page component
  */
 function Settings() {
   const { 
@@ -28,7 +28,7 @@ function Settings() {
   };
 
   const handleReset = () => {
-    if (window.confirm('确定要将所有设置重置为默认值吗？')) {
+    if (window.confirm('Are you sure you want to reset all settings to default?')) {
       resetSettings();
     }
   };
@@ -36,41 +36,41 @@ function Settings() {
   if (isLoading) {
     return (
       <div className="settings">
-        <h1 className="settings__title">设置</h1>
-        <div className="settings__loading">加载设置中...</div>
+        <h1 className="settings__title">Settings</h1>
+        <div className="settings__loading">Loading settings...</div>
       </div>
     );
   }
 
   return (
     <div className="settings">
-      <h1 className="settings__title">设置</h1>
+      <h1 className="settings__title">Settings</h1>
       
       <div className="settings__section">
-        <h2 className="settings__section-title">显示</h2>
+        <h2 className="settings__section-title">Display</h2>
         
         <div className="settings__option">
-          <label className="settings__label">主题模式:</label>
+          <label className="settings__label">Theme Mode:</label>
           <ThemeToggle />
         </div>
         
         <div className="settings__option settings__option--select">
-          <label htmlFor="theme" className="settings__label">选择主题:</label>
+          <label htmlFor="theme" className="settings__label">Select Theme:</label>
           <select 
             id="theme" 
             className="settings__select"
             value={settings.theme}
             onChange={handleThemeChange}
           >
-            <option value="light">明亮模式</option>
-            <option value="dark">暗黑模式</option>
-            <option value="system">系统默认</option>
+            <option value="light">Light Mode</option>
+            <option value="dark">Dark Mode</option>
+            <option value="system">System Default</option>
           </select>
         </div>
       </div>
       
       <div className="settings__section">
-        <h2 className="settings__section-title">偏好设置</h2>
+        <h2 className="settings__section-title">Preferences</h2>
         
         <div className="settings__option">
           <div className="settings__checkbox-container">
@@ -82,11 +82,11 @@ function Settings() {
               onChange={handleSoundToggle}
             />
             <label htmlFor="sound" className="settings__checkbox-label">
-              启用声音
+              Enable Sound
             </label>
           </div>
           <p className="settings__description">
-            在游戏和导航过程中播放音效
+            Play sound effects during games and navigation
           </p>
         </div>
         
@@ -100,11 +100,11 @@ function Settings() {
               onChange={handleTutorialsToggle}
             />
             <label htmlFor="tutorials" className="settings__checkbox-label">
-              显示教程
+              Show Tutorials
             </label>
           </div>
           <p className="settings__description">
-            显示游戏教程和提示
+            Display game tutorials and tips
           </p>
         </div>
       </div>
@@ -114,7 +114,7 @@ function Settings() {
           className="settings__reset-button"
           onClick={handleReset}
         >
-          恢复默认设置
+          Reset to Default
         </button>
       </div>
     </div>

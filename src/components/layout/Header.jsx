@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGames } from '../../contexts/GameContext';
+import ThemeToggle from '../theme/ThemeToggle';
 import './Header.css';
 
 /**
@@ -51,6 +52,7 @@ function Header() {
           <nav className="header__nav">
             <Link to="/" className="header__nav-item">Home</Link>
             <Link to="/about" className="header__nav-item">About</Link>
+            <ThemeToggle />
           </nav>
         </div>
       </div>

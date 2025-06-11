@@ -3,54 +3,54 @@ import { useUserSettings } from '../../contexts/UserSettingsContext';
 import './ThemeToggle.css';
 
 /**
- * 主题切换组件
- * @returns {JSX.Element} 主题切换组件
+ * Theme toggle component for switching between light, dark, and system themes
+ * @returns {JSX.Element} Theme toggle component
  */
 function ThemeToggle() {
-  const { settings, updateSettings } = useUserSettings();
-  
-  const handleThemeChange = (theme) => {
-    updateSettings({ theme });
+  const { settings, setTheme } = useUserSettings();
+
+  // Get the icon based on current theme
+  const getThemeIcon = () => {
+    switch (settings.theme) {
+      case 'light':
+        return '☀️';
+      case 'dark':
+        return '🌙';
+      case 'system':
+        return '💻';
+      default:
+        return '☀️';
+    }
   };
-  
+
+  // Get the next theme when toggling
+  const getNextTheme = () => {
+    switch (settings.theme) {
+      case 'light':
+        return 'dark';
+      case 'dark':
+        return 'system';
+      case 'system':
+        return 'light';
+      default:
+        return 'light';
+    }
+  };
+
+  // Handle theme toggle click
+  const handleThemeToggle = () => {
+    setTheme(getNextTheme());
+  };
+
   return (
-    <div className="theme-toggle">
-      <div className="theme-toggle__buttons">
-        <button
-          className={`theme-toggle__button ${settings.theme === 'light' ? 'theme-toggle__button--active' : ''}`}
-          onClick={() => handleThemeChange('light')}
-          aria-label="明亮模式"
-          title="明亮模式"
-        >
-          <span className="theme-toggle__icon">☀️</span>
-          <span className="theme-toggle__text">明亮</span>
-        </button>
-        
-        <button
-          className={`theme-toggle__button ${settings.theme === 'dark' ? 'theme-toggle__button--active' : ''}`}
-          onClick={() => handleThemeChange('dark')}
-          aria-label="暗黑模式"
-          title="暗黑模式"
-        >
-          <span className="theme-toggle__icon">🌙</span>
-          <span className="theme-toggle__text">暗黑</span>
-        </button>
-        
-        <button
-          className={`theme-toggle__button ${settings.theme === 'system' ? 'theme-toggle__button--active' : ''}`}
-          onClick={() => handleThemeChange('system')}
-          aria-label="系统主题"
-          title="使用系统主题"
-        >
-          <span className="theme-toggle__icon">💻</span>
-          <span className="theme-toggle__text">系统</span>
-        </button>
-      </div>
-      
-      <div className="theme-toggle__info">
-        <p>选择您喜欢的主题模式</p>
-      </div>
-    </div>
+    <button
+      className="theme-toggle"
+      onClick={handleThemeToggle}
+      title={`Current theme: ${settings.theme}. Click to change.`}
+    >
+      <span className="theme-toggle__icon">{getThemeIcon()}</span>
+      <span className="theme-toggle__name">{settings.theme}</span>
+    </button>
   );
 }
 

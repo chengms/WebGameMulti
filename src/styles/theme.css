@@ -1,10 +1,10 @@
 /**
- * 主题系统CSS变量
- * 定义了明亮模式和暗黑模式的颜色变量
+ * Theme system CSS variables
+ * Defines color variables for light and dark modes
  */
 
 :root {
-  /* 明亮主题变量 */
+  /* Light theme variables */
   --color-primary: #4a6ea9;
   --color-primary-light: #6987c0;
   --color-primary-dark: #3a5a89;
@@ -41,7 +41,7 @@
   --transition-speed: 0.2s;
 }
 
-/* 暗黑主题变量 */
+/* Dark theme variables */
 [data-theme="dark"] {
   --color-primary: #5d82c1;
   --color-primary-light: #7c9ad2;
@@ -73,7 +73,7 @@
   --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* 系统主题 */
+/* System theme */
 @media (prefers-color-scheme: dark) {
   [data-theme="system"] {
     --color-primary: #5d82c1;
