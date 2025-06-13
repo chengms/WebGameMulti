@@ -1,5 +1,16 @@
-[env.production]
+# Cloudflare Pages configuration
 name = "gametime"
+compatibility_date = "2024-01-01"
+
+[build]
+command = "npm run build"
+output_directory = "dist"
+
+[build.environment]
+NODE_ENV = "production"
+
+[env.production]
+name = "gametime-prod"
 route = "gametime.bar/*"
 zone_id = "" # 需要填入你的zone_id
 usage_model = "bundled"
@@ -27,18 +38,19 @@ node_compat = true
 [env.development.vars]
 NODE_ENV = "development"
 
-# 配置自定义域名
-[[env.production.routes]]
+# Custom domains configuration
+[[routes]]
 pattern = "gametime.bar"
 custom_domain = true
 
-[[env.development.routes]]
+[[routes]]
 pattern = "dev.gametime.bar"
 custom_domain = true
 
-# 配置HTTP响应头
-[env.production.headers]
-"/*" = [
+# HTTP headers configuration
+[[headers]]
+pattern = "/*"
+headers = [
   { key = "Access-Control-Allow-Origin", value = "https://gametime.bar" },
   { key = "X-Frame-Options", value = "DENY" },
   { key = "X-Content-Type-Options", value = "nosniff" },
