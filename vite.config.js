@@ -6,17 +6,16 @@ const isProd = process.env.CF_PAGES_BRANCH === 'main';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: isProd ? 'https://gametime.bar' : '/',
+  base: '/',
   plugins: [react()],
   server: {
     port: 3000,
     cors: true,
     // 开发环境配置
-    proxy: isProd ? {} : {
+    proxy: {
       '/api': {
-        target: 'https://gametime.bar',
-        changeOrigin: true,
-        secure: false
+        target: 'http://localhost:3000',
+        changeOrigin: true
       }
     }
   },
@@ -25,8 +24,15 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    emptyOutDir: true,
     assetsDir: 'assets',
-    sourcemap: true
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom']
+  }
 }); 
