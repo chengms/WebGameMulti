@@ -1,0 +1,47 @@
+[env.production]
+name = "gametime"
+route = "gametime.bar/*"
+zone_id = "" # 需要填入你的zone_id
+usage_model = "bundled"
+compatibility_date = "2024-01-01"
+
+[env.production.build]
+command = "npm run build"
+output_directory = "dist"
+node_compat = true
+
+[env.production.vars]
+NODE_ENV = "production"
+
+[env.development]
+name = "gametime-dev"
+route = "dev.gametime.bar/*"
+usage_model = "bundled"
+compatibility_date = "2024-01-01"
+
+[env.development.build]
+command = "npm run build:dev"
+output_directory = "dist"
+node_compat = true
+
+[env.development.vars]
+NODE_ENV = "development"
+
+# 配置自定义域名
+[[env.production.routes]]
+pattern = "gametime.bar"
+custom_domain = true
+
+[[env.development.routes]]
+pattern = "dev.gametime.bar"
+custom_domain = true
+
+# 配置HTTP响应头
+[env.production.headers]
+"/*" = [
+  { key = "Access-Control-Allow-Origin", value = "https://gametime.bar" },
+  { key = "X-Frame-Options", value = "DENY" },
+  { key = "X-Content-Type-Options", value = "nosniff" },
+  { key = "Referrer-Policy", value = "strict-origin-when-cross-origin" },
+  { key = "Content-Security-Policy", value = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;" }
+] 
