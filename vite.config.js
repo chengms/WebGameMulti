@@ -28,9 +28,14 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       output: {
-        manualChunks: undefined
+        manualChunks: undefined,
+        assetFileNames: 'assets/[name].[ext]',
+        chunkFileNames: 'assets/[name].[hash].js',
+        entryFileNames: 'assets/[name].[hash].js'
       }
-    }
+    },
+    target: 'esnext',
+    minify: 'esbuild'
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom']
