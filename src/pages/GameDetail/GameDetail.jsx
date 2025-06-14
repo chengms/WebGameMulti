@@ -6,8 +6,8 @@ import AchievementList from '../../components/leaderboard/AchievementList';
 import './GameDetail.css';
 
 /**
- * 游戏详情页面组件
- * @returns {JSX.Element} 游戏详情页面组件
+ * Game detail page component
+ * @returns {JSX.Element} Game detail page component
  */
 function GameDetail() {
   const { gameId } = useParams();
@@ -17,10 +17,11 @@ function GameDetail() {
   const [game, setGame] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [iframeHeight, setIframeHeight] = useState('600px');
+  const [iframeHeight, setIframeHeight] = useState('80vh'); // Set default height to 80% of viewport height
   const [activeTab, setActiveTab] = useState('game'); // 'game', 'leaderboard', 'achievements'
+  const [isFullWidth, setIsFullWidth] = useState(false); // State to control full-width display
   
-  // 获取游戏详情
+  // Get game details
   useEffect(() => {
     const fetchGameDetails = async () => {
       try {
@@ -29,8 +30,8 @@ function GameDetail() {
         const gameData = await getGameDetails(gameId);
         setGame(gameData);
       } catch (err) {
-        setError(err.message || '加载游戏数据失败');
-        console.error('加载游戏详情错误:', err);
+        setError(err.message || 'Failed to load game data');
+        console.error('Error loading game details:', err);
       } finally {
         setIsLoading(false);
       }
@@ -39,18 +40,18 @@ function GameDetail() {
     fetchGameDetails();
   }, [gameId, getGameDetails]);
   
-  // 处理窗口大小变化，使iframe响应式
+  // Handle window resize to make iframe responsive
   useEffect(() => {
     const handleResize = () => {
-      // 根据窗口宽度调整iframe高度
+      // Adjust iframe height based on window width
       if (window.innerWidth < 768) {
-        setIframeHeight('400px');
+        setIframeHeight('60vh');
       } else {
-        setIframeHeight('600px');
+        setIframeHeight('80vh');
       }
     };
     
-    handleResize(); // 设置初始高度
+    handleResize(); // Set initial height
     window.addEventListener('resize', handleResize);
     
     return () => {
@@ -67,20 +68,25 @@ function GameDetail() {
       window.open(game.gameUrl, '_blank');
     }
   };
+  
+  // Toggle full-width mode
+  const toggleFullWidth = () => {
+    setIsFullWidth(!isFullWidth);
+  };
 
   return (
-    <div className="game-detail">
+    <div className={`game-detail ${isFullWidth ? 'game-detail--full-width' : ''}`}>
       {isLoading && (
         <div className="game-detail__loading">
           <div className="game-detail__loading-spinner"></div>
-          <p>加载游戏中...</p>
+          <p>Loading game...</p>
         </div>
       )}
       
       {error && (
         <div className="game-detail__error">
           <p>{error}</p>
-          <button onClick={handleBackClick}>返回游戏列表</button>
+          <button onClick={handleBackClick}>Back to Games</button>
         </div>
       )}
       
@@ -88,12 +94,12 @@ function GameDetail() {
         <>
           <div className="game-detail__header">
             <button className="game-detail__back-button" onClick={handleBackClick}>
-              &larr; 返回游戏列表
+              &larr; Back to Games
             </button>
             <h1 className="game-detail__title">{game.name}</h1>
             <div className="game-detail__meta">
-              <span className="game-detail__author">作者: {game.author}</span>
-              <span className="game-detail__date">更新: {game.lastUpdated}</span>
+              <span className="game-detail__author">Author: {game.author}</span>
+              <span className="game-detail__date">Updated: {game.lastUpdated}</span>
             </div>
             <div className="game-detail__tags">
               {game.tags.map((tag, index) => (
@@ -108,24 +114,24 @@ function GameDetail() {
                 className={`game-detail__tab ${activeTab === 'game' ? 'game-detail__tab--active' : ''}`}
                 onClick={() => setActiveTab('game')}
               >
-                游戏
+                Game
               </button>
               <button 
                 className={`game-detail__tab ${activeTab === 'leaderboard' ? 'game-detail__tab--active' : ''}`}
                 onClick={() => setActiveTab('leaderboard')}
               >
-                排行榜
+                Leaderboard
               </button>
               <button 
                 className={`game-detail__tab ${activeTab === 'achievements' ? 'game-detail__tab--active' : ''}`}
                 onClick={() => setActiveTab('achievements')}
               >
-                成就
+                Achievements
               </button>
             </div>
             
             {activeTab === 'game' && (
-              <div className="game-detail__game-container">
+              <div className={`game-detail__game-container ${isFullWidth ? 'game-detail__game-container--full' : ''}`}>
                 <div className="game-detail__game-wrapper">
                   <iframe 
                     src={game.gameUrl} 
@@ -140,42 +146,50 @@ function GameDetail() {
                       className="game-detail__fullscreen-button" 
                       onClick={handleFullscreenClick}
                     >
-                      全屏游戏
+                      Fullscreen
+                    </button>
+                    <button 
+                      className="game-detail__toggle-width-button" 
+                      onClick={toggleFullWidth}
+                    >
+                      {isFullWidth ? 'Default View' : 'Widescreen Mode'}
                     </button>
                   </div>
                 </div>
                 
-                <div className="game-detail__info">
-                  <h2 className="game-detail__section-title">关于此游戏</h2>
-                  <div 
-                    className="game-detail__description"
-                    dangerouslySetInnerHTML={{ __html: game.fullDescription }}
-                  ></div>
-                  
-                  {game.controls && (
-                    <div className="game-detail__controls-info">
-                      <h3 className="game-detail__subsection-title">游戏控制</h3>
-                      <p>{game.controls}</p>
-                    </div>
-                  )}
-                  
-                  {game.screenshots && game.screenshots.length > 0 && (
-                    <div className="game-detail__screenshots">
-                      <h2 className="game-detail__section-title">游戏截图</h2>
-                      <div className="game-detail__screenshots-grid">
-                        {game.screenshots.map((screenshot, index) => (
-                          <div key={index} className="game-detail__screenshot">
-                            <img 
-                              src={screenshot} 
-                              alt={`${game.name} 截图 ${index + 1}`} 
-                              className="game-detail__screenshot-img"
-                            />
-                          </div>
-                        ))}
+                {!isFullWidth && (
+                  <div className="game-detail__info">
+                    <h2 className="game-detail__section-title">About this Game</h2>
+                    <div 
+                      className="game-detail__description"
+                      dangerouslySetInnerHTML={{ __html: game.fullDescription }}
+                    ></div>
+                    
+                    {game.controls && (
+                      <div className="game-detail__controls-info">
+                        <h3 className="game-detail__subsection-title">Game Controls</h3>
+                        <p>{game.controls}</p>
                       </div>
-                    </div>
-                  )}
-                </div>
+                    )}
+                    
+                    {game.screenshots && game.screenshots.length > 0 && (
+                      <div className="game-detail__screenshots">
+                        <h2 className="game-detail__section-title">Screenshots</h2>
+                        <div className="game-detail__screenshots-grid">
+                          {game.screenshots.map((screenshot, index) => (
+                            <div key={index} className="game-detail__screenshot">
+                              <img 
+                                src={screenshot} 
+                                alt={`${game.name} screenshot ${index + 1}`} 
+                                className="game-detail__screenshot-img"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             )}
             
@@ -184,15 +198,15 @@ function GameDetail() {
                 <Leaderboard gameId={gameId} type="global" />
                 
                 <div className="game-detail__leaderboard-info">
-                  <h3>如何上榜?</h3>
-                  <p>在游戏中获得高分后，点击"提交我的分数"按钮提交您的分数到排行榜。</p>
-                  <p>排行榜每小时更新一次。</p>
+                  <h3>How to Get on the Leaderboard?</h3>
+                  <p>After achieving a high score in the game, click the "Submit My Score" button to submit your score to the leaderboard.</p>
+                  <p>Leaderboards are updated hourly.</p>
                   
-                  <h3>排行榜规则</h3>
+                  <h3>Leaderboard Rules</h3>
                   <ul>
-                    <li>每位玩家在全球排行榜中只能有一个最高分记录</li>
-                    <li>作弊分数将被移除</li>
-                    <li>每周排行榜于每周一凌晨重置</li>
+                    <li>Each player can have only one highest score record on the global leaderboard</li>
+                    <li>Cheating scores will be removed</li>
+                    <li>Weekly leaderboards reset every Monday at midnight</li>
                   </ul>
                 </div>
               </div>
@@ -203,9 +217,9 @@ function GameDetail() {
                 <AchievementList gameId={gameId} />
                 
                 <div className="game-detail__achievements-info">
-                  <h3>关于成就</h3>
-                  <p>完成游戏中的特定目标可以解锁成就。解锁所有成就以展示您的游戏技巧！</p>
-                  <p>您的成就进度会自动保存，并在所有设备上同步。</p>
+                  <h3>About Achievements</h3>
+                  <p>Complete specific objectives in the game to unlock achievements. Unlock all achievements to showcase your gaming skills!</p>
+                  <p>Your achievement progress is automatically saved and synchronized across all devices.</p>
                 </div>
               </div>
             )}

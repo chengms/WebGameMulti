@@ -1,50 +1,50 @@
-# WebGameMulti 游戏集成指南
+# WebGameMulti Game Integration Guide
 
-本文档详细说明如何将新游戏集成到 WebGameMulti 平台中。
+This document details how to integrate new games into the WebGameMulti platform.
 
-## 概述
+## Overview
 
-WebGameMulti 平台采用文件夹式的游戏集成方式，每个游戏在 `games/` 目录下有独立的文件夹。平台会自动检测和加载这些游戏，并在主页上展示。
+The WebGameMulti platform uses a folder-based game integration approach, with each game having its own folder in the `games/` directory. The platform automatically detects and loads these games, displaying them on the homepage.
 
-## 游戏集成步骤
+## Game Integration Steps
 
-### 1. 创建游戏目录
+### 1. Create Game Directory
 
-在 `games/` 目录下创建一个新的文件夹，文件夹名称应该是游戏的英文名，使用小写字母和连字符，例如：`snake-game`。
+Create a new folder in the `games/` directory. The folder name should be the English name of the game, using lowercase letters and hyphens, for example: `snake-game`.
 
 ```
 games/
 └── snake-game/
 ```
 
-### 2. 创建必要文件
+### 2. Create Required Files
 
-每个游戏目录必须包含以下文件：
+Each game directory must include the following files:
 
-- `index.html`：游戏主入口文件
-- `meta.json`：游戏元信息文件
-- `image/`：图片资源目录
-  - `cover.png`：游戏封面图（建议尺寸：300x200px）
+- `index.html`: Main game entry file
+- `meta.json`: Game metadata file
+- `image/`: Image resources directory
+  - `cover.png`: Game cover image (recommended size: 300x200px)
 
-其他文件可以根据需要添加，例如：
+Other files can be added as needed, such as:
 
-- `game.js`：游戏主脚本
-- `style.css`：游戏样式
-- 其他资源文件
+- `game.js`: Main game script
+- `style.css`: Game styles
+- Other resource files
 
-### 3. 编写游戏元信息
+### 3. Write Game Metadata
 
-`meta.json` 文件用于描述游戏的基本信息，格式如下：
+The `meta.json` file is used to describe basic game information, in the following format:
 
 ```json
 {
-  "name": "贪吃蛇",
-  "description": "经典贪吃蛇游戏，通过键盘控制蛇的移动，吃到食物后长大，撞到墙壁或自身则游戏结束。",
-  "author": "开发者名称",
+  "name": "Snake",
+  "description": "Classic snake game where you control a snake with keyboard, eat food to grow longer, and lose if you hit walls or yourself.",
+  "author": "Developer Name",
   "version": "1.0.0",
-  "tags": ["益智", "休闲", "经典"],
+  "tags": ["Puzzle", "Casual", "Classic"],
   "thumbnail": "image/cover.png",
-  "controls": "使用方向键控制蛇的移动",
+  "controls": "Use arrow keys to control snake movement",
   "minWidth": 800,
   "minHeight": 600,
   "createdAt": "2023-06-10",
@@ -52,37 +52,37 @@ games/
 }
 ```
 
-| 字段 | 类型 | 必填 | 描述 |
+| Field | Type | Required | Description |
 |------|------|------|------|
-| name | 字符串 | 是 | 游戏名称 |
-| description | 字符串 | 是 | 游戏描述 |
-| author | 字符串 | 否 | 游戏作者 |
-| version | 字符串 | 否 | 游戏版本 |
-| tags | 字符串数组 | 是 | 游戏标签 |
-| thumbnail | 字符串 | 是 | 游戏封面图路径 |
-| controls | 字符串 | 否 | 游戏操作说明 |
-| minWidth | 数字 | 否 | 游戏最小宽度 |
-| minHeight | 数字 | 否 | 游戏最小高度 |
-| createdAt | 字符串 | 否 | 创建日期 |
-| updatedAt | 字符串 | 否 | 更新日期 |
+| name | String | Yes | Game name |
+| description | String | Yes | Game description |
+| author | String | No | Game author |
+| version | String | No | Game version |
+| tags | String Array | Yes | Game tags |
+| thumbnail | String | Yes | Game cover image path |
+| controls | String | No | Game controls description |
+| minWidth | Number | No | Minimum game width |
+| minHeight | Number | No | Minimum game height |
+| createdAt | String | No | Creation date |
+| updatedAt | String | No | Update date |
 
-### 4. 编写游戏入口文件
+### 4. Write Game Entry File
 
-`index.html` 是游戏的主入口文件，应该包含完整的 HTML 结构。例如：
+`index.html` is the main entry file for the game and should contain a complete HTML structure. For example:
 
 ```html
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>贪吃蛇</title>
+  <title>Snake</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="game-container">
     <canvas id="game-canvas"></canvas>
-    <div id="score">分数: 0</div>
+    <div id="score">Score: 0</div>
   </div>
   
   <script src="game.js"></script>
@@ -90,98 +90,98 @@ games/
 </html>
 ```
 
-### 5. 游戏实现注意事项
+### 5. Game Implementation Considerations
 
-#### 资源路径
+#### Resource Paths
 
-游戏内部资源引用应使用相对路径，例如：
+Game internal resource references should use relative paths, for example:
 
 ```html
-<!-- 正确 -->
+<!-- Correct -->
 <img src="image/sprite.png">
 <script src="game.js"></script>
 
-<!-- 错误 -->
+<!-- Incorrect -->
 <img src="/games/snake-game/image/sprite.png">
 ```
 
-#### 游戏尺寸
+#### Game Dimensions
 
-游戏应该能够适应不同尺寸的容器。最好使用响应式设计，或者提供 `minWidth` 和 `minHeight` 参数指定最小尺寸。
+Games should be able to adapt to containers of different sizes. It's best to use responsive design or provide `minWidth` and `minHeight` parameters to specify minimum dimensions.
 
-#### 游戏状态
+#### Game State
 
-游戏应该提供暂停和恢复功能，以便用户离开页面后返回时能继续游戏。
+Games should provide pause and resume functionality so users can continue playing when they return after leaving the page.
 
-#### 全局变量
+#### Global Variables
 
-避免使用全局变量，以防止与平台或其他游戏冲突。建议将游戏逻辑封装在自执行函数或模块中。
+Avoid using global variables to prevent conflicts with the platform or other games. It's recommended to encapsulate game logic in self-executing functions or modules.
 
 ```javascript
-// 推荐
+// Recommended
 (function() {
-  // 游戏代码
+  // Game code
 })();
 
-// 或者使用 ES 模块
+// Or use ES modules
 export default class Game {
-  // 游戏代码
+  // Game code
 }
 ```
 
-### 6. 测试游戏
+### 6. Test the Game
 
-集成完成后，启动平台并测试游戏功能是否正常：
+After integration, start the platform and test that the game functions properly:
 
-1. 游戏能否正常加载
-2. 游戏功能是否正常
-3. 游戏在不同尺寸下的表现
-4. 游戏的错误处理
+1. Can the game load normally
+2. Are game functions working properly
+3. How the game performs at different sizes
+4. Game error handling
 
-## 高级集成选项
+## Advanced Integration Options
 
-### 游戏通信
+### Game Communication
 
-如果游戏需要与平台通信（例如保存分数、获取用户信息等），可以通过 `window.parent.postMessage` 进行：
+If the game needs to communicate with the platform (e.g., save scores, get user information), it can do so through `window.parent.postMessage`:
 
 ```javascript
-// 游戏内发送消息到平台
+// Send message from game to platform
 window.parent.postMessage({
   type: 'SCORE_UPDATE',
   score: 100
 }, '*');
 
-// 监听平台消息
+// Listen for platform messages
 window.addEventListener('message', function(event) {
   if (event.data.type === 'PAUSE_GAME') {
-    // 暂停游戏
+    // Pause game
   }
 });
 ```
 
-### 游戏打包
+### Game Bundling
 
-对于复杂的游戏，建议使用打包工具（如 webpack、rollup 等）将游戏打包成单文件或少量文件，然后集成到平台中。
+For complex games, it's recommended to use bundling tools (such as webpack, rollup, etc.) to package the game into a single file or a few files, then integrate it into the platform.
 
-## 常见问题
+## Common Issues
 
-### 1. 游戏不显示在主页上
+### 1. Game Not Showing on Homepage
 
-- 检查 `meta.json` 文件格式是否正确
-- 确保游戏目录结构符合规范
-- 查看控制台是否有错误信息
+- Check if the `meta.json` file format is correct
+- Ensure the game directory structure follows the guidelines
+- Check the console for error messages
 
-### 2. 游戏加载出错
+### 2. Game Loading Errors
 
-- 检查资源路径是否正确
-- 确保所有资源都可以正常加载
-- 查看控制台错误信息
+- Check if resource paths are correct
+- Ensure all resources can load normally
+- Check console error messages
 
-### 3. 游戏与平台样式冲突
+### 3. Game Style Conflicts with Platform
 
-- 使用游戏特定的 CSS 类名，避免与平台样式冲突
-- 考虑在游戏中使用 CSS 重置或隔离样式
+- Use game-specific CSS class names to avoid conflicts with platform styles
+- Consider using CSS reset or isolating styles in the game
 
-## 示例游戏
+## Example Game
 
-参考 `games/example-game/` 目录，其中包含一个完整的示例游戏，可以作为开发新游戏的参考。 
+Refer to the `games/example-game/` directory, which contains a complete example game that can be used as a reference for developing new games. 

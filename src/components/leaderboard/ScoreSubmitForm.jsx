@@ -3,13 +3,13 @@ import { submitScore } from '../../utils/leaderboardService';
 import './ScoreSubmitForm.css';
 
 /**
- * 分数提交表单组件
- * @param {Object} props - 组件属性
- * @param {string} props.gameId - 游戏ID
- * @param {number} props.score - 游戏分数
- * @param {Function} props.onSubmitSuccess - 提交成功回调
- * @param {Function} props.onCancel - 取消提交回调
- * @returns {JSX.Element} 分数提交表单组件
+ * Score submission form component
+ * @param {Object} props - Component props
+ * @param {string} props.gameId - Game ID
+ * @param {number} props.score - Game score
+ * @param {Function} props.onSubmitSuccess - Submit success callback
+ * @param {Function} props.onCancel - Cancel submission callback
+ * @returns {JSX.Element} Score submission form component
  */
 function ScoreSubmitForm({ gameId, score, onSubmitSuccess, onCancel }) {
   const [playerName, setPlayerName] = useState('');
@@ -20,7 +20,7 @@ function ScoreSubmitForm({ gameId, score, onSubmitSuccess, onCancel }) {
     e.preventDefault();
     
     if (!playerName.trim()) {
-      setError('请输入玩家名称');
+      setError('Please enter a player name');
       return;
     }
     
@@ -39,8 +39,8 @@ function ScoreSubmitForm({ gameId, score, onSubmitSuccess, onCancel }) {
         }
       }
     } catch (err) {
-      setError(err.message || '提交分数失败，请重试');
-      console.error('提交分数失败:', err);
+      setError(err.message || 'Failed to submit score, please try again');
+      console.error('Failed to submit score:', err);
     } finally {
       setIsSubmitting(false);
     }
@@ -49,11 +49,11 @@ function ScoreSubmitForm({ gameId, score, onSubmitSuccess, onCancel }) {
   return (
     <div className="score-form">
       <div className="score-form__header">
-        <h3 className="score-form__title">提交您的分数</h3>
+        <h3 className="score-form__title">Submit Your Score</h3>
         <button 
           className="score-form__close-button" 
           onClick={onCancel}
-          aria-label="关闭"
+          aria-label="Close"
         >
           ×
         </button>
@@ -61,14 +61,14 @@ function ScoreSubmitForm({ gameId, score, onSubmitSuccess, onCancel }) {
       
       <div className="score-form__content">
         <div className="score-form__score-display">
-          <span className="score-form__score-label">您的分数:</span>
+          <span className="score-form__score-label">Your Score:</span>
           <span className="score-form__score-value">{score}</span>
         </div>
         
         <form onSubmit={handleSubmit} className="score-form__form">
           <div className="score-form__field">
             <label htmlFor="playerName" className="score-form__label">
-              玩家名称:
+              Player Name:
             </label>
             <input
               id="playerName"
@@ -76,7 +76,7 @@ function ScoreSubmitForm({ gameId, score, onSubmitSuccess, onCancel }) {
               className="score-form__input"
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
-              placeholder="输入您的名称"
+              placeholder="Enter your name"
               disabled={isSubmitting}
               maxLength={20}
               required
@@ -96,14 +96,14 @@ function ScoreSubmitForm({ gameId, score, onSubmitSuccess, onCancel }) {
               onClick={onCancel}
               disabled={isSubmitting}
             >
-              取消
+              Cancel
             </button>
             <button
               type="submit"
               className="score-form__submit-button"
               disabled={isSubmitting}
             >
-              {isSubmitting ? '提交中...' : '提交分数'}
+              {isSubmitting ? 'Submitting...' : 'Submit Score'}
             </button>
           </div>
         </form>

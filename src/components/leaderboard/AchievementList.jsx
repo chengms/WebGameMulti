@@ -4,10 +4,10 @@ import Achievement from './Achievement';
 import './AchievementList.css';
 
 /**
- * 成就列表组件
- * @param {Object} props - 组件属性
- * @param {string} props.gameId - 游戏ID
- * @returns {JSX.Element} 成就列表组件
+ * Achievement list component
+ * @param {Object} props - Component props
+ * @param {string} props.gameId - Game ID
+ * @returns {JSX.Element} Achievement list component
  */
 function AchievementList({ gameId }) {
   const [achievements, setAchievements] = useState([]);
@@ -21,12 +21,12 @@ function AchievementList({ gameId }) {
         setLoading(true);
         setError(null);
         
-        // 获取成就列表及状态
+        // Get achievements list and status
         const achievementsData = getAchievementsWithStatus(gameId);
         setAchievements(achievementsData);
       } catch (err) {
-        setError('无法加载成就数据');
-        console.error('加载成就失败:', err);
+        setError('Unable to load achievement data');
+        console.error('Failed to load achievements:', err);
       } finally {
         setLoading(false);
       }
@@ -34,7 +34,7 @@ function AchievementList({ gameId }) {
     
     loadAchievements();
     
-    // 每30秒刷新一次成就状态
+    // Refresh achievement status every 30 seconds
     const refreshInterval = setInterval(loadAchievements, 30000);
     
     return () => {
@@ -42,7 +42,7 @@ function AchievementList({ gameId }) {
     };
   }, [gameId]);
   
-  // 根据筛选条件过滤成就
+  // Filter achievements based on criteria
   const filteredAchievements = achievements.filter(achievement => {
     if (filter === 'all') return true;
     if (filter === 'unlocked') return achievement.unlocked;
@@ -50,7 +50,7 @@ function AchievementList({ gameId }) {
     return true;
   });
   
-  // 计算成就解锁进度
+  // Calculate achievement unlock progress
   const unlockedCount = achievements.filter(a => a.unlocked).length;
   const totalCount = achievements.length;
   const progressPercentage = totalCount > 0 ? (unlockedCount / totalCount) * 100 : 0;
@@ -58,7 +58,7 @@ function AchievementList({ gameId }) {
   return (
     <div className="achievement-list">
       <div className="achievement-list__header">
-        <h3 className="achievement-list__title">游戏成就</h3>
+        <h3 className="achievement-list__title">Game Achievements</h3>
         
         <div className="achievement-list__progress">
           <div className="achievement-list__progress-bar">
@@ -77,19 +77,19 @@ function AchievementList({ gameId }) {
             className={`achievement-list__filter ${filter === 'all' ? 'achievement-list__filter--active' : ''}`}
             onClick={() => setFilter('all')}
           >
-            全部
+            All
           </button>
           <button 
             className={`achievement-list__filter ${filter === 'unlocked' ? 'achievement-list__filter--active' : ''}`}
             onClick={() => setFilter('unlocked')}
           >
-            已解锁
+            Unlocked
           </button>
           <button 
             className={`achievement-list__filter ${filter === 'locked' ? 'achievement-list__filter--active' : ''}`}
             onClick={() => setFilter('locked')}
           >
-            未解锁
+            Locked
           </button>
         </div>
       </div>
@@ -97,20 +97,20 @@ function AchievementList({ gameId }) {
       {loading && (
         <div className="achievement-list__loading">
           <div className="achievement-list__spinner"></div>
-          <p>加载成就数据...</p>
+          <p>Loading achievement data...</p>
         </div>
       )}
       
       {error && (
         <div className="achievement-list__error">
           <p>{error}</p>
-          <button onClick={() => window.location.reload()}>重试</button>
+          <button onClick={() => window.location.reload()}>Retry</button>
         </div>
       )}
       
       {!loading && !error && filteredAchievements.length === 0 && (
         <div className="achievement-list__empty">
-          <p>没有找到符合条件的成就</p>
+          <p>No achievements found matching the criteria</p>
         </div>
       )}
       

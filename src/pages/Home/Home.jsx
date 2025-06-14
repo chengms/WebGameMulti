@@ -12,7 +12,7 @@ function Home() {
   const { filteredGames, loading, error } = useGames();
   const navigate = useNavigate();
   
-  // 添加调试代码
+  // Add debug code
   useEffect(() => {
     console.log('Home component - filteredGames:', filteredGames);
     console.log('Home component - loading:', loading);

@@ -85,9 +85,11 @@
   border-top: 1px solid #e9ecef;
   display: flex;
   justify-content: center;
+  gap: 10px;
 }
 
-.game-detail__fullscreen-button {
+.game-detail__fullscreen-button,
+.game-detail__toggle-width-button {
   background-color: #3498db;
   color: white;
   border: none;
@@ -99,8 +101,17 @@
   transition: background-color 0.2s ease;
 }
 
-.game-detail__fullscreen-button:hover {
+.game-detail__fullscreen-button:hover,
+.game-detail__toggle-width-button:hover {
   background-color: #2980b9;
+}
+
+.game-detail__toggle-width-button {
+  background-color: #27ae60;
+}
+
+.game-detail__toggle-width-button:hover {
+  background-color: #219653;
 }
 
 .game-detail__info {
@@ -331,10 +342,36 @@
   color: #666;
 }
 
-/* Responsive styles */
+/* 添加全宽模式样式 */
+.game-detail--full-width {
+  padding: 0;
+}
+
+.game-detail--full-width .game-detail__header,
+.game-detail--full-width .game-detail__tabs {
+  padding: 0 20px;
+}
+
+.game-detail__game-container--full {
+  grid-template-columns: 1fr !important;
+  gap: 0;
+}
+
+.game-detail__game-container--full .game-detail__game-wrapper {
+  width: 100%;
+  border-radius: 0;
+}
+
+.game-detail__game-container--full .game-detail__iframe {
+  height: 85vh !important;
+  max-height: calc(100vh - 150px);
+}
+
+/* 响应式调整 */
 @media (max-width: 992px) {
   .game-detail__game-container {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
   
   .game-detail__info {
@@ -360,6 +397,10 @@
     padding: 10px 15px;
     font-size: 0.9rem;
   }
+  
+  .game-detail__game-container--full .game-detail__iframe {
+    height: 70vh !important;
+  }
 }
 
 @media (max-width: 576px) {
@@ -373,6 +414,15 @@
     font-size: 0.8rem;
     flex: 1;
     text-align: center;
+  }
+  
+  .game-detail__controls {
+    flex-direction: column;
+  }
+  
+  .game-detail__fullscreen-button,
+  .game-detail__toggle-width-button {
+    width: 100%;
   }
 }
 

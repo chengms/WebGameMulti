@@ -631,6 +631,11 @@
                 clearInterval(gameInterval);
                 gameInterval = null;
                 isGameOver = true;
+                isPaused = true;
+                
+                // 更新暂停按钮文本
+                pauseButton.textContent = 'Pause';
+                pauseButton.disabled = true; // 禁用暂停按钮
                 
                 finalScoreDisplay.textContent = score;
                 gameOverDisplay.style.display = 'block';
@@ -666,6 +671,10 @@
                     clearInterval(gameInterval);
                     gameInterval = null;
                 }
+                
+                // 重新启用暂停按钮
+                pauseButton.disabled = false;
+                
                 initGame();
             }
             
@@ -693,7 +702,7 @@
                     }
                 }
                 
-                if (e.key === 'p') {
+                if (e.key === 'p' && !isGameOver) {
                     togglePause();
                 }
             }
@@ -702,7 +711,11 @@
             document.addEventListener('keydown', handleKeyPress);
             
             startButton.addEventListener('click', startGame);
-            pauseButton.addEventListener('click', togglePause);
+            pauseButton.addEventListener('click', () => {
+                if (!isGameOver) {
+                    togglePause();
+                }
+            });
             resetButton.addEventListener('click', resetGame);
             playAgainButton.addEventListener('click', resetGame);
             

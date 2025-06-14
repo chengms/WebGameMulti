@@ -18,15 +18,6 @@ export const loadGames = async () => {
     // Get games data (in a production app, this would be loaded dynamically from the server)
     const games = [
       {
-        id: 'example-game',
-        name: 'Example Game',
-        description: 'This is an example game that demonstrates how to integrate games into the WebGameMulti platform.',
-        thumbnail: '/games/example-game/image/cover.png',
-        tags: ['Example', 'Tutorial'],
-        author: 'WebGameMulti Team',
-        createdAt: '2023-06-10'
-      },
-      {
         id: 'snake',
         name: 'Snake',
         description: 'Classic snake game. Control the snake using arrow keys, eat food to grow longer, and avoid hitting walls or yourself.',
@@ -96,31 +87,6 @@ export const loadGameDetails = async (gameId) => {
     
     // Sample game details (in a real app, this would come from the server)
     const gameDetails = {
-      'example-game': {
-        id: 'example-game',
-        name: 'Example Game',
-        description: 'This is an example game that demonstrates how to integrate games into the WebGameMulti platform.',
-        fullDescription: `<p>This example game demonstrates the integration process with WebGameMulti platform. It shows how to:</p>
-          <ul>
-            <li>Structure your game files</li>
-            <li>Create game metadata</li>
-            <li>Handle communications with the platform</li>
-            <li>Implement responsive design</li>
-          </ul>
-          <p>Use this as a starting point for your own game development.</p>`,
-        thumbnail: '/games/example-game/image/cover.png',
-        screenshots: [
-          '/games/example-game/image/screen1.png',
-          '/games/example-game/image/screen2.png'
-        ],
-        tags: ['Example', 'Tutorial'],
-        author: 'WebGameMulti Team',
-        version: '1.0.0',
-        controls: 'Click buttons to interact',
-        createdAt: '2023-06-10',
-        lastUpdated: '2023-06-10',
-        gameUrl: '/games/example-game/index.html'
-      },
       'snake': {
         id: 'snake',
         name: 'Snake',

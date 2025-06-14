@@ -112,8 +112,6 @@
         
         .tile {
             position: absolute;
-            width: 100%;
-            height: 100%;
             border-radius: 5px;
             display: flex;
             justify-content: center;
@@ -403,11 +401,21 @@
                 tile.className = `tile tile-${value}`;
                 tile.textContent = value;
                 
-                // Position the tile
-                tile.style.top = `${row * 25}%`;
-                tile.style.left = `${col * 25}%`;
-                tile.style.width = '25%';
-                tile.style.height = '25%';
+                // 获取网格容器的尺寸
+                const gridRect = grid.getBoundingClientRect();
+                const cellSize = gridRect.width / 4; // 每个单元格的实际宽度
+                
+                // 计算单元格的位置
+                const cells = document.querySelectorAll('.cell');
+                const cellIndex = row * 4 + col;
+                const cell = cells[cellIndex];
+                const cellRect = cell.getBoundingClientRect();
+                
+                // 设置tile的尺寸和位置，使其与cell完全匹配
+                tile.style.width = `${cellRect.width}px`;
+                tile.style.height = `${cellRect.height}px`;
+                tile.style.top = `${cellRect.top - gridRect.top}px`;
+                tile.style.left = `${cellRect.left - gridRect.left}px`;
                 
                 grid.appendChild(tile);
             }
@@ -681,6 +689,9 @@
                     }
                 }
             }
+            
+            // 窗口大小改变时重新渲染
+            window.addEventListener('resize', renderBoard);
             
             // Initialize the game
             initGame();

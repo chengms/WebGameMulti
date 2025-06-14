@@ -2,16 +2,16 @@ import React from 'react';
 import './Achievement.css';
 
 /**
- * 游戏成就组件
- * @param {Object} props - 组件属性
- * @param {Object} props.achievement - 成就对象
- * @param {string} props.achievement.id - 成就ID
- * @param {string} props.achievement.title - 成就标题
- * @param {string} props.achievement.description - 成就描述
- * @param {string} props.achievement.icon - 成就图标
- * @param {boolean} props.achievement.unlocked - 是否已解锁
- * @param {number} props.achievement.progress - 完成进度 (0-100)
- * @returns {JSX.Element} 成就组件
+ * Game achievement component
+ * @param {Object} props - Component props
+ * @param {Object} props.achievement - Achievement object
+ * @param {string} props.achievement.id - Achievement ID
+ * @param {string} props.achievement.title - Achievement title
+ * @param {string} props.achievement.description - Achievement description
+ * @param {string} props.achievement.icon - Achievement icon
+ * @param {boolean} props.achievement.unlocked - Whether it's unlocked
+ * @param {number} props.achievement.progress - Completion progress (0-100)
+ * @returns {JSX.Element} Achievement component
  */
 function Achievement({ achievement }) {
   const { title, description, icon, unlocked, progress = 0 } = achievement;
@@ -45,9 +45,9 @@ function Achievement({ achievement }) {
       
       <div className="achievement__status">
         {unlocked ? (
-          <span className="achievement__unlocked-badge">已解锁</span>
+          <span className="achievement__unlocked-badge">Unlocked</span>
         ) : (
-          <span className="achievement__locked-badge">未解锁</span>
+          <span className="achievement__locked-badge">Locked</span>
         )}
       </div>
     </div>

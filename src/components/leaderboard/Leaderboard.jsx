@@ -3,11 +3,11 @@ import { getLeaderboard } from '../../utils/leaderboardService';
 import './Leaderboard.css';
 
 /**
- * 游戏排行榜组件
- * @param {Object} props - 组件属性
- * @param {string} props.gameId - 游戏ID
- * @param {string} props.type - 排行榜类型 ('global', 'friends', 'weekly')
- * @returns {JSX.Element} 排行榜组件
+ * Game leaderboard component
+ * @param {Object} props - Component props
+ * @param {string} props.gameId - Game ID
+ * @param {string} props.type - Leaderboard type ('global', 'friends', 'weekly')
+ * @returns {JSX.Element} Leaderboard component
  */
 function Leaderboard({ gameId, type = 'global' }) {
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -22,8 +22,8 @@ function Leaderboard({ gameId, type = 'global' }) {
         const data = await getLeaderboard(gameId, type);
         setLeaderboardData(data);
       } catch (err) {
-        setError('无法加载排行榜数据');
-        console.error('加载排行榜失败:', err);
+        setError('Unable to load leaderboard data');
+        console.error('Failed to load leaderboard:', err);
       } finally {
         setLoading(false);
       }
@@ -47,20 +47,20 @@ function Leaderboard({ gameId, type = 'global' }) {
     <div className="leaderboard">
       <div className="leaderboard__header">
         <h3 className="leaderboard__title">
-          {type === 'global' && '全球排行榜'}
-          {type === 'friends' && '好友排行榜'}
-          {type === 'weekly' && '每周排行榜'}
+          {type === 'global' && 'Global Leaderboard'}
+          {type === 'friends' && 'Friends Leaderboard'}
+          {type === 'weekly' && 'Weekly Leaderboard'}
         </h3>
         
         <div className="leaderboard__tabs">
           <button className={`leaderboard__tab ${type === 'global' ? 'leaderboard__tab--active' : ''}`}>
-            全球
+            Global
           </button>
           <button className={`leaderboard__tab ${type === 'friends' ? 'leaderboard__tab--active' : ''}`}>
-            好友
+            Friends
           </button>
           <button className={`leaderboard__tab ${type === 'weekly' ? 'leaderboard__tab--active' : ''}`}>
-            每周
+            Weekly
           </button>
         </div>
       </div>
@@ -68,20 +68,20 @@ function Leaderboard({ gameId, type = 'global' }) {
       {loading && (
         <div className="leaderboard__loading">
           <div className="leaderboard__spinner"></div>
-          <p>加载排行榜数据...</p>
+          <p>Loading leaderboard data...</p>
         </div>
       )}
       
       {error && (
         <div className="leaderboard__error">
           <p>{error}</p>
-          <button onClick={() => window.location.reload()}>重试</button>
+          <button onClick={() => window.location.reload()}>Retry</button>
         </div>
       )}
       
       {!loading && !error && leaderboardData.length === 0 && (
         <div className="leaderboard__empty">
-          <p>暂无排行数据</p>
+          <p>No leaderboard data available</p>
         </div>
       )}
       
@@ -89,10 +89,10 @@ function Leaderboard({ gameId, type = 'global' }) {
         <table className="leaderboard__table">
           <thead>
             <tr>
-              <th className="leaderboard__header-cell leaderboard__header-cell--rank">排名</th>
-              <th className="leaderboard__header-cell leaderboard__header-cell--player">玩家</th>
-              <th className="leaderboard__header-cell leaderboard__header-cell--score">得分</th>
-              <th className="leaderboard__header-cell leaderboard__header-cell--date">日期</th>
+              <th className="leaderboard__header-cell leaderboard__header-cell--rank">Rank</th>
+              <th className="leaderboard__header-cell leaderboard__header-cell--player">Player</th>
+              <th className="leaderboard__header-cell leaderboard__header-cell--score">Score</th>
+              <th className="leaderboard__header-cell leaderboard__header-cell--date">Date</th>
             </tr>
           </thead>
           <tbody>
@@ -127,7 +127,7 @@ function Leaderboard({ gameId, type = 'global' }) {
       
       {!loading && !error && (
         <div className="leaderboard__actions">
-          <button className="leaderboard__submit-button">提交我的分数</button>
+          <button className="leaderboard__submit-button">Submit My Score</button>
         </div>
       )}
     </div>

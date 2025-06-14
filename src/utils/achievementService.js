@@ -1,44 +1,44 @@
 /**
- * 成就服务
- * 提供游戏成就相关的功能
+ * Achievement Service
+ * Provides game achievement related functionality
  */
 
 /**
- * 获取游戏的所有成就
- * @param {string} gameId - 游戏ID
- * @returns {Promise<Array>} 成就数组
+ * Get all achievements for a game
+ * @param {string} gameId - Game ID
+ * @returns {Promise<Array>} Achievement array
  */
 export const getAchievements = async (gameId) => {
   try {
-    // 模拟网络延迟
+    // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 800));
     
-    // 在实际应用中，这里应该是API调用
-    // 目前使用模拟数据
+    // In a real application, this would be an API call
+    // Currently using mock data
     const achievements = getGameAchievements(gameId);
     
     return achievements;
   } catch (error) {
-    console.error('获取成就失败:', error);
-    throw new Error('获取成就数据失败');
+    console.error('Failed to get achievements:', error);
+    throw new Error('Failed to get achievement data');
   }
 };
 
 /**
- * 解锁一个成就
- * @param {string} gameId - 游戏ID
- * @param {string} achievementId - 成就ID
- * @returns {Promise<Object>} 解锁结果
+ * Unlock an achievement
+ * @param {string} gameId - Game ID
+ * @param {string} achievementId - Achievement ID
+ * @returns {Promise<Object>} Unlock result
  */
 export const unlockAchievement = async (gameId, achievementId) => {
   try {
-    // 模拟网络延迟
+    // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 600));
     
-    // 在实际应用中，这里应该是API调用
-    // 目前只是保存到本地存储
+    // In a real application, this would be an API call
+    // Currently just saving to local storage
     
-    // 获取当前已解锁的成就
+    // Get currently unlocked achievements
     const storageKey = `webgamemulti_achievements_${gameId}`;
     let unlockedAchievements = {};
     
@@ -48,49 +48,49 @@ export const unlockAchievement = async (gameId, achievementId) => {
         unlockedAchievements = JSON.parse(savedData);
       }
     } catch (err) {
-      console.error('读取已解锁成就失败:', err);
+      console.error('Failed to read unlocked achievements:', err);
     }
     
-    // 更新解锁状态
+    // Update unlock status
     unlockedAchievements[achievementId] = {
       unlockedAt: new Date().toISOString()
     };
     
-    // 保存到本地存储
+    // Save to local storage
     localStorage.setItem(storageKey, JSON.stringify(unlockedAchievements));
     
     return {
       success: true,
-      message: '成就已解锁',
+      message: 'Achievement unlocked',
       achievementId
     };
   } catch (error) {
-    console.error('解锁成就失败:', error);
-    throw new Error('解锁成就失败');
+    console.error('Failed to unlock achievement:', error);
+    throw new Error('Failed to unlock achievement');
   }
 };
 
 /**
- * 更新成就进度
- * @param {string} gameId - 游戏ID
- * @param {string} achievementId - 成就ID
- * @param {number} progress - 成就进度 (0-100)
- * @returns {Promise<Object>} 更新结果
+ * Update achievement progress
+ * @param {string} gameId - Game ID
+ * @param {string} achievementId - Achievement ID
+ * @param {number} progress - Achievement progress (0-100)
+ * @returns {Promise<Object>} Update result
  */
 export const updateAchievementProgress = async (gameId, achievementId, progress) => {
   try {
-    // 模拟网络延迟
+    // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 500));
     
-    // 验证进度值
+    // Validate progress value
     if (progress < 0 || progress > 100) {
-      throw new Error('进度值必须在0-100之间');
+      throw new Error('Progress value must be between 0-100');
     }
     
-    // 在实际应用中，这里应该是API调用
-    // 目前只是保存到本地存储
+    // In a real application, this would be an API call
+    // Currently just saving to local storage
     
-    // 获取当前成就进度
+    // Get current achievement progress
     const storageKey = `webgamemulti_achievement_progress_${gameId}`;
     let achievementProgress = {};
     
@@ -100,37 +100,37 @@ export const updateAchievementProgress = async (gameId, achievementId, progress)
         achievementProgress = JSON.parse(savedData);
       }
     } catch (err) {
-      console.error('读取成就进度失败:', err);
+      console.error('Failed to read achievement progress:', err);
     }
     
-    // 更新进度
+    // Update progress
     achievementProgress[achievementId] = progress;
     
-    // 保存到本地存储
+    // Save to local storage
     localStorage.setItem(storageKey, JSON.stringify(achievementProgress));
     
-    // 如果进度达到100%，自动解锁成就
+    // If progress reaches 100%, automatically unlock achievement
     if (progress >= 100) {
       await unlockAchievement(gameId, achievementId);
     }
     
     return {
       success: true,
-      message: '成就进度已更新',
+      message: 'Achievement progress updated',
       gameId,
       achievementId,
       progress
     };
   } catch (error) {
-    console.error('更新成就进度失败:', error);
-    throw new Error(error.message || '更新成就进度失败');
+    console.error('Failed to update achievement progress:', error);
+    throw new Error(error.message || 'Failed to update achievement progress');
   }
 };
 
 /**
- * 获取游戏的已解锁成就
- * @param {string} gameId - 游戏ID
- * @returns {Object} 已解锁成就对象
+ * Get unlocked achievements for a game
+ * @param {string} gameId - Game ID
+ * @returns {Object} Unlocked achievements object
  */
 export const getUnlockedAchievements = (gameId) => {
   try {
@@ -143,15 +143,15 @@ export const getUnlockedAchievements = (gameId) => {
     
     return {};
   } catch (error) {
-    console.error('获取已解锁成就失败:', error);
+    console.error('Failed to get unlocked achievements:', error);
     return {};
   }
 };
 
 /**
- * 获取游戏的成就进度
- * @param {string} gameId - 游戏ID
- * @returns {Object} 成就进度对象
+ * Get achievement progress for a game
+ * @param {string} gameId - Game ID
+ * @returns {Object} Achievement progress object
  */
 export const getAchievementProgress = (gameId) => {
   try {
@@ -164,27 +164,27 @@ export const getAchievementProgress = (gameId) => {
     
     return {};
   } catch (error) {
-    console.error('获取成就进度失败:', error);
+    console.error('Failed to get achievement progress:', error);
     return {};
   }
 };
 
 /**
- * 获取游戏的所有成就，包括解锁状态和进度
- * @param {string} gameId - 游戏ID
- * @returns {Array} 包含解锁状态和进度的成就数组
+ * Get all achievements for a game, including unlock status and progress
+ * @param {string} gameId - Game ID
+ * @returns {Array} Achievement array with unlock status and progress
  */
 export const getAchievementsWithStatus = (gameId) => {
-  // 获取游戏的所有成就
+  // Get all achievements for the game
   const achievements = getGameAchievements(gameId);
   
-  // 获取已解锁的成就
+  // Get unlocked achievements
   const unlockedAchievements = getUnlockedAchievements(gameId);
   
-  // 获取成就进度
+  // Get achievement progress
   const achievementProgress = getAchievementProgress(gameId);
   
-  // 合并数据
+  // Merge data
   return achievements.map(achievement => {
     const isUnlocked = !!unlockedAchievements[achievement.id];
     const progress = achievementProgress[achievement.id] || 0;
@@ -198,88 +198,74 @@ export const getAchievementsWithStatus = (gameId) => {
 };
 
 /**
- * 获取游戏的所有成就定义
- * @param {string} gameId - 游戏ID
- * @returns {Array} 成就数组
+ * Get all achievement definitions for a game
+ * @param {string} gameId - Game ID
+ * @returns {Array} Achievement array
  */
 const getGameAchievements = (gameId) => {
-  // 每个游戏的成就定义
+  // Achievement definitions for each game
   const gameAchievements = {
     'snake': [
       {
         id: 'snake_beginner',
-        title: '新手蛇道',
-        description: '第一次玩蛇类游戏',
+        title: 'Snake Beginner',
+        description: 'Play Snake for the first time',
         icon: null
       },
       {
         id: 'snake_score_100',
-        title: '小有成就',
-        description: '获得100分',
+        title: 'Small Achievement',
+        description: 'Score 100 points',
         icon: null
       },
       {
         id: 'snake_score_500',
-        title: '蛇神在世',
-        description: '获得500分',
+        title: 'Snake Master',
+        description: 'Score 500 points',
         icon: null
       },
       {
         id: 'snake_score_1000',
-        title: '蛇坛传说',
-        description: '获得1000分',
+        title: 'Snake Legend',
+        description: 'Score 1000 points',
         icon: null
       },
       {
         id: 'snake_games_10',
-        title: '热爱游戏',
-        description: '玩10局游戏',
+        title: 'Game Enthusiast',
+        description: 'Play 10 games',
         icon: null
       }
     ],
     'memory-match': [
       {
         id: 'memory_beginner',
-        title: '记忆新手',
-        description: '完成第一局记忆匹配游戏',
+        title: 'Memory Novice',
+        description: 'Complete your first memory match game',
         icon: null
       },
       {
         id: 'memory_perfect',
-        title: '完美记忆',
-        description: '无错误完成一局游戏',
-        icon: null
-      },
-      {
-        id: 'memory_hard',
-        title: '硬核玩家',
-        description: '完成一局困难模式',
+        title: 'Perfect Memory',
+        description: 'Complete a game without any errors',
         icon: null
       },
       {
         id: 'memory_speed',
-        title: '闪电记忆',
-        description: '在30秒内完成一局游戏',
+        title: 'Speed Matcher',
+        description: 'Complete a game in under 30 seconds',
+        icon: null
+      },
+      {
+        id: 'memory_hard',
+        title: 'Challenge Accepted',
+        description: 'Complete a game on hard difficulty',
         icon: null
       },
       {
         id: 'memory_games_5',
-        title: '记忆大师',
-        description: '完成5局游戏',
-        icon: null
-      }
-    ],
-    'example-game': [
-      {
-        id: 'example_play',
-        title: '尝鲜者',
-        description: '玩示例游戏',
-        icon: null
-      },
-      {
-        id: 'example_score',
-        title: '有才之人',
-        description: '在示例游戏中获得分数',
+        title: 'Memory Addict',
+        description: 'Play 5 games',
         icon: null
       }
     ]
