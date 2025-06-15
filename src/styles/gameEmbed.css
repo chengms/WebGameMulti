@@ -1,0 +1,61 @@
+/**
+ * Game Embed Styles
+ * These styles are applied to the game iframe container to ensure proper display
+ */
+
+.game-embed-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.game-embed-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ensure iframe content is centered */
+.game-embed-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0 auto;
+  border: none;
+  display: block;
+  background-color: #000;
+}
+
+/* 移除旋转，确保游戏始终以原始方向显示 */
+@media (orientation: portrait) {
+  .game-embed-wrapper {
+    transform: none;
+    transform-origin: center center;
+  }
+  
+  .game-embed-wrapper iframe {
+    transform: none;
+    transform-origin: center center;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .game-embed-container {
+    height: 70vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-embed-container {
+    height: 60vh;
+  }
+} 

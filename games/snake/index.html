@@ -12,14 +12,25 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      background-color: #f0f0f0;
+      background-color: #000;
       height: 100vh;
       overflow: hidden;
+      color: white;
+    }
+    
+    h1 {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      color: #4CAF50;
+      font-size: 28px;
     }
     
     .game-container {
-      margin-top: 20px;
       position: relative;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     
     #game-board {
@@ -27,16 +38,18 @@
       border: 5px solid #333;
       border-radius: 5px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      max-width: 100%;
+      max-height: 80vh;
     }
     
     .score-container {
       display: flex;
       justify-content: space-between;
-      width: 300px;
+      width: 500px;
       margin-bottom: 10px;
-      font-size: 20px;
+      font-size: 24px;
       font-weight: bold;
-      color: #333;
+      color: #fff;
     }
     
     .game-over {
@@ -44,28 +57,32 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(0, 0, 0, 0.9);
       color: white;
-      padding: 20px;
+      padding: 30px;
       border-radius: 10px;
       text-align: center;
       display: none;
+      border: 2px solid #4CAF50;
+      min-width: 300px;
     }
     
     .game-over h2 {
       margin-top: 0;
-      font-size: 24px;
+      font-size: 32px;
+      color: #FF5722;
     }
     
     .game-over button {
       background-color: #4CAF50;
       color: white;
       border: none;
-      padding: 10px 20px;
-      margin-top: 10px;
+      padding: 12px 24px;
+      margin-top: 15px;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 18px;
+      transition: background-color 0.3s;
     }
     
     .game-over button:hover {
@@ -73,13 +90,14 @@
     }
     
     .controls {
-      margin-top: 20px;
+      margin-top: 15px;
       text-align: center;
+      color: #aaa;
     }
     
     .controls p {
       margin: 5px 0;
-      color: #555;
+      font-size: 16px;
     }
   </style>
 </head>
@@ -92,7 +110,7 @@
   </div>
   
   <div class="game-container">
-    <canvas id="game-board" width="300" height="300"></canvas>
+    <canvas id="game-board" width="500" height="500"></canvas>
     
     <div class="game-over" id="game-over">
       <h2>Game Over!</h2>
@@ -108,8 +126,8 @@
   
   <script>
     // Game settings
-    const GRID_SIZE = 15;
-    const CELL_SIZE = 20;
+    const GRID_SIZE = 20; // 增加网格大小
+    const CELL_SIZE = 25; // 增加单元格大小
     const INITIAL_SPEED = 150; // Milliseconds between moves
     const SPEED_INCREASE = 5; // Milliseconds to decrease per food eaten
     const MIN_SPEED = 50; // Minimum speed (maximum difficulty)
@@ -136,6 +154,10 @@
       canvas = document.getElementById('game-board');
       ctx = canvas.getContext('2d');
       
+      // Adjust canvas size based on window size
+      adjustCanvasSize();
+      window.addEventListener('resize', adjustCanvasSize);
+      
       // Load high score from local storage
       highScore = localStorage.getItem('snakeHighScore') || 0;
       highScoreElement.textContent = highScore;
@@ -148,10 +170,19 @@
       startGame();
     }
     
+    // Adjust canvas size based on window size
+    function adjustCanvasSize() {
+      const maxSize = Math.min(window.innerWidth - 40, window.innerHeight - 150);
+      const size = Math.min(500, maxSize);
+      
+      canvas.style.width = `${size}px`;
+      canvas.style.height = `${size}px`;
+    }
+    
     // Start a new game
     function startGame() {
       // Initialize game state
-      snake = [{ x: 7, y: 7 }]; // Snake starts with one segment in the middle
+      snake = [{ x: 10, y: 10 }]; // Snake starts in the middle
       direction = 'right';
       nextDirection = 'right';
       score = 0;
@@ -260,6 +291,22 @@
       // Clear canvas
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw grid lines (optional)
+      ctx.strokeStyle = '#111';
+      for (let i = 0; i < GRID_SIZE; i++) {
+        // Vertical lines
+        ctx.beginPath();
+        ctx.moveTo(i * CELL_SIZE, 0);
+        ctx.lineTo(i * CELL_SIZE, canvas.height);
+        ctx.stroke();
+        
+        // Horizontal lines
+        ctx.beginPath();
+        ctx.moveTo(0, i * CELL_SIZE);
+        ctx.lineTo(canvas.width, i * CELL_SIZE);
+        ctx.stroke();
+      }
       
       // Draw snake
       snake.forEach((segment, index) => {

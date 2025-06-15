@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useGames } from '../../contexts/GameContext';
 import Leaderboard from '../../components/leaderboard/Leaderboard';
 import AchievementList from '../../components/leaderboard/AchievementList';
+import GameEmbed from '../../components/game/GameEmbed';
 import './GameDetail.css';
 
 /**
@@ -17,9 +18,9 @@ function GameDetail() {
   const [game, setGame] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [iframeHeight, setIframeHeight] = useState('80vh'); // Set default height to 80% of viewport height
+  const [iframeHeight, setIframeHeight] = useState('85vh'); // 增加默认高度
   const [activeTab, setActiveTab] = useState('game'); // 'game', 'leaderboard', 'achievements'
-  const [isFullWidth, setIsFullWidth] = useState(false); // State to control full-width display
+  const [isFullWidth, setIsFullWidth] = useState(true); // Default to full-width (widescreen) mode
   
   // Get game details
   useEffect(() => {
@@ -45,9 +46,9 @@ function GameDetail() {
     const handleResize = () => {
       // Adjust iframe height based on window width
       if (window.innerWidth < 768) {
-        setIframeHeight('60vh');
+        setIframeHeight('70vh');
       } else {
-        setIframeHeight('80vh');
+        setIframeHeight('85vh');
       }
     };
     
@@ -68,14 +69,9 @@ function GameDetail() {
       window.open(game.gameUrl, '_blank');
     }
   };
-  
-  // Toggle full-width mode
-  const toggleFullWidth = () => {
-    setIsFullWidth(!isFullWidth);
-  };
 
   return (
-    <div className={`game-detail ${isFullWidth ? 'game-detail--full-width' : ''}`}>
+    <div className="game-detail game-detail--full-width">
       {isLoading && (
         <div className="game-detail__loading">
           <div className="game-detail__loading-spinner"></div>
@@ -131,15 +127,13 @@ function GameDetail() {
             </div>
             
             {activeTab === 'game' && (
-              <div className={`game-detail__game-container ${isFullWidth ? 'game-detail__game-container--full' : ''}`}>
+              <div className="game-detail__game-container game-detail__game-container--full">
                 <div className="game-detail__game-wrapper">
-                  <iframe 
-                    src={game.gameUrl} 
-                    title={game.name}
-                    className="game-detail__iframe"
-                    style={{ height: iframeHeight }}
-                    allowFullScreen
-                  ></iframe>
+                  <GameEmbed 
+                    gameUrl={game.gameUrl} 
+                    title={game.name} 
+                    height={iframeHeight}
+                  />
                   
                   <div className="game-detail__controls">
                     <button 
@@ -148,48 +142,40 @@ function GameDetail() {
                     >
                       Fullscreen
                     </button>
-                    <button 
-                      className="game-detail__toggle-width-button" 
-                      onClick={toggleFullWidth}
-                    >
-                      {isFullWidth ? 'Default View' : 'Widescreen Mode'}
-                    </button>
                   </div>
                 </div>
                 
-                {!isFullWidth && (
-                  <div className="game-detail__info">
-                    <h2 className="game-detail__section-title">About this Game</h2>
-                    <div 
-                      className="game-detail__description"
-                      dangerouslySetInnerHTML={{ __html: game.fullDescription }}
-                    ></div>
-                    
-                    {game.controls && (
-                      <div className="game-detail__controls-info">
-                        <h3 className="game-detail__subsection-title">Game Controls</h3>
-                        <p>{game.controls}</p>
+                <div className="game-detail__info">
+                  <h2 className="game-detail__section-title">About this Game</h2>
+                  <div 
+                    className="game-detail__description"
+                    dangerouslySetInnerHTML={{ __html: game.fullDescription }}
+                  ></div>
+                  
+                  {game.controls && (
+                    <div className="game-detail__controls-info">
+                      <h3 className="game-detail__subsection-title">Game Controls</h3>
+                      <p>{game.controls}</p>
+                    </div>
+                  )}
+                  
+                  {game.screenshots && game.screenshots.length > 0 && (
+                    <div className="game-detail__screenshots">
+                      <h2 className="game-detail__section-title">Screenshots</h2>
+                      <div className="game-detail__screenshots-grid">
+                        {game.screenshots.map((screenshot, index) => (
+                          <div key={index} className="game-detail__screenshot">
+                            <img 
+                              src={screenshot} 
+                              alt={`${game.name} screenshot ${index + 1}`} 
+                              className="game-detail__screenshot-img"
+                            />
+                          </div>
+                        ))}
                       </div>
-                    )}
-                    
-                    {game.screenshots && game.screenshots.length > 0 && (
-                      <div className="game-detail__screenshots">
-                        <h2 className="game-detail__section-title">Screenshots</h2>
-                        <div className="game-detail__screenshots-grid">
-                          {game.screenshots.map((screenshot, index) => (
-                            <div key={index} className="game-detail__screenshot">
-                              <img 
-                                src={screenshot} 
-                                alt={`${game.name} screenshot ${index + 1}`} 
-                                className="game-detail__screenshot-img"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
               </div>
             )}
             
