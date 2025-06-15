@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="20" fill="#6441a5" />
+  
+  <!-- 游戏控制器主体 -->
+  <rect x="20" y="35" width="60" height="30" rx="15" fill="#9146ff" />
+  
+  <!-- 左侧按钮区域 -->
+  <circle cx="30" cy="50" r="8" fill="#ff5722" />
+  
+  <!-- 右侧按钮 -->
+  <circle cx="70" cy="45" r="4" fill="#ff7e55" />
+  <circle cx="78" cy="50" r="4" fill="#ff7e55" />
+  <circle cx="70" cy="55" r="4" fill="#ff7e55" />
+  <circle cx="62" cy="50" r="4" fill="#ff7e55" />
+  
+  <!-- 文字 -->
+  <text x="50" y="85" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">GameTime</text>
+</svg> 

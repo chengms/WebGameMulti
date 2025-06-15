@@ -7,18 +7,42 @@
 .about__header {
   text-align: center;
   margin-bottom: 40px;
+  position: relative;
+  padding: 20px 0;
+}
+
+.about__header::before {
+  content: '🎮';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  opacity: 0.7;
+}
+
+.about__header::after {
+  content: '🎲';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  opacity: 0.7;
 }
 
 .about__title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: 10px;
+  color: var(--color-primary);
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .about__subtitle {
   font-size: 1.2rem;
-  color: var(--color-text-secondary);
+  color: var(--color-accent);
+  font-weight: 500;
 }
 
 .about__content {
@@ -31,6 +55,7 @@
 
 .about__section {
   margin-bottom: 40px;
+  position: relative;
 }
 
 .about__section:last-child {
@@ -42,7 +67,8 @@
   color: var(--color-primary);
   margin: 0 0 16px 0;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 2px solid var(--color-accent);
+  display: inline-block;
 }
 
 .about__section p {
@@ -58,9 +84,14 @@
 }
 
 .about__list li {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   line-height: 1.5;
   color: var(--color-text);
+  position: relative;
+}
+
+.about__list li::marker {
+  color: var(--color-accent);
 }
 
 .about__list--contact {
@@ -70,17 +101,25 @@
 
 .about__list--contact li {
   padding: 8px 0;
+  display: flex;
+  align-items: center;
+}
+
+.about__list--contact li strong {
+  color: var(--color-primary);
+  margin-right: 10px;
 }
 
 .about__link {
-  color: var(--color-primary);
+  color: var(--color-accent);
   text-decoration: none;
   margin-left: 5px;
   transition: color 0.2s ease;
+  font-weight: 500;
 }
 
 .about__link:hover {
-  color: var(--color-primary-dark);
+  color: var(--color-accent-dark);
   text-decoration: underline;
 }
 
@@ -100,6 +139,11 @@
   
   .about__section-title {
     font-size: 1.5rem;
+  }
+  
+  .about__header::before,
+  .about__header::after {
+    display: none;
   }
 }
 

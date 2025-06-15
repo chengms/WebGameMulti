@@ -26,8 +26,8 @@ function Home() {
   return (
     <div className="home">
       <div className="home__header">
-        <h1 className="home__title">Welcome to WebGameMulti</h1>
-        <p className="home__subtitle">Discover and play a variety of fun web games</p>
+        <h1 className="home__title">Welcome to GameTime Bar</h1>
+        <p className="home__subtitle">Your Ultimate Gaming Entertainment Hub</p>
       </div>
       
       {loading && (

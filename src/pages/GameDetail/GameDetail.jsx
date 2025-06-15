@@ -82,7 +82,7 @@ function GameDetail() {
       {error && (
         <div className="game-detail__error">
           <p>{error}</p>
-          <button onClick={handleBackClick}>Back to Games</button>
+          <button onClick={handleBackClick}>Back to GameTime Bar</button>
         </div>
       )}
       
@@ -90,11 +90,11 @@ function GameDetail() {
         <>
           <div className="game-detail__header">
             <button className="game-detail__back-button" onClick={handleBackClick}>
-              &larr; Back to Games
+              &larr; Back to GameTime Bar
             </button>
             <h1 className="game-detail__title">{game.name}</h1>
             <div className="game-detail__meta">
-              <span className="game-detail__author">Author: {game.author}</span>
+              <span className="game-detail__author">Developer: {game.author}</span>
               <span className="game-detail__date">Updated: {game.lastUpdated}</span>
             </div>
             <div className="game-detail__tags">
@@ -110,19 +110,19 @@ function GameDetail() {
                 className={`game-detail__tab ${activeTab === 'game' ? 'game-detail__tab--active' : ''}`}
                 onClick={() => setActiveTab('game')}
               >
-                Game
+                <span className="game-detail__tab-icon">🎮</span> Play Game
               </button>
               <button 
                 className={`game-detail__tab ${activeTab === 'leaderboard' ? 'game-detail__tab--active' : ''}`}
                 onClick={() => setActiveTab('leaderboard')}
               >
-                Leaderboard
+                <span className="game-detail__tab-icon">🏆</span> Leaderboard
               </button>
               <button 
                 className={`game-detail__tab ${activeTab === 'achievements' ? 'game-detail__tab--active' : ''}`}
                 onClick={() => setActiveTab('achievements')}
               >
-                Achievements
+                <span className="game-detail__tab-icon">🌟</span> Achievements
               </button>
             </div>
             
@@ -140,7 +140,7 @@ function GameDetail() {
                       className="game-detail__fullscreen-button" 
                       onClick={handleFullscreenClick}
                     >
-                      Fullscreen
+                      <span className="game-detail__button-icon">⛶</span> Fullscreen
                     </button>
                   </div>
                 </div>

@@ -39,6 +39,11 @@ function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar__content">
+        <div className="sidebar__branding">
+          <span className="sidebar__logo-icon">🎮</span>
+          <h2 className="sidebar__logo-text">GameTime Bar</h2>
+        </div>
+        
         <h3 className="sidebar__title">Game Categories</h3>
         
         {categoriesLoading && <p className="sidebar__loading">Loading...</p>}
@@ -56,6 +61,7 @@ function Sidebar() {
                 onClick={() => handleCategoryClick('all')}
                 end
               >
+                <i className="sidebar__category-icon">🎲</i>
                 All Games
               </NavLink>
             </li>
@@ -68,6 +74,9 @@ function Sidebar() {
                   }
                   onClick={() => handleCategoryClick(category.id)}
                 >
+                  <i className="sidebar__category-icon">
+                    {getCategoryIcon(category.name)}
+                  </i>
                   {category.name}
                 </NavLink>
               </li>
@@ -116,11 +125,28 @@ function Sidebar() {
         </div>
         
         <div className="sidebar__footer">
-          <p>© {new Date().getFullYear()} WebGameMulti</p>
+          <p>© {new Date().getFullYear()} GameTime Bar</p>
+          <p className="sidebar__tagline">Your Ultimate Gaming Entertainment Hub</p>
         </div>
       </div>
     </aside>
   );
+}
+
+// 根据类别名称返回适当的图标
+function getCategoryIcon(categoryName) {
+  const name = categoryName.toLowerCase();
+  if (name.includes('puzzle')) return '🧩';
+  if (name.includes('arcade')) return '👾';
+  if (name.includes('strategy')) return '🧠';
+  if (name.includes('action')) return '🎯';
+  if (name.includes('casual')) return '🎮';
+  if (name.includes('classic')) return '🕹️';
+  if (name.includes('board')) return '🎲';
+  if (name.includes('memory')) return '🧠';
+  if (name.includes('logic')) return '🔢';
+  if (name.includes('number')) return '🔢';
+  return '🎮';
 }
 
 export default Sidebar; 

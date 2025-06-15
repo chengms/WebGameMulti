@@ -27,7 +27,8 @@ function Header() {
         <div className="header__content">
           <div className="header__logo">
             <Link to="/" className="header__logo-link">
-              WebGameMulti
+              <span className="header__logo-icon">🎮</span>
+              GameTime Bar
             </Link>
           </div>
           

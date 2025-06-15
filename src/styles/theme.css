@@ -1,17 +1,17 @@
 /**
  * Theme system CSS variables
- * Defines color variables for light and dark modes
+ * Defines color variables for light and dark modes for GameTime Bar
  */
 
 :root {
   /* Light theme variables */
-  --color-primary: #4a6ea9;
-  --color-primary-light: #6987c0;
-  --color-primary-dark: #3a5a89;
+  --color-primary: #6441a5; /* Twitch紫色 */
+  --color-primary-light: #9146ff;
+  --color-primary-dark: #4b367c;
   
-  --color-accent: #f39c12;
-  --color-accent-light: #f8c471;
-  --color-accent-dark: #d68910;
+  --color-accent: #ff5722; /* 橙色 */
+  --color-accent-light: #ff7e55;
+  --color-accent-dark: #e64a19;
   
   --color-background: #ffffff;
   --color-background-secondary: #f8f9fa;
@@ -25,10 +25,10 @@
   --color-border-light: #f1f3f5;
   --color-border-dark: #ced4da;
   
-  --color-success: #28a745;
-  --color-warning: #ffc107;
-  --color-error: #dc3545;
-  --color-info: #17a2b8;
+  --color-success: #4caf50;
+  --color-warning: #ff9800;
+  --color-error: #f44336;
+  --color-info: #2196f3;
   
   --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -43,30 +43,30 @@
 
 /* Dark theme variables */
 [data-theme="dark"] {
-  --color-primary: #5d82c1;
-  --color-primary-light: #7c9ad2;
-  --color-primary-dark: #456db8;
+  --color-primary: #9146ff; /* 更亮的Twitch紫色 */
+  --color-primary-light: #b490ff;
+  --color-primary-dark: #6441a5;
   
-  --color-accent: #f39c12;
-  --color-accent-light: #f8c471;
-  --color-accent-dark: #d68910;
+  --color-accent: #ff5722; /* 保持橙色 */
+  --color-accent-light: #ff7e55;
+  --color-accent-dark: #e64a19;
   
-  --color-background: #1a1a1a;
-  --color-background-secondary: #2a2a2a;
-  --color-background-tertiary: #333333;
+  --color-background: #18181b; /* Twitch深色背景 */
+  --color-background-secondary: #1f1f23;
+  --color-background-tertiary: #26262c;
   
-  --color-text: #f1f3f5;
-  --color-text-secondary: #ced4da;
-  --color-text-tertiary: #adb5bd;
+  --color-text: #efeff1;
+  --color-text-secondary: #adadb8;
+  --color-text-tertiary: #848494;
   
-  --color-border: #444444;
-  --color-border-light: #555555;
-  --color-border-dark: #333333;
+  --color-border: #3a3a3d;
+  --color-border-light: #4a4a4d;
+  --color-border-dark: #2a2a2d;
   
-  --color-success: #28a745;
-  --color-warning: #ffc107;
-  --color-error: #dc3545;
-  --color-info: #17a2b8;
+  --color-success: #4caf50;
+  --color-warning: #ff9800;
+  --color-error: #f44336;
+  --color-info: #2196f3;
   
   --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.3);
   --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -76,30 +76,30 @@
 /* System theme */
 @media (prefers-color-scheme: dark) {
   [data-theme="system"] {
-    --color-primary: #5d82c1;
-    --color-primary-light: #7c9ad2;
-    --color-primary-dark: #456db8;
+    --color-primary: #9146ff; /* 更亮的Twitch紫色 */
+    --color-primary-light: #b490ff;
+    --color-primary-dark: #6441a5;
     
-    --color-accent: #f39c12;
-    --color-accent-light: #f8c471;
-    --color-accent-dark: #d68910;
+    --color-accent: #ff5722; /* 保持橙色 */
+    --color-accent-light: #ff7e55;
+    --color-accent-dark: #e64a19;
     
-    --color-background: #1a1a1a;
-    --color-background-secondary: #2a2a2a;
-    --color-background-tertiary: #333333;
+    --color-background: #18181b; /* Twitch深色背景 */
+    --color-background-secondary: #1f1f23;
+    --color-background-tertiary: #26262c;
     
-    --color-text: #f1f3f5;
-    --color-text-secondary: #ced4da;
-    --color-text-tertiary: #adb5bd;
+    --color-text: #efeff1;
+    --color-text-secondary: #adadb8;
+    --color-text-tertiary: #848494;
     
-    --color-border: #444444;
-    --color-border-light: #555555;
-    --color-border-dark: #333333;
+    --color-border: #3a3a3d;
+    --color-border-light: #4a4a4d;
+    --color-border-dark: #2a2a2d;
     
-    --color-success: #28a745;
-    --color-warning: #ffc107;
-    --color-error: #dc3545;
-    --color-info: #17a2b8;
+    --color-success: #4caf50;
+    --color-warning: #ff9800;
+    --color-error: #f44336;
+    --color-info: #2196f3;
     
     --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.3);
     --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.3);
