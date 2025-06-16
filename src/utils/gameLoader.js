@@ -18,6 +18,15 @@ export const loadGames = async () => {
     // Get games data (in a production app, this would be loaded dynamically from the server)
     const games = [
       {
+        id: 'crazy-cattle-3d',
+        name: 'Crazy Cattle 3D',
+        description: '一款充满乐趣的3D物理对战游戏，让你体验独特的绵羊战斗！掌握物理动量系统，在3D竞技场中与其他玩家展开激烈对战。',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="%236441a5"/><text x="50%" y="40%" font-family="Arial" font-size="20" fill="white" text-anchor="middle" dominant-baseline="middle">🐄</text><text x="50%" y="60%" font-family="Arial" font-size="18" fill="white" text-anchor="middle" dominant-baseline="middle">Crazy Cattle 3D</text><text x="50%" y="80%" font-family="Arial" font-size="12" fill="%23ff5722" text-anchor="middle" dominant-baseline="middle">3D Physics Battle</text></svg>',
+        tags: ['3D', '物理引擎', '多人在线', '竞技对战', '动作'],
+        author: 'Crazy Cattle Team',
+        createdAt: '2025-01-15'
+      },
+      {
         id: 'snake',
         name: 'Snake',
         description: 'Classic snake game. Control the snake using arrow keys, eat food to grow longer, and avoid hitting walls or yourself.',
@@ -87,6 +96,40 @@ export const loadGameDetails = async (gameId) => {
     
     // Sample game details (in a real app, this would come from the server)
     const gameDetails = {
+      'crazy-cattle-3d': {
+        id: 'crazy-cattle-3d',
+        name: 'Crazy Cattle 3D',
+        description: '一款充满乐趣的3D物理对战游戏，让你体验独特的绵羊战斗！掌握物理动量系统，在3D竞技场中与其他玩家展开激烈对战。',
+        fullDescription: `<h3>游戏特色</h3>
+          <ul>
+            <li>独特的物理引擎系统</li>
+            <li>3D战斗竞技场</li>
+            <li>多人在线对战</li>
+            <li>丰富的战术策略</li>
+          </ul>
+          <h3>操作说明</h3>
+          <ul>
+            <li>WASD键：控制移动</li>
+            <li>鼠标：精确控制绵羊方向</li>
+            <li>空格键：触发特殊碰撞能力</li>
+          </ul>
+          <h3>游戏技巧</h3>
+          <p>在Crazy Cattle 3D中，成功的关键在于掌握物理动量系统。通过下坡加速来积累动能，然后发动强力攻击或快速逃脱。游戏独特的碰撞机制会奖励精准的时机把握 - 精确角度的撞击可以将对手击飞出地图，而时机不当的攻击则会让你陷入危险。</p>
+          <p>想要赢得更多比赛，建议从防守开始 - 专注于生存和战略定位。研究每个竞技场的布局，发现最佳攻击位置和危险区域。在失败后，可以观察顶级玩家的技巧来学习。持续练习，你很快就能掌握绵羊战斗的艺术！</p>`,
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="%236441a5"/><text x="50%" y="40%" font-family="Arial" font-size="20" fill="white" text-anchor="middle" dominant-baseline="middle">🐄</text><text x="50%" y="60%" font-family="Arial" font-size="18" fill="white" text-anchor="middle" dominant-baseline="middle">Crazy Cattle 3D</text><text x="50%" y="80%" font-family="Arial" font-size="12" fill="%23ff5722" text-anchor="middle" dominant-baseline="middle">3D Physics Battle</text></svg>',
+        screenshots: [
+          'https://www.crazycattle-3d.info/images/screenshot1.jpg',
+          'https://www.crazycattle-3d.info/images/screenshot2.jpg',
+          'https://www.crazycattle-3d.info/images/screenshot3.jpg'
+        ],
+        tags: ['3D', '物理引擎', '多人在线', '竞技对战', '动作'],
+        author: 'Crazy Cattle Team',
+        version: '1.0.0',
+        controls: 'WASD键移动，鼠标控制方向，空格键触发碰撞能力',
+        createdAt: '2025-01-15',
+        lastUpdated: '2025-01-15',
+        gameUrl: '/games/crazy-cattle-3d/index.html'
+      },
       'snake': {
         id: 'snake',
         name: 'Snake',
