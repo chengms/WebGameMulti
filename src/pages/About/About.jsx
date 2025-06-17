@@ -87,8 +87,8 @@ function About() {
           <ul className="about__list about__list--contact">
             <li>
               <strong>Email:</strong> 
-              <a href="mailto:info@gametime.bar" className="about__link">
-                info@gametime.bar
+              <a href="mailto:chengms666@gmail.com" className="about__link">
+                chengms666@gmail.com
               </a>
             </li>
           </ul>
