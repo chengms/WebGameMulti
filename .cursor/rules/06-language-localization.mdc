@@ -1,0 +1,88 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Language and Localization Rules
+
+## Language Requirements
+
+**CRITICAL**: All user-facing content in the WebGameMulti project MUST be in English only.
+
+## Content Language Standards
+
+### User Interface Elements
+- All UI text, labels, buttons, and navigation elements must be in English
+- Error messages and notifications must be in English
+- Form placeholders and validation messages must be in English
+- Loading states and status messages must be in English
+
+### Game Content
+- Game names in [meta.json](mdc:games/*/meta.json) files must be in English
+- Game descriptions must be in English
+- Game tags and categories must be in English
+- Game controls descriptions must be in English
+
+### Navigation and Routing
+- All navigation labels in [Header.jsx](mdc:src/components/layout/Header.jsx) must be in English
+- Sidebar category names must be in English
+- Page titles and headings must be in English
+
+## Examples of Correct English Usage
+
+### Header Component
+```jsx
+// Correct English usage
+<input placeholder="Search games..." />
+<button>Search</button>
+<Link to="/">Home</Link>
+<Link to="/about">About</Link>
+```
+
+### Game Categories
+```javascript
+// Correct English categories
+const categories = [
+  { id: 'action', name: 'Action', icon: '⚔️' },
+  { id: 'puzzle', name: 'Puzzle', icon: '🧩' },
+  { id: 'strategy', name: 'Strategy', icon: '🎯' },
+  { id: 'arcade', name: 'Arcade', icon: '🕹️' },
+  { id: 'casual', name: 'Casual', icon: '🎲' }
+];
+```
+
+### Game Meta.json Format
+```json
+{
+  "name": "Game Name in English",
+  "description": "Game description in English explaining gameplay and features",
+  "tags": ["Category1", "Category2"],
+  "controls": "Control instructions in English"
+}
+```
+
+## File References
+
+### Components with UI Text
+- [src/components/layout/Header.jsx](mdc:src/components/layout/Header.jsx): Navigation and search
+- [src/components/layout/Sidebar.jsx](mdc:src/components/layout/Sidebar.jsx): Category navigation
+- [src/pages/Home/Home.jsx](mdc:src/pages/Home/Home.jsx): Welcome messages and content
+- [src/pages/About/About.jsx](mdc:src/pages/About/About.jsx): About page content
+- [src/pages/Settings/Settings.jsx](mdc:src/pages/Settings/Settings.jsx): Settings labels
+
+### Game Integration
+- All [games/*/meta.json](mdc:games/*/meta.json) files must contain English content
+- Game loading utilities in [src/utils/gameLoader.js](mdc:src/utils/gameLoader.js) should handle English content
+
+## Quality Assurance
+
+- Before adding any new UI text, ensure it's in proper English
+- When creating new games, verify meta.json contains English descriptions
+- All user-facing strings should use clear, concise English
+- Avoid technical jargon in user-facing descriptions
+
+## Code Comments and Documentation
+
+- Code comments can be in any language for development purposes
+- JSDoc comments should be in English for consistency
+- README and documentation files should be in English

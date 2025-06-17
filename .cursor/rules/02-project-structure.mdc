@@ -3,19 +3,23 @@ description:
 globs: 
 alwaysApply: true
 ---
-# WebGameMulti Project Structure
+# GameTime Bar Project Structure
 
-This file explains the directory structure and key files in the WebGameMulti project.
+This file explains the directory structure and key files in the GameTime Bar project.
 
 ## Directory Structure
 
 ```
-WebGameMulti/
+GameTime Bar/
+├── .cursor/           # Cursor editor rules and configuration
+│   └── rules/         # Cursor-specific rules files
 ├── docs/              # Documentation files
-├── games/             # Individual game directories
-│   ├── example-game/  # Example game with implementation
+├── games/             # Individual game directories (REQUIRED)
+│   ├── snake/         # Snake game
 │   ├── memory-match/  # Memory matching game
-│   └── snake/         # Snake game
+│   ├── tetris/        # Tetris game
+│   ├── 2048/          # 2048 number puzzle
+│   └── tic-tac-toe/   # Tic-tac-toe game
 ├── public/            # Static assets for production
 ├── src/               # Application source code
 │   ├── components/    # Reusable UI components
@@ -23,20 +27,27 @@ WebGameMulti/
 │   ├── pages/         # Page components
 │   ├── styles/        # Global styles
 │   └── utils/         # Utility functions
-└── index.html         # Main HTML file
+├── node_modules/      # Dependencies (auto-generated)
+├── index.html         # Main HTML file with GameTime Bar branding
+├── package.json       # Project dependencies and scripts
+├── vite.config.js     # Vite build configuration
+└── wrangler.toml      # Cloudflare deployment configuration
 ```
 
 ## Key Directories
 
-### Games Directory
+### Games Directory (CRITICAL)
 
-The [games](mdc:games) directory contains individual game implementations. Each game has its own folder with:
+The [games](mdc:games) directory contains individual game implementations. **ALL games MUST be placed here**.
 
-- `index.html`: The game implementation
-- `meta.json`: Game metadata (name, description, etc.)
-- `image/`: Directory for game images
+Each game has its own folder with:
 
-Example: [games/memory-match](mdc:games/memory-match)
+- `index.html`: The game implementation (REQUIRED)
+- `meta.json`: Game metadata in English (REQUIRED)
+- `image/`: Directory for game images (REQUIRED)
+  - `cover.png`: Thumbnail image (REQUIRED)
+
+Example: [games/snake](mdc:games/snake)
 
 ### Source Directory
 
@@ -45,6 +56,7 @@ The [src](mdc:src) directory contains the React application code:
 - [components](mdc:src/components): Reusable UI components
   - [layout](mdc:src/components/layout): Layout components (Header, Sidebar, etc.)
   - [game](mdc:src/components/game): Game-related components (GameCard, etc.)
+  - [theme](mdc:src/components/theme): Theme and UI components
   
 - [contexts](mdc:src/contexts): React context providers
   - [GameContext.jsx](mdc:src/contexts/GameContext.jsx): Game data and filtering
@@ -55,10 +67,32 @@ The [src](mdc:src) directory contains the React application code:
   - [GameDetail](mdc:src/pages/GameDetail): Game detail page
   - [Settings](mdc:src/pages/Settings): Settings page
   - [About](mdc:src/pages/About): About page
+  - [NotFound](mdc:src/pages/NotFound): 404 error page
   
 - [utils](mdc:src/utils): Utility functions
   - [gameLoader.js](mdc:src/utils/gameLoader.js): Game loading and filtering
 
-- [styles](mdc:src/styles): Global styles
+- [styles](mdc:src/styles): Global styles and CSS modules
+
+### Configuration Files
+
+- [package.json](mdc:package.json): Project metadata, dependencies, and scripts
+- [vite.config.js](mdc:vite.config.js): Vite build tool configuration
+- [wrangler.toml](mdc:wrangler.toml): Cloudflare Pages deployment settings
+- [.eslintrc.js](mdc:.eslintrc.js): ESLint code quality rules
+- [.prettierrc](mdc:.prettierrc): Prettier code formatting rules
+
+## Entry Points
+
+- [index.html](mdc:index.html): Main HTML entry point with GameTime Bar branding
+- [src/main.jsx](mdc:src/main.jsx): JavaScript application entry point
+- [src/App.jsx](mdc:src/App.jsx): Main React application component
+
+## Language Requirements
+
+ALL content in the project structure must follow English-only requirements:
+- Game names and descriptions in `meta.json` files
+- UI component text and labels
+- File and directory names should be descriptive in English
 
 
