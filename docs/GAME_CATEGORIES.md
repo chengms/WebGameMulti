@@ -42,6 +42,7 @@ Easy-to-learn games suitable for all ages and skill levels.
 - **Match-3**: Games involving matching three or more items
 - **Racing**: Vehicle racing games
 - **Running**: Endless running games
+- **Shooter**: Combat games with shooting mechanics
 - **Strategy**: Games requiring tactical planning
 - **Memory**: Games testing memory skills
 - **Classic**: Timeless, traditional games
@@ -73,4 +74,5 @@ Easy-to-learn games suitable for all ages and skill levels.
 | RPG Demo | Adventure | Fantasy, Strategy |
 | Circle Path | Arcade | Casual, Action |
 | Endless Run | Action | Running, Casual |
-| Pacman | Arcade | Classic, Retro | 
+| Pacman | Arcade | Classic, Retro |
+| Plane War | Action | Shooter, Arcade | 

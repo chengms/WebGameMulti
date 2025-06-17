@@ -72,6 +72,15 @@ export const loadGames = async () => {
         createdAt: '2024-01-20'
       },
       {
+        id: 'planewar',
+        name: 'Plane War',
+        description: 'An exciting space shooter game! Pilot your fighter plane, shoot down enemy aircraft, collect power-ups, and survive as long as possible in this intense aerial combat.',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="planeBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23001122;stop-opacity:1" /><stop offset="30%" style="stop-color:%23003366;stop-opacity:1" /><stop offset="70%" style="stop-color:%23004488;stop-opacity:1" /><stop offset="100%" style="stop-color:%230066cc;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23planeBg)"/><polygon points="150,60 140,80 160,80" fill="%23ff6600"/><polygon points="150,80 135,100 165,100" fill="%23cccccc"/><polygon points="130,90 170,90 160,110 140,110" fill="%23999999"/><circle cx="80" cy="40" r="3" fill="%23ffff00"/><circle cx="220" cy="50" r="2" fill="%23ffff00"/><circle cx="60" cy="80" r="2" fill="%23ffff00"/><circle cx="240" cy="120" r="3" fill="%23ffff00"/><circle cx="70" cy="160" r="2" fill="%23ffff00"/><polygon points="200,120 190,130 210,130" fill="%23ff0000"/><polygon points="100,140 90,150 110,150" fill="%23ff0000"/><rect x="145" y="120" width="10" height="15" fill="%23ffff00"/><rect x="145" y="140" width="10" height="15" fill="%23ffff00"/><text x="150" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="%23ffffff" text-anchor="middle">PLANE WAR</text><text x="150" y="185" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="%23ffffff" text-anchor="middle">Space Shooter</text></svg>',
+        tags: ['Action', 'Shooter', 'Arcade'],
+        author: 'WebGameMulti Team',
+        createdAt: '2024-01-20'
+      },
+      {
         id: 'crazy-cattle-3d',
         name: 'Crazy Cattle 3D',
         description: 'An exciting 3D cattle adventure game with immersive gameplay and stunning graphics. Navigate through challenging levels and experience the thrill of 3D gaming.',
@@ -294,6 +303,41 @@ export const loadGameDetails = async (gameId) => {
         createdAt: '2024-01-20',
         lastUpdated: '2024-01-20',
         gameUrl: '/games/pacman/index.html'
+      },
+      'planewar': {
+        id: 'planewar',
+        name: 'Plane War',
+        description: 'An exciting space shooter game! Pilot your fighter plane, shoot down enemy aircraft, collect power-ups, and survive as long as possible in this intense aerial combat.',
+        fullDescription: `<p>Plane War is an intense space shooter game that puts you in the cockpit of a fighter plane in the middle of an epic aerial battle.</p>
+          <p>Navigate through enemy-filled skies, dodge incoming fire, and unleash your arsenal against waves of enemy aircraft. Collect power-ups to upgrade your weapons and health as you fight for survival in this fast-paced action game.</p>
+          <h3>Game Features:</h3>
+          <ul>
+            <li>Intense aerial combat with smooth controls</li>
+            <li>Multiple enemy types with different attack patterns</li>
+            <li>Power-up system for weapon and health upgrades</li>
+            <li>Progressive difficulty with increasing enemy waves</li>
+            <li>Stunning space and sky environments</li>
+            <li>High score tracking and achievements</li>
+          </ul>
+          <h3>How to Play:</h3>
+          <ul>
+            <li>Drag your plane around the screen to move and avoid enemy fire</li>
+            <li>Your plane automatically shoots at enemies</li>
+            <li>Collect power-ups to upgrade your weapons</li>
+            <li>Collect health power-ups to restore your HP</li>
+            <li>Survive as long as possible and achieve the highest score</li>
+            <li>Destroy different enemy types for varying point values</li>
+          </ul>
+          <p>Take to the skies and become the ultimate fighter pilot in this thrilling aerial combat adventure!</p>`,
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="planeBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23001122;stop-opacity:1" /><stop offset="30%" style="stop-color:%23003366;stop-opacity:1" /><stop offset="70%" style="stop-color:%23004488;stop-opacity:1" /><stop offset="100%" style="stop-color:%230066cc;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23planeBg)"/><polygon points="150,60 140,80 160,80" fill="%23ff6600"/><polygon points="150,80 135,100 165,100" fill="%23cccccc"/><polygon points="130,90 170,90 160,110 140,110" fill="%23999999"/><circle cx="80" cy="40" r="3" fill="%23ffff00"/><circle cx="220" cy="50" r="2" fill="%23ffff00"/><circle cx="60" cy="80" r="2" fill="%23ffff00"/><circle cx="240" cy="120" r="3" fill="%23ffff00"/><circle cx="70" cy="160" r="2" fill="%23ffff00"/><polygon points="200,120 190,130 210,130" fill="%23ff0000"/><polygon points="100,140 90,150 110,150" fill="%23ff0000"/><rect x="145" y="120" width="10" height="15" fill="%23ffff00"/><rect x="145" y="140" width="10" height="15" fill="%23ffff00"/><text x="150" y="30" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="%23ffffff" text-anchor="middle">PLANE WAR</text><text x="150" y="185" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="%23ffffff" text-anchor="middle">Space Shooter</text></svg>',
+        screenshots: [],
+        tags: ['Action', 'Shooter', 'Arcade'],
+        author: 'WebGameMulti Team',
+        version: '1.0.0',
+        controls: 'Drag your plane to move around the screen. Your plane automatically shoots at enemies. Collect power-ups to upgrade your weapons and health.',
+        createdAt: '2024-01-20',
+        lastUpdated: '2024-01-20',
+        gameUrl: '/games/planewar/index.html'
       },
       'crazy-cattle-3d': {
         id: 'crazy-cattle-3d',
