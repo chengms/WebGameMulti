@@ -3,7 +3,7 @@
   "description": "Navigate through circular paths in this challenging arcade game. Test your timing and precision as you guide your character through rotating obstacles and pathways.",
   "author": "WebXinXin Games",
   "version": "1.0.0",
-  "tags": ["Arcade", "Puzzle", "Casual", "Action"],
+  "tags": ["Arcade", "Casual", "Action"],
   "thumbnail": "image/cover.png",
   "controls": "Click or tap to change direction and navigate through the circular paths. Time your moves carefully to avoid obstacles.",
   "minWidth": 600,

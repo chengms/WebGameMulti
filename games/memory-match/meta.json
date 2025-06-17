@@ -5,9 +5,9 @@
   "version": "1.0.0",
   "tags": ["Puzzle", "Memory", "Casual"],
   "thumbnail": "image/cover.png",
-  "controls": "Mouse click",
+  "controls": "Click on cards to flip them and find matching pairs",
   "minWidth": 320,
   "minHeight": 480,
   "createdAt": "2023-06-25",
-  "updatedAt": "2023-06-25"
+  "updatedAt": "2024-01-15"
 } 

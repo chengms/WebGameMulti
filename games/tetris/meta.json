@@ -1,17 +1,13 @@
 {
   "name": "Tetris",
   "description": "The classic puzzle game where you arrange falling blocks to create complete lines.",
-  "fullDescription": "<p>Tetris is one of the most iconic puzzle games of all time. The goal is simple: rotate and arrange falling blocks (tetrominoes) to create complete horizontal lines. When a line is complete, it disappears, and you earn points.</p><p>The game gets progressively faster as you level up, testing your reflexes and strategic thinking. How long can you last before the blocks stack up to the top?</p>",
   "author": "WebGameMulti Team",
   "version": "1.0.0",
-  "lastUpdated": "2023-07-15",
-  "thumbnailUrl": "image/thumbnail.jpg",
-  "tags": ["puzzle", "classic", "arcade", "strategy"],
+  "tags": ["Puzzle", "Classic", "Strategy"],
+  "thumbnail": "image/thumbnail.jpg",
   "controls": "Use arrow keys to move (←, →, ↓) and rotate (↑) the pieces. Press Space for hard drop.",
-  "difficulty": "Medium",
-  "ageRating": "Everyone",
-  "screenshots": [
-    "image/screenshot1.jpg",
-    "image/screenshot2.jpg"
-  ]
+  "minWidth": 400,
+  "minHeight": 600,
+  "createdAt": "2023-07-15",
+  "updatedAt": "2024-01-15"
 } 

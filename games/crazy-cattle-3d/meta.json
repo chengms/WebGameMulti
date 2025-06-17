@@ -3,7 +3,7 @@
   "description": "An exciting 3D cattle adventure game with immersive gameplay and stunning graphics. Navigate through challenging levels and experience the thrill of 3D gaming.",
   "author": "Crazy Cattle Games",
   "version": "1.0.0",
-  "tags": ["Action", "Adventure", "3D", "Arcade"],
+  "tags": ["Action", "Adventure", "3D"],
   "thumbnail": "image/cover.png",
   "controls": "Use mouse and keyboard to control the game. Specific controls are shown in the game interface.",
   "minWidth": 800,

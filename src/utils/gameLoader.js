@@ -21,8 +21,8 @@ export const loadGames = async () => {
         id: 'snake',
         name: 'Snake',
         description: 'Classic snake game. Control the snake using arrow keys, eat food to grow longer, and avoid hitting walls or yourself.',
-        thumbnail: '/games/snake/image/cover.png',
-        tags: ['Puzzle', 'Casual', 'Classic'],
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="snakeBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%2332cd32;stop-opacity:1" /><stop offset="50%" style="stop-color:%2328a745;stop-opacity:1" /><stop offset="100%" style="stop-color:%23228b22;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23snakeBg)"/><rect x="50" y="80" width="20" height="20" rx="10" fill="white" opacity="0.9"/><rect x="70" y="80" width="20" height="20" rx="10" fill="white" opacity="0.8"/><rect x="90" y="80" width="20" height="20" rx="10" fill="white" opacity="0.7"/><rect x="110" y="80" width="20" height="20" rx="10" fill="white" opacity="0.6"/><circle cx="200" cy="120" r="8" fill="%23ff4444"/><text x="150" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">🐍</text><text x="150" y="160" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Snake Game</text></svg>',
+        tags: ['Arcade', 'Classic', 'Casual'],
         author: 'WebGameMulti Team',
         createdAt: '2023-06-15'
       },
@@ -30,7 +30,7 @@ export const loadGames = async () => {
         id: 'memory-match',
         name: 'Memory Match',
         description: 'Test your memory by matching pairs of cards. Find all matching pairs in the shortest time possible.',
-        thumbnail: '/games/memory-match/image/cover.png',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="memoryBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%236c5ce7;stop-opacity:1" /><stop offset="50%" style="stop-color:%23a55eea;stop-opacity:1" /><stop offset="100%" style="stop-color:%23fd79a8;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23memoryBg)"/><rect x="60" y="60" width="30" height="40" rx="5" fill="white" opacity="0.9"/><rect x="100" y="60" width="30" height="40" rx="5" fill="white" opacity="0.8"/><rect x="140" y="60" width="30" height="40" rx="5" fill="white" opacity="0.7"/><rect x="180" y="60" width="30" height="40" rx="5" fill="white" opacity="0.6"/><rect x="60" y="110" width="30" height="40" rx="5" fill="white" opacity="0.8"/><rect x="100" y="110" width="30" height="40" rx="5" fill="white" opacity="0.9"/><rect x="140" y="110" width="30" height="40" rx="5" fill="white" opacity="0.6"/><rect x="180" y="110" width="30" height="40" rx="5" fill="white" opacity="0.7"/><text x="150" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">🧠</text><text x="150" y="180" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Memory Match</text></svg>',
         tags: ['Puzzle', 'Memory', 'Casual'],
         author: 'WebGameMulti Team',
         createdAt: '2023-06-25'
@@ -39,8 +39,8 @@ export const loadGames = async () => {
         id: 'tetris',
         name: 'Tetris',
         description: 'The classic puzzle game where you arrange falling blocks to create complete lines.',
-        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="%234a6ea9"/><text x="50%" y="50%" font-family="Arial" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle">Tetris</text></svg>',
-        tags: ['Puzzle', 'Classic', 'Arcade', 'Strategy'],
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="tetrisBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234a6ea9;stop-opacity:1" /><stop offset="50%" style="stop-color:%233d5a96;stop-opacity:1" /><stop offset="100%" style="stop-color:%23304680;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23tetrisBg)"/><rect x="80" y="60" width="20" height="20" fill="%23ff6b6b"/><rect x="100" y="60" width="20" height="20" fill="%23ff6b6b"/><rect x="120" y="60" width="20" height="20" fill="%23ff6b6b"/><rect x="100" y="80" width="20" height="20" fill="%23ff6b6b"/><rect x="160" y="80" width="20" height="20" fill="%234ecdc4"/><rect x="180" y="80" width="20" height="20" fill="%234ecdc4"/><rect x="160" y="100" width="20" height="20" fill="%234ecdc4"/><rect x="180" y="100" width="20" height="20" fill="%234ecdc4"/><rect x="60" y="120" width="20" height="20" fill="%23ffe66d"/><rect x="80" y="120" width="20" height="20" fill="%23ffe66d"/><rect x="100" y="120" width="20" height="20" fill="%23ffe66d"/><rect x="120" y="120" width="20" height="20" fill="%23ffe66d"/><text x="150" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">🎮</text><text x="150" y="170" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Tetris</text></svg>',
+        tags: ['Puzzle', 'Classic', 'Strategy'],
         author: 'WebGameMulti Team',
         createdAt: '2023-07-15'
       },
@@ -48,8 +48,8 @@ export const loadGames = async () => {
         id: '2048',
         name: '2048',
         description: 'Slide numbered tiles and combine matching values to reach the 2048 tile in this addictive puzzle game.',
-        thumbnail: '/games/2048/image/thumbnail.jpg',
-        tags: ['Puzzle', 'Strategy', 'Logic', 'Number'],
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="numberBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23f4a261;stop-opacity:1" /><stop offset="50%" style="stop-color:%23e76f51;stop-opacity:1" /><stop offset="100%" style="stop-color:%23e9c46a;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23numberBg)"/><rect x="60" y="60" width="40" height="40" rx="5" fill="white" opacity="0.9"/><rect x="110" y="60" width="40" height="40" rx="5" fill="white" opacity="0.8"/><rect x="160" y="60" width="40" height="40" rx="5" fill="white" opacity="0.7"/><rect x="60" y="110" width="40" height="40" rx="5" fill="white" opacity="0.8"/><rect x="110" y="110" width="40" height="40" rx="5" fill="white" opacity="0.9"/><rect x="160" y="110" width="40" height="40" rx="5" fill="white" opacity="0.6"/><text x="80" y="85" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="%23264653" text-anchor="middle">2</text><text x="130" y="85" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="%23264653" text-anchor="middle">4</text><text x="180" y="85" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="%23264653" text-anchor="middle">8</text><text x="80" y="135" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="%23264653" text-anchor="middle">16</text><text x="130" y="135" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="%23264653" text-anchor="middle">32</text><text x="150" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">2048</text><text x="150" y="180" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">Number Puzzle</text></svg>',
+        tags: ['Puzzle', 'Strategy', 'Logic'],
         author: 'WebGameMulti Team',
         createdAt: '2023-07-18'
       },
@@ -57,8 +57,8 @@ export const loadGames = async () => {
         id: 'tic-tac-toe',
         name: 'Tic Tac Toe',
         description: 'The classic game of X\'s and O\'s with three difficulty levels of AI opponents.',
-        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="%23a6824a"/><text x="50%" y="50%" font-family="Arial" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle">Tic Tac Toe</text></svg>',
-        tags: ['Board', 'Strategy', 'Classic', 'Puzzle'],
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="ticBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23a6824a;stop-opacity:1" /><stop offset="50%" style="stop-color:%23b8860b;stop-opacity:1" /><stop offset="100%" style="stop-color:%23daa520;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23ticBg)"/><line x1="110" y1="60" x2="110" y2="140" stroke="white" stroke-width="3"/><line x1="190" y1="60" x2="190" y2="140" stroke="white" stroke-width="3"/><line x1="70" y1="100" x2="230" y2="100" stroke="white" stroke-width="3"/><line x1="70" y1="120" x2="230" y2="120" stroke="white" stroke-width="3"/><text x="90" y="85" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">X</text><text x="150" y="85" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">O</text><text x="210" y="135" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">X</text><text x="150" y="40" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Tic Tac Toe</text><text x="150" y="170" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Classic Strategy</text></svg>',
+        tags: ['Casual', 'Strategy', 'Classic'],
         author: 'WebGameMulti Team',
         createdAt: '2023-07-20'
       },
@@ -67,7 +67,7 @@ export const loadGames = async () => {
         name: 'Crazy Cattle 3D',
         description: 'An exciting 3D cattle adventure game with immersive gameplay and stunning graphics. Navigate through challenging levels and experience the thrill of 3D gaming.',
         thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234a90e2;stop-opacity:1" /><stop offset="100%" style="stop-color:%237b68ee;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23bg)"/><circle cx="80" cy="120" r="25" fill="white" opacity="0.9"/><circle cx="220" cy="80" r="20" fill="white" opacity="0.7"/><circle cx="250" cy="150" r="15" fill="white" opacity="0.5"/><text x="150" y="90" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">🐄</text><text x="150" y="120" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Crazy Cattle</text><text x="150" y="145" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">3D Adventure</text></svg>',
-        tags: ['Action', 'Adventure', '3D', 'Arcade'],
+        tags: ['Action', 'Adventure', '3D'],
         author: 'Crazy Cattle Games',
         createdAt: '2024-01-15'
       },
@@ -76,7 +76,7 @@ export const loadGames = async () => {
         name: 'Candy Crush',
         description: 'A sweet and addictive match-3 puzzle game. Match colorful candies to clear levels and achieve high scores in this delightful candy-themed adventure.',
         thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="candyBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff6b9d;stop-opacity:1" /><stop offset="50%" style="stop-color:%23c44569;stop-opacity:1" /><stop offset="100%" style="stop-color:%23f8b500;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23candyBg)"/><circle cx="70" cy="60" r="15" fill="white" opacity="0.8"/><circle cx="230" cy="70" r="12" fill="white" opacity="0.6"/><circle cx="80" cy="140" r="10" fill="white" opacity="0.7"/><circle cx="220" cy="150" r="18" fill="white" opacity="0.5"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">🍬</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Candy Crush</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Match-3 Puzzle</text></svg>',
-        tags: ['Puzzle', 'Match-3', 'Casual', 'Arcade'],
+        tags: ['Arcade', 'Match-3', 'Casual'],
         author: 'WebXinXin Games',
         createdAt: '2024-01-15'
       },
@@ -85,7 +85,7 @@ export const loadGames = async () => {
         name: 'Bike Racing',
         description: 'Experience thrilling motorcycle racing with realistic physics and challenging tracks. Race through different environments and compete for the best times.',
         thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="bikeBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%231e3c72;stop-opacity:1" /><stop offset="50%" style="stop-color:%232a5298;stop-opacity:1" /><stop offset="100%" style="stop-color:%23ff6b35;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23bikeBg)"/><circle cx="60" cy="120" r="20" fill="white" opacity="0.8"/><circle cx="240" cy="80" r="15" fill="white" opacity="0.6"/><circle cx="80" cy="60" r="12" fill="white" opacity="0.7"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">🏍️</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Bike Racing</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Racing Adventure</text></svg>',
-        tags: ['Racing', 'Sports', 'Arcade', 'Action'],
+        tags: ['Sports', 'Racing', 'Action'],
         author: 'WebXinXin Games',
         createdAt: '2024-01-15'
       },
@@ -94,7 +94,7 @@ export const loadGames = async () => {
         name: 'RPG Demo',
         description: 'Embark on an epic role-playing adventure with classic RPG elements. Explore worlds, battle monsters, and level up your character in this engaging demo.',
         thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="rpgBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%232c1810;stop-opacity:1" /><stop offset="30%" style="stop-color:%238b4513;stop-opacity:1" /><stop offset="70%" style="stop-color:%23daa520;stop-opacity:1" /><stop offset="100%" style="stop-color:%23ffd700;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23rpgBg)"/><circle cx="70" cy="70" r="18" fill="white" opacity="0.7"/><circle cx="230" cy="60" r="15" fill="white" opacity="0.6"/><circle cx="80" cy="150" r="12" fill="white" opacity="0.8"/><circle cx="220" cy="140" r="20" fill="white" opacity="0.5"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">⚔️</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">RPG Demo</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Epic Adventure</text></svg>',
-        tags: ['RPG', 'Adventure', 'Strategy', 'Fantasy'],
+        tags: ['Adventure', 'Fantasy', 'Strategy'],
         author: 'WebXinXin Games',
         createdAt: '2024-01-15'
       },
@@ -103,7 +103,7 @@ export const loadGames = async () => {
         name: 'Circle Path',
         description: 'Navigate through circular paths in this challenging arcade game. Test your timing and precision as you guide your character through rotating obstacles and pathways.',
         thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><radialGradient id="circleBg" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:1" /><stop offset="50%" style="stop-color:%23764ba2;stop-opacity:1" /><stop offset="100%" style="stop-color:%23f093fb;stop-opacity:1" /></radialGradient></defs><rect width="300" height="200" fill="url(%23circleBg)"/><circle cx="150" cy="100" r="60" fill="none" stroke="white" stroke-width="3" opacity="0.8"/><circle cx="150" cy="100" r="40" fill="none" stroke="white" stroke-width="2" opacity="0.6"/><circle cx="150" cy="100" r="20" fill="none" stroke="white" stroke-width="2" opacity="0.7"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">⭕</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Circle Path</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Navigate Circles</text></svg>',
-        tags: ['Arcade', 'Puzzle', 'Casual', 'Action'],
+        tags: ['Arcade', 'Casual', 'Action'],
         author: 'WebXinXin Games',
         createdAt: '2024-01-15'
       },
@@ -112,7 +112,7 @@ export const loadGames = async () => {
         name: 'Endless Run',
         description: 'Run as far as you can in this exciting endless running adventure! Jump over obstacles, collect coins, and beat your high score in this fast-paced arcade game.',
         thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="runBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:1" /><stop offset="25%" style="stop-color:%23764ba2;stop-opacity:1" /><stop offset="50%" style="stop-color:%23f093fb;stop-opacity:1" /><stop offset="75%" style="stop-color:%23f5576c;stop-opacity:1" /><stop offset="100%" style="stop-color:%234facfe;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23runBg)"/><circle cx="60" cy="80" r="15" fill="white" opacity="0.7"/><circle cx="240" cy="120" r="12" fill="white" opacity="0.6"/><circle cx="80" cy="160" r="18" fill="white" opacity="0.8"/><circle cx="220" cy="60" r="10" fill="white" opacity="0.5"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">🏃</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Endless Run</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Running Adventure</text></svg>',
-        tags: ['Action', 'Arcade', 'Running', 'Casual'],
+        tags: ['Action', 'Running', 'Casual'],
         author: 'WebXinXin Games',
         createdAt: '2024-01-15'
       }
@@ -155,12 +155,12 @@ export const loadGameDetails = async (gameId) => {
             <li>The game gets more challenging as your snake grows longer</li>
           </ul>
           <p>Challenge yourself to achieve the highest score possible!</p>`,
-        thumbnail: '/games/snake/image/cover.png',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="snakeBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%2332cd32;stop-opacity:1" /><stop offset="50%" style="stop-color:%2328a745;stop-opacity:1" /><stop offset="100%" style="stop-color:%23228b22;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23snakeBg)"/><rect x="50" y="80" width="20" height="20" rx="10" fill="white" opacity="0.9"/><rect x="70" y="80" width="20" height="20" rx="10" fill="white" opacity="0.8"/><rect x="90" y="80" width="20" height="20" rx="10" fill="white" opacity="0.7"/><rect x="110" y="80" width="20" height="20" rx="10" fill="white" opacity="0.6"/><circle cx="200" cy="120" r="8" fill="%23ff4444"/><text x="150" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">🐍</text><text x="150" y="160" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Snake Game</text></svg>',
         screenshots: [
           '/games/snake/image/screen1.png',
           '/games/snake/image/screen2.png'
         ],
-        tags: ['Puzzle', 'Casual', 'Classic'],
+        tags: ['Arcade', 'Classic', 'Casual'],
         author: 'WebGameMulti Team',
         version: '1.0.0',
         controls: 'Arrow keys',
@@ -184,7 +184,7 @@ export const loadGameDetails = async (gameId) => {
             <li>Find all pairs to complete the game</li>
           </ul>
           <p>Choose from three difficulty levels: Easy, Medium, and Hard.</p>`,
-        thumbnail: '/games/memory-match/image/cover.png',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="memoryBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%236c5ce7;stop-opacity:1" /><stop offset="50%" style="stop-color:%23a55eea;stop-opacity:1" /><stop offset="100%" style="stop-color:%23fd79a8;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23memoryBg)"/><rect x="60" y="60" width="30" height="40" rx="5" fill="white" opacity="0.9"/><rect x="100" y="60" width="30" height="40" rx="5" fill="white" opacity="0.8"/><rect x="140" y="60" width="30" height="40" rx="5" fill="white" opacity="0.7"/><rect x="180" y="60" width="30" height="40" rx="5" fill="white" opacity="0.6"/><rect x="60" y="110" width="30" height="40" rx="5" fill="white" opacity="0.8"/><rect x="100" y="110" width="30" height="40" rx="5" fill="white" opacity="0.9"/><rect x="140" y="110" width="30" height="40" rx="5" fill="white" opacity="0.6"/><rect x="180" y="110" width="30" height="40" rx="5" fill="white" opacity="0.7"/><text x="150" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">🧠</text><text x="150" y="180" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Memory Match</text></svg>',
         screenshots: [
           '/games/memory-match/image/screen1.png',
           '/games/memory-match/image/screen2.png'
@@ -202,12 +202,12 @@ export const loadGameDetails = async (gameId) => {
         name: 'Tetris',
         description: 'The classic puzzle game where you arrange falling blocks to create complete lines.',
         fullDescription: `<p>Tetris is one of the most iconic puzzle games of all time. The goal is simple: rotate and arrange falling blocks (tetrominoes) to create complete horizontal lines. When a line is complete, it disappears, and you earn points.</p><p>The game gets progressively faster as you level up, testing your reflexes and strategic thinking. How long can you last before the blocks stack up to the top?</p>`,
-        thumbnail: '/games/tetris/image/thumbnail.jpg',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="tetrisBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234a6ea9;stop-opacity:1" /><stop offset="50%" style="stop-color:%233d5a96;stop-opacity:1" /><stop offset="100%" style="stop-color:%23304680;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23tetrisBg)"/><rect x="80" y="60" width="20" height="20" fill="%23ff6b6b"/><rect x="100" y="60" width="20" height="20" fill="%23ff6b6b"/><rect x="120" y="60" width="20" height="20" fill="%23ff6b6b"/><rect x="100" y="80" width="20" height="20" fill="%23ff6b6b"/><rect x="160" y="80" width="20" height="20" fill="%234ecdc4"/><rect x="180" y="80" width="20" height="20" fill="%234ecdc4"/><rect x="160" y="100" width="20" height="20" fill="%234ecdc4"/><rect x="180" y="100" width="20" height="20" fill="%234ecdc4"/><rect x="60" y="120" width="20" height="20" fill="%23ffe66d"/><rect x="80" y="120" width="20" height="20" fill="%23ffe66d"/><rect x="100" y="120" width="20" height="20" fill="%23ffe66d"/><rect x="120" y="120" width="20" height="20" fill="%23ffe66d"/><text x="150" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">🎮</text><text x="150" y="170" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Tetris</text></svg>',
         screenshots: [
           '/games/tetris/image/screenshot1.jpg',
           '/games/tetris/image/screenshot2.jpg'
         ],
-        tags: ['Puzzle', 'Classic', 'Arcade', 'Strategy'],
+        tags: ['Puzzle', 'Classic', 'Strategy'],
         author: 'WebGameMulti Team',
         version: '1.0.0',
         controls: 'Use arrow keys to move (←, →, ↓) and rotate (↑) the pieces. Press Space for hard drop.',
@@ -220,12 +220,12 @@ export const loadGameDetails = async (gameId) => {
         name: '2048',
         description: 'Slide numbered tiles and combine matching values to reach the 2048 tile in this addictive puzzle game.',
         fullDescription: `<p>2048 is an addictive sliding puzzle game that challenges your strategic thinking. The rules are simple: slide tiles on a grid to combine matching numbers, doubling their value each time they merge. Starting with 2s and 4s, you need to create a tile with the number 2048.</p><p>Every move spawns a new tile (usually a 2, sometimes a 4), gradually filling up the board. Plan your moves carefully to avoid running out of space. Can you reach 2048, or even beyond?</p>`,
-        thumbnail: '/games/2048/image/thumbnail.jpg',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="numberBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23f4a261;stop-opacity:1" /><stop offset="50%" style="stop-color:%23e76f51;stop-opacity:1" /><stop offset="100%" style="stop-color:%23e9c46a;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23numberBg)"/><rect x="60" y="60" width="40" height="40" rx="5" fill="white" opacity="0.9"/><rect x="110" y="60" width="40" height="40" rx="5" fill="white" opacity="0.8"/><rect x="160" y="60" width="40" height="40" rx="5" fill="white" opacity="0.7"/><rect x="60" y="110" width="40" height="40" rx="5" fill="white" opacity="0.8"/><rect x="110" y="110" width="40" height="40" rx="5" fill="white" opacity="0.9"/><rect x="160" y="110" width="40" height="40" rx="5" fill="white" opacity="0.6"/><text x="80" y="85" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="%23264653" text-anchor="middle">2</text><text x="130" y="85" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="%23264653" text-anchor="middle">4</text><text x="180" y="85" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="%23264653" text-anchor="middle">8</text><text x="80" y="135" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="%23264653" text-anchor="middle">16</text><text x="130" y="135" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="%23264653" text-anchor="middle">32</text><text x="150" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">2048</text><text x="150" y="180" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">Number Puzzle</text></svg>',
         screenshots: [
           '/games/2048/image/screenshot1.jpg',
           '/games/2048/image/screenshot2.jpg'
         ],
-        tags: ['Puzzle', 'Strategy', 'Logic', 'Number'],
+        tags: ['Puzzle', 'Strategy', 'Logic'],
         author: 'WebGameMulti Team',
         version: '1.0.0',
         controls: 'Use arrow keys to slide tiles in that direction. On mobile, swipe to move tiles.',
@@ -238,12 +238,12 @@ export const loadGameDetails = async (gameId) => {
         name: 'Tic Tac Toe',
         description: 'The classic game of X\'s and O\'s with three difficulty levels of AI opponents.',
         fullDescription: `<p>Tic Tac Toe is a classic paper-and-pencil game for two players who take turns marking X and O on a 3×3 grid. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner.</p><p>In this digital version, you play as X against a computer opponent (O) with three difficulty levels:</p><ul><li><strong>Easy:</strong> The computer makes random moves</li><li><strong>Medium:</strong> The computer can block your winning moves and make its own winning moves</li><li><strong>Hard:</strong> The computer uses the minimax algorithm to play perfectly</li></ul><p>Challenge yourself against the AI and see if you can outsmart it!</p>`,
-        thumbnail: '/games/tic-tac-toe/image/thumbnail.jpg',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="ticBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23a6824a;stop-opacity:1" /><stop offset="50%" style="stop-color:%23b8860b;stop-opacity:1" /><stop offset="100%" style="stop-color:%23daa520;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23ticBg)"/><line x1="110" y1="60" x2="110" y2="140" stroke="white" stroke-width="3"/><line x1="190" y1="60" x2="190" y2="140" stroke="white" stroke-width="3"/><line x1="70" y1="100" x2="230" y2="100" stroke="white" stroke-width="3"/><line x1="70" y1="120" x2="230" y2="120" stroke="white" stroke-width="3"/><text x="90" y="85" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">X</text><text x="150" y="85" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">O</text><text x="210" y="135" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">X</text><text x="150" y="40" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Tic Tac Toe</text><text x="150" y="170" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Classic Strategy</text></svg>',
         screenshots: [
           '/games/tic-tac-toe/image/screenshot1.jpg',
           '/games/tic-tac-toe/image/screenshot2.jpg'
         ],
-        tags: ['Board', 'Strategy', 'Classic', 'Puzzle'],
+        tags: ['Casual', 'Strategy', 'Classic'],
         author: 'WebGameMulti Team',
         version: '1.0.0',
         controls: 'Click or tap on a cell to place your mark. Select difficulty from the dropdown menu.',
@@ -268,7 +268,7 @@ export const loadGameDetails = async (gameId) => {
           <p>Embark on this thrilling 3D adventure and discover what makes Crazy Cattle 3D so captivating!</p>`,
         thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234a90e2;stop-opacity:1" /><stop offset="100%" style="stop-color:%237b68ee;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23bg)"/><circle cx="80" cy="120" r="25" fill="white" opacity="0.9"/><circle cx="220" cy="80" r="20" fill="white" opacity="0.7"/><circle cx="250" cy="150" r="15" fill="white" opacity="0.5"/><text x="150" y="90" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">🐄</text><text x="150" y="120" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Crazy Cattle</text><text x="150" y="145" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">3D Adventure</text></svg>',
         screenshots: [],
-        tags: ['Action', 'Adventure', '3D', 'Arcade'],
+        tags: ['Action', 'Adventure', '3D'],
         author: 'Crazy Cattle Games',
         version: '1.0.0',
         controls: 'Use mouse and keyboard to control the game. Specific controls and instructions will be shown within the game interface.',
@@ -304,7 +304,7 @@ export const loadGameDetails = async (gameId) => {
           <p>Get ready for a sweet adventure that will keep you coming back for more!</p>`,
         thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="candyBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff6b9d;stop-opacity:1" /><stop offset="50%" style="stop-color:%23c44569;stop-opacity:1" /><stop offset="100%" style="stop-color:%23f8b500;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23candyBg)"/><circle cx="70" cy="60" r="15" fill="white" opacity="0.8"/><circle cx="230" cy="70" r="12" fill="white" opacity="0.6"/><circle cx="80" cy="140" r="10" fill="white" opacity="0.7"/><circle cx="220" cy="150" r="18" fill="white" opacity="0.5"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">🍬</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Candy Crush</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Match-3 Puzzle</text></svg>',
         screenshots: [],
-        tags: ['Puzzle', 'Match-3', 'Casual', 'Arcade'],
+        tags: ['Arcade', 'Match-3', 'Casual'],
         author: 'WebXinXin Games',
         version: '1.0.0',
         controls: 'Click or tap to swap adjacent candies and create matches of 3 or more identical candies.',
@@ -340,7 +340,7 @@ export const loadGameDetails = async (gameId) => {
           <p>Get ready for the ultimate motorcycle racing experience!</p>`,
         thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="bikeBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%231e3c72;stop-opacity:1" /><stop offset="50%" style="stop-color:%232a5298;stop-opacity:1" /><stop offset="100%" style="stop-color:%23ff6b35;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23bikeBg)"/><circle cx="60" cy="120" r="20" fill="white" opacity="0.8"/><circle cx="240" cy="80" r="15" fill="white" opacity="0.6"/><circle cx="80" cy="60" r="12" fill="white" opacity="0.7"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">🏍️</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Bike Racing</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Racing Adventure</text></svg>',
         screenshots: [],
-        tags: ['Racing', 'Sports', 'Arcade', 'Action'],
+        tags: ['Sports', 'Racing', 'Action'],
         author: 'WebXinXin Games',
         version: '1.0.0',
         controls: 'Use arrow keys or WASD to control your bike. Balance carefully to avoid crashes and maintain speed.',
@@ -377,7 +377,7 @@ export const loadGameDetails = async (gameId) => {
           <p>Begin your legendary adventure and become the hero of your own story!</p>`,
         thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="rpgBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%232c1810;stop-opacity:1" /><stop offset="30%" style="stop-color:%238b4513;stop-opacity:1" /><stop offset="70%" style="stop-color:%23daa520;stop-opacity:1" /><stop offset="100%" style="stop-color:%23ffd700;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23rpgBg)"/><circle cx="70" cy="70" r="18" fill="white" opacity="0.7"/><circle cx="230" cy="60" r="15" fill="white" opacity="0.6"/><circle cx="80" cy="150" r="12" fill="white" opacity="0.8"/><circle cx="220" cy="140" r="20" fill="white" opacity="0.5"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">⚔️</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">RPG Demo</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Epic Adventure</text></svg>',
         screenshots: [],
-        tags: ['RPG', 'Adventure', 'Strategy', 'Fantasy'],
+        tags: ['Adventure', 'Fantasy', 'Strategy'],
         author: 'WebXinXin Games',
         version: '1.0.0',
         controls: 'Use arrow keys or WASD to move your character. Click on interface elements to interact, battle, and manage your inventory.',
@@ -413,7 +413,7 @@ export const loadGameDetails = async (gameId) => {
           <p>Test your precision and timing in this captivating circular adventure!</p>`,
         thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><radialGradient id="circleBg" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:1" /><stop offset="50%" style="stop-color:%23764ba2;stop-opacity:1" /><stop offset="100%" style="stop-color:%23f093fb;stop-opacity:1" /></radialGradient></defs><rect width="300" height="200" fill="url(%23circleBg)"/><circle cx="150" cy="100" r="60" fill="none" stroke="white" stroke-width="3" opacity="0.8"/><circle cx="150" cy="100" r="40" fill="none" stroke="white" stroke-width="2" opacity="0.6"/><circle cx="150" cy="100" r="20" fill="none" stroke="white" stroke-width="2" opacity="0.7"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">⭕</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Circle Path</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Navigate Circles</text></svg>',
         screenshots: [],
-        tags: ['Arcade', 'Puzzle', 'Casual', 'Action'],
+        tags: ['Arcade', 'Casual', 'Action'],
         author: 'WebXinXin Games',
         version: '1.0.0',
         controls: 'Click or tap to change direction and navigate through the circular paths. Time your moves carefully to avoid obstacles.',
