@@ -3,11 +3,11 @@
   "description": "Classic snake game. Control the snake using arrow keys, eat food to grow longer, and avoid hitting walls or yourself.",
   "author": "WebGameMulti Team",
   "version": "1.0.0",
-  "tags": ["Puzzle", "Casual", "Classic"],
+  "tags": ["Arcade", "Classic", "Casual"],
   "thumbnail": "image/cover.png",
-  "controls": "Arrow keys",
+  "controls": "Use arrow keys to control the snake's movement",
   "minWidth": 350,
   "minHeight": 450,
   "createdAt": "2023-06-15",
-  "updatedAt": "2023-06-15"
+  "updatedAt": "2024-01-15"
 } 

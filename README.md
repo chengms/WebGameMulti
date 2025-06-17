@@ -96,5 +96,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact Information
 
-- GitHub: [github.com/webgamemulti](https://github.com/webgamemulti)
-- Email: info@webgamemulti.com 
+- Email: chengms666@gmail.com 

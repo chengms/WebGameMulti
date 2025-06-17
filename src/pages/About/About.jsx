@@ -57,10 +57,8 @@ function About() {
             <li>Analytics and feedback from real players</li>
           </ul>
           <p>
-            Interested in adding your game to our platform? Check out our 
-            <a href="https://github.com/gametimebar/docs" className="about__link">
-              developer documentation
-            </a>.
+            Interested in adding your game to our platform? Contact us for more information about 
+            our developer documentation and integration guidelines.
           </p>
         </section>
         
@@ -88,15 +86,9 @@ function About() {
           </p>
           <ul className="about__list about__list--contact">
             <li>
-              <strong>GitHub:</strong> 
-              <a href="https://github.com/gametimebar" className="about__link">
-                github.com/gametimebar
-              </a>
-            </li>
-            <li>
               <strong>Email:</strong> 
-              <a href="mailto:info@gametime.bar" className="about__link">
-                info@gametime.bar
+              <a href="mailto:chengms666@gmail.com" className="about__link">
+                chengms666@gmail.com
               </a>
             </li>
           </ul>

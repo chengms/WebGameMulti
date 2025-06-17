@@ -3,33 +3,51 @@ description:
 globs: 
 alwaysApply: true
 ---
-# WebGameMulti Project Overview
+# GameTime Bar Project Overview
 
-WebGameMulti is a web-based gaming platform that hosts and displays multiple web games in a unified interface. It allows users to browse, search, and play various HTML5 games.
+GameTime Bar is a web-based gaming platform that hosts and displays multiple web games in a unified interface. It allows users to browse, search, and play various HTML5 games in English.
 
 ## Key Features
 
-- Game catalog with filtering by categories and search
-- Responsive design for various screen sizes
+- Game catalog with filtering by categories and search functionality
+- Responsive design for various screen sizes and devices
 - Individual game detail pages with metadata and game embedding
 - User settings and preferences system
-- Multiple integrated games with consistent UI
+- Multiple integrated games with consistent English UI
+- Modern gaming entertainment hub experience
 
 ## Key Technologies
 
-- **React**: Frontend framework
-- **React Router**: For navigation between pages
-- **Context API**: For state management
-- **CSS Modules**: For component styling
+- **React**: Frontend framework for component-based architecture
+- **React Router**: For navigation between pages and game routing
+- **Context API**: For state management and data sharing
+- **CSS Modules**: For component styling and responsive design
 - **HTML5 Games**: Individual games integrated into the platform
+- **Vite**: Build tool and development server
 
 ## Main Entry Points
 
-- [index.html](mdc:index.html): HTML entry point
+- [index.html](mdc:index.html): HTML entry point with GameTime Bar branding
 - [src/main.jsx](mdc:src/main.jsx): JavaScript entry point
 - [src/App.jsx](mdc:src/App.jsx): Main application component with routing
 
 ## Game Integration
 
-Games are integrated via the `games` directory and loaded through the game loader utility at [src/utils/gameLoader.js](mdc:src/utils/gameLoader.js).
+**CRITICAL**: Games MUST be placed in the [games](mdc:games) directory and loaded through the game loader utility at [src/utils/gameLoader.js](mdc:src/utils/gameLoader.js).
+
+## Language Requirements
+
+**ALL user-facing content MUST be in English**, including:
+- UI elements and navigation
+- Game names and descriptions
+- Error messages and notifications  
+- Form labels and placeholders
+
+## Project Structure
+
+- [games](mdc:games): Directory containing all game implementations
+- [src/components](mdc:src/components): Reusable React components
+- [src/pages](mdc:src/pages): Page-level components
+- [src/contexts](mdc:src/contexts): React context providers
+- [src/utils](mdc:src/utils): Utility functions and game loading logic
 

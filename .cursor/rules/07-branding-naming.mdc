@@ -1,0 +1,111 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Branding and Naming Conventions
+
+## Brand Identity
+
+The project is branded as **GameTime Bar** - a modern gaming entertainment hub.
+
+## Brand Usage
+
+### Primary Brand Name
+- **Correct**: GameTime Bar
+- **Incorrect**: GameTime, WebGameMulti, Game Time Bar
+
+### Brand References in Code
+
+#### HTML Title and Meta Tags
+```html
+<title>GameTime Bar</title>
+<meta name="description" content="GameTime Bar - Your Ultimate Gaming Entertainment Hub" />
+<meta property="og:title" content="GameTime Bar" />
+```
+
+#### Component Display
+```jsx
+// In Header component
+<div className="header__logo">
+  <Link to="/" className="header__logo-link">
+    <span className="header__logo-icon">🎮</span>
+    GameTime Bar
+  </Link>
+</div>
+```
+
+## File and Directory Naming
+
+### Game Directory Structure
+- Game directories should use kebab-case: `snake`, `tic-tac-toe`, `memory-match`
+- Avoid spaces or special characters in directory names
+- Use descriptive, English names
+
+### Component Files
+- React components use PascalCase: `GameCard.jsx`, `Header.jsx`
+- Utility files use camelCase: `gameLoader.js`, `userSettings.js`
+- Style files match component names: `Header.css`, `GameCard.css`
+
+### Image Files
+- Use descriptive names: `cover.png`, `thumbnail.jpg`
+- Avoid generic names like `image1.png`
+- Use consistent naming across games
+
+## Text Content Standards
+
+### Welcome Messages
+```jsx
+// Home page welcome text
+<h1>Welcome to GameTime Bar</h1>
+<p>Discover and play a variety of fun web games</p>
+```
+
+### Navigation Labels
+```jsx
+// Navigation items
+<Link to="/">Home</Link>
+<Link to="/about">About</Link>
+<Link to="/settings">Settings</Link>
+```
+
+### Search and Form Elements
+```jsx
+// Search functionality
+<input placeholder="Search games..." />
+<button>Search</button>
+```
+
+## Domain and URL References
+
+### Production Domain
+- Primary domain: `https://gametime.bar`
+- All absolute URLs should reference this domain
+
+### Development References
+- Local development references should be relative
+- Avoid hardcoded localhost URLs in production code
+
+## Consistency Requirements
+
+### Brand Consistency
+- Always use "GameTime Bar" as the complete brand name
+- Maintain consistent capitalization
+- Use the 🎮 emoji as the brand icon
+
+### Language Consistency
+- All user-facing text must be in English
+- Use consistent terminology across the platform
+- Maintain professional, friendly tone
+
+## File References
+
+### Key Files with Brand References
+- [index.html](mdc:index.html): Main HTML with title and meta tags
+- [src/components/layout/Header.jsx](mdc:src/components/layout/Header.jsx): Header with logo
+- [src/pages/Home/Home.jsx](mdc:src/pages/Home/Home.jsx): Welcome messages
+- [src/pages/About/About.jsx](mdc:src/pages/About/About.jsx): About page content
+
+### Configuration Files
+- [package.json](mdc:package.json): Project metadata and dependencies
+- [vite.config.js](mdc:vite.config.js): Build configuration

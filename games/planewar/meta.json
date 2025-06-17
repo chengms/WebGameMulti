@@ -1,0 +1,15 @@
+{
+  "id": "planewar",
+  "name": "Plane War",
+  "description": "An exciting space shooter game! Pilot your fighter plane, shoot down enemy aircraft, collect power-ups, and survive as long as possible in this intense aerial combat.",
+  "tags": ["Action", "Shooter", "Arcade"],
+  "author": "WebGameMulti Team",
+  "version": "1.0.0",
+  "controls": "Drag your plane to move around the screen. Your plane automatically shoots at enemies. Collect power-ups to upgrade your weapons and health.",
+  "createdAt": "2024-01-20",
+  "lastUpdated": "2024-01-20",
+  "category": "Action",
+  "difficulty": "Medium",
+  "players": "Single Player",
+  "gameUrl": "/games/planewar/index.html"
+} 

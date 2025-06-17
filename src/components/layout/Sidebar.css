@@ -20,6 +20,19 @@
   margin-bottom: 20px;
   padding-bottom: 15px;
   border-bottom: 2px solid var(--color-accent);
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--transition-speed);
+  border-radius: var(--radius-small);
+  padding: 10px 8px 15px 8px;
+  margin: 0 -8px 20px -8px;
+}
+
+.sidebar__branding:hover {
+  background-color: var(--color-background-tertiary);
+  text-decoration: none;
+  color: inherit;
+  transform: translateY(-1px);
 }
 
 .sidebar__logo-icon {
