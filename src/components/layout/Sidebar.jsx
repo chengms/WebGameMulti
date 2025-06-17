@@ -22,6 +22,12 @@ function Sidebar() {
   const handleCategoryClick = (categoryId) => {
     setCategory(categoryId);
   };
+
+  const handleLogoClick = () => {
+    setCategory('all');
+    // 滚动到页面顶部
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   
   const getThemeIcon = () => {
     switch (settings.theme) {
@@ -39,10 +45,10 @@ function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar__content">
-        <div className="sidebar__branding">
+        <NavLink to="/" className="sidebar__branding" onClick={handleLogoClick}>
           <span className="sidebar__logo-icon">🎮</span>
           <h2 className="sidebar__logo-text">GameTime Bar</h2>
-        </div>
+        </NavLink>
         
         <h3 className="sidebar__title">Game Categories</h3>
         

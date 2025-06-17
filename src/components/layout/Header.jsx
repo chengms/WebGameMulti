@@ -20,13 +20,18 @@ function Header() {
     e.preventDefault();
     setSearch(localSearch);
   };
+
+  const handleLogoClick = () => {
+    // 滚动到页面顶部
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   
   return (
     <header className="header">
       <div className="container">
         <div className="header__content">
           <div className="header__logo">
-            <Link to="/" className="header__logo-link">
+            <Link to="/" className="header__logo-link" onClick={handleLogoClick}>
               <span className="header__logo-icon">🎮</span>
               GameTime Bar
             </Link>
