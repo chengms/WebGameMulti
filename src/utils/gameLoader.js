@@ -61,6 +61,15 @@ export const loadGames = async () => {
         tags: ['Board', 'Strategy', 'Classic', 'Puzzle'],
         author: 'WebGameMulti Team',
         createdAt: '2023-07-20'
+      },
+      {
+        id: 'crazy-cattle-3d',
+        name: 'Crazy Cattle 3D',
+        description: 'An exciting 3D cattle adventure game with immersive gameplay and stunning graphics. Navigate through challenging levels and experience the thrill of 3D gaming.',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234a90e2;stop-opacity:1" /><stop offset="100%" style="stop-color:%237b68ee;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23bg)"/><circle cx="80" cy="120" r="25" fill="white" opacity="0.9"/><circle cx="220" cy="80" r="20" fill="white" opacity="0.7"/><circle cx="250" cy="150" r="15" fill="white" opacity="0.5"/><text x="150" y="90" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">🐄</text><text x="150" y="120" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Crazy Cattle</text><text x="150" y="145" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">3D Adventure</text></svg>',
+        tags: ['Action', 'Adventure', '3D', 'Arcade'],
+        author: 'Crazy Cattle Games',
+        createdAt: '2024-01-15'
       }
     ];
     
@@ -196,6 +205,33 @@ export const loadGameDetails = async (gameId) => {
         createdAt: '2023-07-20',
         lastUpdated: '2023-07-20',
         gameUrl: '/games/tic-tac-toe/index.html'
+      },
+      'crazy-cattle-3d': {
+        id: 'crazy-cattle-3d',
+        name: 'Crazy Cattle 3D',
+        description: 'An exciting 3D cattle adventure game with immersive gameplay and stunning graphics. Navigate through challenging levels and experience the thrill of 3D gaming.',
+        fullDescription: `<p>Crazy Cattle 3D is an immersive 3D adventure game that takes you on an exciting journey through a vibrant cattle world.</p>
+          <p>Experience stunning 3D graphics and engaging gameplay as you navigate through challenging levels, overcome obstacles, and explore a beautifully crafted game world.</p>
+          <h3>Game Features:</h3>
+          <ul>
+            <li>Stunning 3D graphics and immersive gameplay</li>
+            <li>Multiple challenging levels to explore</li>
+            <li>Intuitive controls optimized for web browsers</li>
+            <li>Engaging adventure storyline</li>
+            <li>Smooth performance across different devices</li>
+          </ul>
+          <p>Embark on this thrilling 3D adventure and discover what makes Crazy Cattle 3D so captivating!</p>`,
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234a90e2;stop-opacity:1" /><stop offset="100%" style="stop-color:%237b68ee;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23bg)"/><circle cx="80" cy="120" r="25" fill="white" opacity="0.9"/><circle cx="220" cy="80" r="20" fill="white" opacity="0.7"/><circle cx="250" cy="150" r="15" fill="white" opacity="0.5"/><text x="150" y="90" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">🐄</text><text x="150" y="120" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Crazy Cattle</text><text x="150" y="145" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">3D Adventure</text></svg>',
+        screenshots: [],
+        tags: ['Action', 'Adventure', '3D', 'Arcade'],
+        author: 'Crazy Cattle Games',
+        version: '1.0.0',
+        controls: 'Use mouse and keyboard to control the game. Specific controls and instructions will be shown within the game interface.',
+        createdAt: '2024-01-15',
+        lastUpdated: '2024-01-15',
+        gameUrl: '/games/crazy-cattle-3d/index.html',
+        isExternal: true,
+        externalUrl: 'https://www.crazycattle-3d.info/crazy-cattle-3d.embed'
       }
     };
     

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crazy Cattle 3D - GameTime Bar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 95vw;
+            max-height: 95vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-title {
+            color: #333;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .loading-message {
+            color: #888;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .game-iframe {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            height: 600px;
+            min-height: 500px;
+            max-width: 1000px;
+            background: #f8f9fa;
+        }
+
+        .controls-info {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .controls-info h3 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .controls-info p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 2rem;
+            }
+            
+            .game-iframe {
+                height: 500px;
+                min-height: 400px;
+            }
+            
+            .game-container {
+                padding: 15px;
+                margin: 10px;
+            }
+            
+            .back-button {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-iframe {
+                height: 400px;
+                min-height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="javascript:history.back()" class="back-button">
+        ← Back to Games
+    </a>
+
+    <div class="game-container">
+        <div class="game-header">
+            <h1 class="game-title">🐄 Crazy Cattle 3D</h1>
+            <p class="game-subtitle">An Exciting 3D Cattle Adventure</p>
+            <p class="loading-message">Loading game... Please wait</p>
+        </div>
+
+        <iframe 
+            src="https://www.crazycattle-3d.info/crazy-cattle-3d.embed"
+            class="game-iframe"
+            allowfullscreen
+            allow="autoplay; encrypted-media; fullscreen"
+            title="Crazy Cattle 3D Game"
+            onload="document.querySelector('.loading-message').style.display='none'"
+            onerror="document.querySelector('.loading-message').textContent='Error loading game. Please try again later.'"
+        ></iframe>
+
+        <div class="controls-info">
+            <h3>Game Controls</h3>
+            <p>Use mouse and keyboard to control the game. Specific controls and instructions will be shown within the game interface.</p>
+        </div>
+    </div>
+
+    <script>
+        // Handle iframe loading
+        window.addEventListener('load', function() {
+            const iframe = document.querySelector('.game-iframe');
+            const loadingMessage = document.querySelector('.loading-message');
+            
+            // Set a timeout to hide loading message if iframe takes too long
+            setTimeout(function() {
+                if (loadingMessage.style.display !== 'none') {
+                    loadingMessage.textContent = 'Game loaded! Enjoy playing!';
+                    setTimeout(function() {
+                        loadingMessage.style.display = 'none';
+                    }, 2000);
+                }
+            }, 3000);
+        });
+
+        // Handle potential iframe errors
+        window.addEventListener('message', function(event) {
+            // Handle messages from the game iframe if needed
+            console.log('Message from game:', event.data);
+        });
+    </script>
+</body>
+</html> 

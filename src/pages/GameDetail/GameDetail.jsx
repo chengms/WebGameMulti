@@ -66,7 +66,9 @@ function GameDetail() {
   
   const handleFullscreenClick = () => {
     if (game) {
-      window.open(game.gameUrl, '_blank');
+      // Use external URL if available, otherwise use game URL
+      const targetUrl = game.isExternal && game.externalUrl ? game.externalUrl : game.gameUrl;
+      window.open(targetUrl, '_blank');
     }
   };
 
@@ -130,7 +132,7 @@ function GameDetail() {
               <div className="game-detail__game-container game-detail__game-container--full">
                 <div className="game-detail__game-wrapper">
                   <GameEmbed 
-                    gameUrl={game.gameUrl} 
+                    gameUrl={game.isExternal && game.externalUrl ? game.externalUrl : game.gameUrl} 
                     title={game.name} 
                     height={iframeHeight}
                   />
