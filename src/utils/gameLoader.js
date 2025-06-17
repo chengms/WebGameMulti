@@ -70,6 +70,15 @@ export const loadGames = async () => {
         tags: ['Action', 'Adventure', '3D', 'Arcade'],
         author: 'Crazy Cattle Games',
         createdAt: '2024-01-15'
+      },
+      {
+        id: 'candy-crush',
+        name: 'Candy Crush',
+        description: 'A sweet and addictive match-3 puzzle game. Match colorful candies to clear levels and achieve high scores in this delightful candy-themed adventure.',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="candyBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff6b9d;stop-opacity:1" /><stop offset="50%" style="stop-color:%23c44569;stop-opacity:1" /><stop offset="100%" style="stop-color:%23f8b500;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23candyBg)"/><circle cx="70" cy="60" r="15" fill="white" opacity="0.8"/><circle cx="230" cy="70" r="12" fill="white" opacity="0.6"/><circle cx="80" cy="140" r="10" fill="white" opacity="0.7"/><circle cx="220" cy="150" r="18" fill="white" opacity="0.5"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">🍬</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Candy Crush</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Match-3 Puzzle</text></svg>',
+        tags: ['Puzzle', 'Match-3', 'Casual', 'Arcade'],
+        author: 'WebXinXin Games',
+        createdAt: '2024-01-15'
       }
     ];
     
@@ -232,6 +241,42 @@ export const loadGameDetails = async (gameId) => {
         gameUrl: '/games/crazy-cattle-3d/index.html',
         isExternal: true,
         externalUrl: 'https://www.crazycattle-3d.info/crazy-cattle-3d.embed'
+      },
+      'candy-crush': {
+        id: 'candy-crush',
+        name: 'Candy Crush',
+        description: 'A sweet and addictive match-3 puzzle game. Match colorful candies to clear levels and achieve high scores in this delightful candy-themed adventure.',
+        fullDescription: `<p>Candy Crush is a delightful match-3 puzzle game that will satisfy your sweet tooth for challenging gameplay.</p>
+          <p>Swap adjacent candies to create matches of three or more identical pieces. Clear objectives, overcome obstacles, and progress through increasingly challenging levels in this colorful candy world.</p>
+          <h3>Game Features:</h3>
+          <ul>
+            <li>Hundreds of sweet and challenging levels</li>
+            <li>Colorful candy graphics and smooth animations</li>
+            <li>Special power-ups and candy combinations</li>
+            <li>Progressive difficulty with unique objectives</li>
+            <li>Optimized for both desktop and mobile play</li>
+            <li>No downloads required - play instantly in your browser</li>
+          </ul>
+          <h3>How to Play:</h3>
+          <ul>
+            <li>Click or tap to swap adjacent candies</li>
+            <li>Match 3 or more candies of the same type</li>
+            <li>Complete level objectives before running out of moves</li>
+            <li>Create special candies by matching 4 or more pieces</li>
+            <li>Use power-ups strategically to clear difficult levels</li>
+          </ul>
+          <p>Get ready for a sweet adventure that will keep you coming back for more!</p>`,
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="candyBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff6b9d;stop-opacity:1" /><stop offset="50%" style="stop-color:%23c44569;stop-opacity:1" /><stop offset="100%" style="stop-color:%23f8b500;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23candyBg)"/><circle cx="70" cy="60" r="15" fill="white" opacity="0.8"/><circle cx="230" cy="70" r="12" fill="white" opacity="0.6"/><circle cx="80" cy="140" r="10" fill="white" opacity="0.7"/><circle cx="220" cy="150" r="18" fill="white" opacity="0.5"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">🍬</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Candy Crush</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Match-3 Puzzle</text></svg>',
+        screenshots: [],
+        tags: ['Puzzle', 'Match-3', 'Casual', 'Arcade'],
+        author: 'WebXinXin Games',
+        version: '1.0.0',
+        controls: 'Click or tap to swap adjacent candies and create matches of 3 or more identical candies.',
+        createdAt: '2024-01-15',
+        lastUpdated: '2024-01-15',
+        gameUrl: '/games/candy-crush/index.html',
+        isExternal: true,
+        externalUrl: 'http://game.webxinxin.com/candy/'
       }
     };
     
