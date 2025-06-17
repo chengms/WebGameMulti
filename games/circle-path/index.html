@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Path - GameTime Bar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle at center, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            max-width: 95vw;
+            max-height: 95vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: conic-gradient(from 0deg, #667eea, #764ba2, #f093fb, #667eea);
+            animation: circleGradient 3s linear infinite;
+        }
+
+        @keyframes circleGradient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-title {
+            color: #764ba2;
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            background: conic-gradient(from 45deg, #667eea, #764ba2, #f093fb, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .loading-message {
+            color: #764ba2;
+            font-style: italic;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .game-iframe {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            height: 700px;
+            min-height: 600px;
+            max-width: 900px;
+            background: #f8f9fa;
+        }
+
+        .controls-info {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f4ff, #faf0ff);
+            border-radius: 15px;
+            text-align: center;
+            max-width: 800px;
+            border: 2px solid rgba(118, 75, 162, 0.2);
+        }
+
+        .controls-info h3 {
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .controls-info p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(118, 75, 162, 0.3);
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #764ba2;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.3);
+            border-color: rgba(118, 75, 162, 0.5);
+        }
+
+        .circle-decorations {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .circle-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: orbit 10s linear infinite;
+        }
+
+        .circle-icon:nth-child(1) { 
+            top: 20%; 
+            left: 20%; 
+            animation-delay: 0s; 
+            animation-duration: 8s;
+        }
+        .circle-icon:nth-child(2) { 
+            top: 30%; 
+            right: 15%; 
+            animation-delay: 2s; 
+            animation-duration: 12s;
+        }
+        .circle-icon:nth-child(3) { 
+            bottom: 25%; 
+            left: 15%; 
+            animation-delay: 4s; 
+            animation-duration: 10s;
+        }
+
+        @keyframes orbit {
+            0% { transform: rotate(0deg) translateX(50px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(50px) rotate(-360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 2.2rem;
+            }
+            
+            .game-iframe {
+                height: 600px;
+                min-height: 500px;
+            }
+            
+            .game-container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .back-button {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-iframe {
+                height: 500px;
+                min-height: 400px;
+            }
+            
+            .game-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="javascript:history.back()" class="back-button">
+        ← Back to Games
+    </a>
+
+    <div class="game-container">
+        <div class="circle-decorations">
+            <div class="circle-icon">⭕</div>
+            <div class="circle-icon">🔵</div>
+            <div class="circle-icon">🟣</div>
+        </div>
+
+        <div class="game-header">
+            <h1 class="game-title">⭕ Circle Path</h1>
+            <p class="game-subtitle">Navigate Circular Challenges</p>
+            <p class="loading-message">Loading circular paths... Please wait</p>
+        </div>
+
+        <iframe 
+            src="http://game.webxinxin.com/circlepath/"
+            class="game-iframe"
+            allowfullscreen
+            allow="autoplay; encrypted-media; fullscreen"
+            title="Circle Path Game"
+            onload="document.querySelector('.loading-message').style.display='none'"
+            onerror="document.querySelector('.loading-message').textContent='Error loading game. Please try again later.'"
+        ></iframe>
+
+        <div class="controls-info">
+            <h3>🎮 Game Controls</h3>
+            <p>Click or tap to change direction and navigate through the circular paths. Time your moves carefully to avoid obstacles and complete each challenging level!</p>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            const iframe = document.querySelector('.game-iframe');
+            const loadingMessage = document.querySelector('.loading-message');
+            
+            setTimeout(function() {
+                if (loadingMessage.style.display !== 'none') {
+                    loadingMessage.textContent = 'Game loaded! Start navigating!';
+                    setTimeout(function() {
+                        loadingMessage.style.display = 'none';
+                    }, 2000);
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html> 

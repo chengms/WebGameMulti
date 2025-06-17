@@ -79,6 +79,42 @@ export const loadGames = async () => {
         tags: ['Puzzle', 'Match-3', 'Casual', 'Arcade'],
         author: 'WebXinXin Games',
         createdAt: '2024-01-15'
+      },
+      {
+        id: 'bike-racing',
+        name: 'Bike Racing',
+        description: 'Experience thrilling motorcycle racing with realistic physics and challenging tracks. Race through different environments and compete for the best times.',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="bikeBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%231e3c72;stop-opacity:1" /><stop offset="50%" style="stop-color:%232a5298;stop-opacity:1" /><stop offset="100%" style="stop-color:%23ff6b35;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23bikeBg)"/><circle cx="60" cy="120" r="20" fill="white" opacity="0.8"/><circle cx="240" cy="80" r="15" fill="white" opacity="0.6"/><circle cx="80" cy="60" r="12" fill="white" opacity="0.7"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">🏍️</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Bike Racing</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Racing Adventure</text></svg>',
+        tags: ['Racing', 'Sports', 'Arcade', 'Action'],
+        author: 'WebXinXin Games',
+        createdAt: '2024-01-15'
+      },
+      {
+        id: 'rpg-demo',
+        name: 'RPG Demo',
+        description: 'Embark on an epic role-playing adventure with classic RPG elements. Explore worlds, battle monsters, and level up your character in this engaging demo.',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="rpgBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%232c1810;stop-opacity:1" /><stop offset="30%" style="stop-color:%238b4513;stop-opacity:1" /><stop offset="70%" style="stop-color:%23daa520;stop-opacity:1" /><stop offset="100%" style="stop-color:%23ffd700;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23rpgBg)"/><circle cx="70" cy="70" r="18" fill="white" opacity="0.7"/><circle cx="230" cy="60" r="15" fill="white" opacity="0.6"/><circle cx="80" cy="150" r="12" fill="white" opacity="0.8"/><circle cx="220" cy="140" r="20" fill="white" opacity="0.5"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">⚔️</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">RPG Demo</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Epic Adventure</text></svg>',
+        tags: ['RPG', 'Adventure', 'Strategy', 'Fantasy'],
+        author: 'WebXinXin Games',
+        createdAt: '2024-01-15'
+      },
+      {
+        id: 'circle-path',
+        name: 'Circle Path',
+        description: 'Navigate through circular paths in this challenging arcade game. Test your timing and precision as you guide your character through rotating obstacles and pathways.',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><radialGradient id="circleBg" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:1" /><stop offset="50%" style="stop-color:%23764ba2;stop-opacity:1" /><stop offset="100%" style="stop-color:%23f093fb;stop-opacity:1" /></radialGradient></defs><rect width="300" height="200" fill="url(%23circleBg)"/><circle cx="150" cy="100" r="60" fill="none" stroke="white" stroke-width="3" opacity="0.8"/><circle cx="150" cy="100" r="40" fill="none" stroke="white" stroke-width="2" opacity="0.6"/><circle cx="150" cy="100" r="20" fill="none" stroke="white" stroke-width="2" opacity="0.7"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">⭕</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Circle Path</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Navigate Circles</text></svg>',
+        tags: ['Arcade', 'Puzzle', 'Casual', 'Action'],
+        author: 'WebXinXin Games',
+        createdAt: '2024-01-15'
+      },
+      {
+        id: 'endless-run',
+        name: 'Endless Run',
+        description: 'Run as far as you can in this exciting endless running adventure! Jump over obstacles, collect coins, and beat your high score in this fast-paced arcade game.',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="runBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:1" /><stop offset="25%" style="stop-color:%23764ba2;stop-opacity:1" /><stop offset="50%" style="stop-color:%23f093fb;stop-opacity:1" /><stop offset="75%" style="stop-color:%23f5576c;stop-opacity:1" /><stop offset="100%" style="stop-color:%234facfe;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23runBg)"/><circle cx="60" cy="80" r="15" fill="white" opacity="0.7"/><circle cx="240" cy="120" r="12" fill="white" opacity="0.6"/><circle cx="80" cy="160" r="18" fill="white" opacity="0.8"/><circle cx="220" cy="60" r="10" fill="white" opacity="0.5"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">🏃</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Endless Run</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Running Adventure</text></svg>',
+        tags: ['Action', 'Arcade', 'Running', 'Casual'],
+        author: 'WebXinXin Games',
+        createdAt: '2024-01-15'
       }
     ];
     
@@ -277,6 +313,152 @@ export const loadGameDetails = async (gameId) => {
         gameUrl: '/games/candy-crush/index.html',
         isExternal: true,
         externalUrl: 'http://game.webxinxin.com/candy/'
+      },
+      'bike-racing': {
+        id: 'bike-racing',
+        name: 'Bike Racing',
+        description: 'Experience thrilling motorcycle racing with realistic physics and challenging tracks. Race through different environments and compete for the best times.',
+        fullDescription: `<p>Bike Racing is an adrenaline-pumping motorcycle racing game that puts you in control of powerful bikes on challenging tracks.</p>
+          <p>Experience the thrill of high-speed racing with realistic physics, stunning environments, and competitive gameplay that will test your racing skills to the limit.</p>
+          <h3>Game Features:</h3>
+          <ul>
+            <li>Realistic motorcycle physics and handling</li>
+            <li>Multiple challenging tracks and environments</li>
+            <li>High-speed racing action</li>
+            <li>Competitive time-based challenges</li>
+            <li>Smooth controls optimized for web browsers</li>
+            <li>Stunning graphics and immersive sound effects</li>
+          </ul>
+          <h3>How to Play:</h3>
+          <ul>
+            <li>Use arrow keys or WASD to control your bike</li>
+            <li>Balance carefully to avoid crashes</li>
+            <li>Maintain speed while navigating obstacles</li>
+            <li>Complete tracks in the shortest time possible</li>
+            <li>Master different terrains and weather conditions</li>
+          </ul>
+          <p>Get ready for the ultimate motorcycle racing experience!</p>`,
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="bikeBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%231e3c72;stop-opacity:1" /><stop offset="50%" style="stop-color:%232a5298;stop-opacity:1" /><stop offset="100%" style="stop-color:%23ff6b35;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23bikeBg)"/><circle cx="60" cy="120" r="20" fill="white" opacity="0.8"/><circle cx="240" cy="80" r="15" fill="white" opacity="0.6"/><circle cx="80" cy="60" r="12" fill="white" opacity="0.7"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">🏍️</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Bike Racing</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Racing Adventure</text></svg>',
+        screenshots: [],
+        tags: ['Racing', 'Sports', 'Arcade', 'Action'],
+        author: 'WebXinXin Games',
+        version: '1.0.0',
+        controls: 'Use arrow keys or WASD to control your bike. Balance carefully to avoid crashes and maintain speed.',
+        createdAt: '2024-01-15',
+        lastUpdated: '2024-01-15',
+        gameUrl: '/games/bike-racing/index.html',
+        isExternal: true,
+        externalUrl: 'http://game.webxinxin.com/bike'
+      },
+      'rpg-demo': {
+        id: 'rpg-demo',
+        name: 'RPG Demo',
+        description: 'Embark on an epic role-playing adventure with classic RPG elements. Explore worlds, battle monsters, and level up your character in this engaging demo.',
+        fullDescription: `<p>RPG Demo is an immersive role-playing game that brings classic RPG elements to your browser.</p>
+          <p>Embark on an epic adventure through fantastical worlds, battle fearsome monsters, level up your character, and experience the depth and excitement of traditional RPG gameplay.</p>
+          <h3>Game Features:</h3>
+          <ul>
+            <li>Classic RPG gameplay with modern touches</li>
+            <li>Character progression and leveling system</li>
+            <li>Epic battles against monsters and bosses</li>
+            <li>Immersive storyline and world exploration</li>
+            <li>Inventory management and equipment system</li>
+            <li>Strategic combat mechanics</li>
+          </ul>
+          <h3>How to Play:</h3>
+          <ul>
+            <li>Use arrow keys or WASD to move your character</li>
+            <li>Click on interface elements to interact</li>
+            <li>Engage in battles with monsters</li>
+            <li>Manage your inventory and equipment</li>
+            <li>Level up your character to become stronger</li>
+            <li>Explore the world and complete quests</li>
+          </ul>
+          <p>Begin your legendary adventure and become the hero of your own story!</p>`,
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="rpgBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%232c1810;stop-opacity:1" /><stop offset="30%" style="stop-color:%238b4513;stop-opacity:1" /><stop offset="70%" style="stop-color:%23daa520;stop-opacity:1" /><stop offset="100%" style="stop-color:%23ffd700;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23rpgBg)"/><circle cx="70" cy="70" r="18" fill="white" opacity="0.7"/><circle cx="230" cy="60" r="15" fill="white" opacity="0.6"/><circle cx="80" cy="150" r="12" fill="white" opacity="0.8"/><circle cx="220" cy="140" r="20" fill="white" opacity="0.5"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">⚔️</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">RPG Demo</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Epic Adventure</text></svg>',
+        screenshots: [],
+        tags: ['RPG', 'Adventure', 'Strategy', 'Fantasy'],
+        author: 'WebXinXin Games',
+        version: '1.0.0',
+        controls: 'Use arrow keys or WASD to move your character. Click on interface elements to interact, battle, and manage your inventory.',
+        createdAt: '2024-01-15',
+        lastUpdated: '2024-01-15',
+        gameUrl: '/games/rpg-demo/index.html',
+        isExternal: true,
+        externalUrl: 'http://game.webxinxin.com/rpgdemo/'
+      },
+      'circle-path': {
+        id: 'circle-path',
+        name: 'Circle Path',
+        description: 'Navigate through circular paths in this challenging arcade game. Test your timing and precision as you guide your character through rotating obstacles and pathways.',
+        fullDescription: `<p>Circle Path is a challenging arcade game that tests your timing, precision, and reflexes.</p>
+          <p>Navigate through intricate circular paths and rotating obstacles in this mesmerizing game that combines simple controls with increasingly complex challenges.</p>
+          <h3>Game Features:</h3>
+          <ul>
+            <li>Unique circular path navigation mechanics</li>
+            <li>Progressively challenging levels</li>
+            <li>Smooth and responsive controls</li>
+            <li>Beautiful geometric visual design</li>
+            <li>Addictive gameplay that's easy to learn</li>
+            <li>Perfect for quick gaming sessions</li>
+          </ul>
+          <h3>How to Play:</h3>
+          <ul>
+            <li>Click or tap to change direction</li>
+            <li>Navigate through circular paths carefully</li>
+            <li>Time your moves to avoid obstacles</li>
+            <li>Follow the path without hitting walls</li>
+            <li>Complete levels to unlock new challenges</li>
+          </ul>
+          <p>Test your precision and timing in this captivating circular adventure!</p>`,
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><radialGradient id="circleBg" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:1" /><stop offset="50%" style="stop-color:%23764ba2;stop-opacity:1" /><stop offset="100%" style="stop-color:%23f093fb;stop-opacity:1" /></radialGradient></defs><rect width="300" height="200" fill="url(%23circleBg)"/><circle cx="150" cy="100" r="60" fill="none" stroke="white" stroke-width="3" opacity="0.8"/><circle cx="150" cy="100" r="40" fill="none" stroke="white" stroke-width="2" opacity="0.6"/><circle cx="150" cy="100" r="20" fill="none" stroke="white" stroke-width="2" opacity="0.7"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">⭕</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Circle Path</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Navigate Circles</text></svg>',
+        screenshots: [],
+        tags: ['Arcade', 'Puzzle', 'Casual', 'Action'],
+        author: 'WebXinXin Games',
+        version: '1.0.0',
+        controls: 'Click or tap to change direction and navigate through the circular paths. Time your moves carefully to avoid obstacles.',
+        createdAt: '2024-01-15',
+        lastUpdated: '2024-01-15',
+        gameUrl: '/games/circle-path/index.html',
+        isExternal: true,
+        externalUrl: 'http://game.webxinxin.com/circlepath/'
+      },
+      'endless-run': {
+        id: 'endless-run',
+        name: 'Endless Run',
+        description: 'Run as far as you can in this exciting endless running adventure! Jump over obstacles, collect coins, and beat your high score in this fast-paced arcade game.',
+        fullDescription: `<p>Endless Run is an exhilarating endless running game that challenges you to run as far as possible while avoiding obstacles and collecting rewards.</p>
+          <p>Experience fast-paced arcade action with smooth controls, challenging obstacles, and addictive gameplay that will keep you coming back to beat your high score.</p>
+          <h3>Game Features:</h3>
+          <ul>
+            <li>Endless running gameplay with increasing difficulty</li>
+            <li>Smooth and responsive jump controls</li>
+            <li>Collectible coins and power-ups</li>
+            <li>High score tracking and achievements</li>
+            <li>Challenging obstacles and terrain variations</li>
+            <li>Fast-paced arcade action</li>
+          </ul>
+          <h3>How to Play:</h3>
+          <ul>
+            <li>Use spacebar or click to jump over obstacles</li>
+            <li>Collect coins to boost your score</li>
+            <li>Avoid hitting obstacles to keep running</li>
+            <li>Time your jumps perfectly for maximum distance</li>
+            <li>Collect power-ups for special abilities</li>
+            <li>Challenge yourself to beat your high score</li>
+          </ul>
+          <p>Start running and see how far you can go in this endless adventure!</p>`,
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="runBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:1" /><stop offset="25%" style="stop-color:%23764ba2;stop-opacity:1" /><stop offset="50%" style="stop-color:%23f093fb;stop-opacity:1" /><stop offset="75%" style="stop-color:%23f5576c;stop-opacity:1" /><stop offset="100%" style="stop-color:%234facfe;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23runBg)"/><circle cx="60" cy="80" r="15" fill="white" opacity="0.7"/><circle cx="240" cy="120" r="12" fill="white" opacity="0.6"/><circle cx="80" cy="160" r="18" fill="white" opacity="0.8"/><circle cx="220" cy="60" r="10" fill="white" opacity="0.5"/><text x="150" y="85" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">🏃</text><text x="150" y="115" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white" text-anchor="middle">Endless Run</text><text x="150" y="140" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Running Adventure</text></svg>',
+        screenshots: [],
+        tags: ['Action', 'Arcade', 'Running', 'Casual'],
+        author: 'WebXinXin Games',
+        version: '1.0.0',
+        controls: 'Use spacebar or click to jump over obstacles. Collect coins and power-ups to boost your score and keep running!',
+        createdAt: '2024-01-15',
+        lastUpdated: '2024-01-15',
+        gameUrl: '/games/endless-run/index.html',
+        isExternal: true,
+        externalUrl: 'http://game.webxinxin.com/run/'
       }
     };
     
