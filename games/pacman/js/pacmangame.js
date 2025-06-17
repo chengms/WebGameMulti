@@ -201,18 +201,141 @@ PacmanGame.prototype = {
     },
     
     gimeMeExitOrder: function(ghost) {
-        this.game.time.events.add(Math.random() * 3000, this.sendExitOrder, this, ghost);
+        this.game.game.time.events.add(Math.random() * 3000, this.sendExitOrder, this, ghost);
     },
         
     killPacman: function() {
         this.pacman.isDead = true;
         this.stopGhosts();
+        this.showGameOverMessage();
     },
     
     stopGhosts: function() {
         for (var i=0; i<this.ghosts.length; i++) {
             this.ghosts[i].mode = this.ghosts[i].STOP;
         }
+    },
+    
+    showGameOverMessage: function() {
+        // 创建游戏结束遮罩
+        this.gameOverOverlay = this.add.graphics(0, 0);
+        this.gameOverOverlay.beginFill(0x000000, 0.7);
+        this.gameOverOverlay.drawRect(0, 0, 448, 496);
+        this.gameOverOverlay.endFill();
+        
+        // 游戏结束文本
+        this.gameOverText = this.add.text(224, 200, "GAME OVER", { 
+            fontSize: "32px", 
+            fill: "#ff0000", 
+            fontWeight: "bold" 
+        });
+        this.gameOverText.anchor.setTo(0.5);
+        
+        // 最终分数
+        this.finalScoreText = this.add.text(224, 250, "Final Score: " + this.score, { 
+            fontSize: "20px", 
+            fill: "#ffffff" 
+        });
+        this.finalScoreText.anchor.setTo(0.5);
+        
+        // 重新开始提示
+        this.restartText = this.add.text(224, 300, "Press SPACE to restart", { 
+            fontSize: "16px", 
+            fill: "#ffff00" 
+        });
+        this.restartText.anchor.setTo(0.5);
+        
+        // 添加重新开始键
+        this.spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.spaceKey.onDown.add(this.restartGame, this);
+    },
+    
+    showVictoryMessage: function() {
+        // 停止所有鬼魂
+        this.stopGhosts();
+        
+        // 创建胜利遮罩
+        this.victoryOverlay = this.add.graphics(0, 0);
+        this.victoryOverlay.beginFill(0x000000, 0.7);
+        this.victoryOverlay.drawRect(0, 0, 448, 496);
+        this.victoryOverlay.endFill();
+        
+        // 胜利文本
+        this.victoryText = this.add.text(224, 200, "YOU WIN!", { 
+            fontSize: "32px", 
+            fill: "#00ff00", 
+            fontWeight: "bold" 
+        });
+        this.victoryText.anchor.setTo(0.5);
+        
+        // 最终分数
+        this.finalScoreText = this.add.text(224, 250, "Final Score: " + this.score, { 
+            fontSize: "20px", 
+            fill: "#ffffff" 
+        });
+        this.finalScoreText.anchor.setTo(0.5);
+        
+        // 下一关提示
+        this.nextLevelText = this.add.text(224, 300, "Press SPACE for next level", { 
+            fontSize: "16px", 
+            fill: "#ffff00" 
+        });
+        this.nextLevelText.anchor.setTo(0.5);
+        
+        // 添加下一关键
+        this.spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.spaceKey.onDown.add(this.nextLevel, this);
+    },
+    
+    restartGame: function() {
+        this.game.state.restart();
+    },
+    
+    nextLevel: function() {
+        // 重新生成所有豆子，增加难度
+        this.dots.callAll('revive');
+        this.pills.callAll('revive');
+        this.numDots = this.TOTAL_DOTS;
+        this.numPills = 4; // 重置药丸数量
+        
+        // 清除胜利界面
+        if (this.victoryOverlay) {
+            this.victoryOverlay.destroy();
+            this.victoryText.destroy();
+            this.finalScoreText.destroy();
+            this.nextLevelText.destroy();
+        }
+        
+        // 重置Pacman
+        this.pacman.sprite.x = (14 * 16) + 8;
+        this.pacman.sprite.y = (17 * 16) + 8;
+        this.pacman.sprite.body.reset(this.pacman.sprite.x, this.pacman.sprite.y);
+        this.pacman.current = Phaser.NONE;
+        this.pacman.isDead = false;
+        this.pacman.isAnimatingDeath = false;
+        this.pacman.sprite.play('munch');
+        this.pacman.move(Phaser.LEFT);
+        
+        // 重置鬼魂
+        this.blinky.resetGhost();
+        this.pinky.resetGhost();
+        this.inky.resetGhost();
+        this.clyde.resetGhost();
+        
+        // 重置游戏状态
+        this.isInkyOut = false;
+        this.isClydeOut = false;
+        this.currentMode = 0;
+        this.changeModeTimer = this.time.time + this.TIME_MODES[this.currentMode].time;
+        this.isPaused = false;
+        
+        // 移除空格键监听
+        if (this.spaceKey) {
+            this.spaceKey.onDown.removeAll();
+        }
+        
+        // 重新发送Pinky出来的命令
+        this.sendExitOrder(this.pinky);
     },
 
     update: function () {
@@ -226,6 +349,11 @@ PacmanGame.prototype = {
             this.overflowText.text = "Overflow ON";
         } else {
             this.overflowText.text = "";
+        }
+        
+        // 如果游戏结束或胜利，只更新显示，不更新游戏逻辑
+        if (this.gameOverOverlay || this.victoryOverlay) {
+            return;
         }
         
         if (!this.pacman.isDead) {
