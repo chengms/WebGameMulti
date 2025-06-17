@@ -11,10 +11,7 @@
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.{js,jsx,css}\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chengms/WebGameMulti.git"
-  },
+
   "keywords": [
     "web",
     "games",
@@ -23,9 +20,7 @@
   ],
   "author": "WebGameMulti Team",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/chengms/WebGameMulti/issues"
-  },
+
   "homepage": "https://gametime.bar",
   "dependencies": {
     "@vitejs/plugin-react": "^4.0.0",

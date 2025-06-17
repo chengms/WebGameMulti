@@ -63,6 +63,15 @@ export const loadGames = async () => {
         createdAt: '2023-07-20'
       },
       {
+        id: 'pacman',
+        name: 'Pacman',
+        description: 'The classic arcade game! Navigate through the maze, eat dots, avoid ghosts, and collect power pellets to turn the tables on your pursuers.',
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="pacmanBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23000080;stop-opacity:1" /><stop offset="50%" style="stop-color:%23000040;stop-opacity:1" /><stop offset="100%" style="stop-color:%23000000;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23pacmanBg)"/><circle cx="80" cy="100" r="25" fill="%23ffff00"/><path d="M 80 100 L 105 85 A 25 25 0 0 1 105 115 Z" fill="url(%23pacmanBg)"/><circle cx="130" cy="100" r="3" fill="%23ffff00"/><circle cx="150" cy="100" r="3" fill="%23ffff00"/><circle cx="170" cy="100" r="3" fill="%23ffff00"/><circle cx="190" cy="100" r="3" fill="%23ffff00"/><circle cx="210" cy="100" r="3" fill="%23ffff00"/><circle cx="230" cy="90" r="12" fill="%23ff0000"/><circle cx="228" cy="86" r="2" fill="white"/><circle cx="232" cy="86" r="2" fill="white"/><rect x="70" y="60" width="4" height="20" fill="%230000ff"/><rect x="80" y="60" width="4" height="20" fill="%230000ff"/><rect x="90" y="60" width="4" height="20" fill="%230000ff"/><rect x="70" y="120" width="4" height="20" fill="%230000ff"/><rect x="80" y="120" width="4" height="20" fill="%230000ff"/><rect x="90" y="120" width="4" height="20" fill="%230000ff"/><text x="150" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="%23ffff00" text-anchor="middle">PAC-MAN</text><text x="150" y="180" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="%23ffff00" text-anchor="middle">Classic Arcade</text></svg>',
+        tags: ['Arcade', 'Classic', 'Retro'],
+        author: 'WebGameMulti Team',
+        createdAt: '2024-01-20'
+      },
+      {
         id: 'crazy-cattle-3d',
         name: 'Crazy Cattle 3D',
         description: 'An exciting 3D cattle adventure game with immersive gameplay and stunning graphics. Navigate through challenging levels and experience the thrill of 3D gaming.',
@@ -250,6 +259,41 @@ export const loadGameDetails = async (gameId) => {
         createdAt: '2023-07-20',
         lastUpdated: '2023-07-20',
         gameUrl: '/games/tic-tac-toe/index.html'
+      },
+      'pacman': {
+        id: 'pacman',
+        name: 'Pacman',
+        description: 'The classic arcade game! Navigate through the maze, eat dots, avoid ghosts, and collect power pellets to turn the tables on your pursuers.',
+        fullDescription: `<p>Pacman is one of the most iconic arcade games of all time, originally released in 1980. Guide Pacman through the maze as he eats dots and avoids the colorful ghosts.</p>
+          <p>This classic game combines simple controls with strategic gameplay, as you must navigate the maze efficiently while avoiding the four ghosts: Blinky, Pinky, Inky, and Sue.</p>
+          <h3>Game Features:</h3>
+          <ul>
+            <li>Classic arcade gameplay faithful to the original</li>
+            <li>Authentic maze design and ghost AI behavior</li>
+            <li>Power pellets that allow you to eat ghosts temporarily</li>
+            <li>Progressive difficulty as you advance through levels</li>
+            <li>Retro pixel art graphics and authentic sound effects</li>
+            <li>High score tracking and achievements</li>
+          </ul>
+          <h3>How to Play:</h3>
+          <ul>
+            <li>Use arrow keys to move Pacman through the maze</li>
+            <li>Eat all the dots to complete each level</li>
+            <li>Avoid the ghosts or they will catch you</li>
+            <li>Collect power pellets to temporarily turn ghosts blue</li>
+            <li>Eat blue ghosts for bonus points</li>
+            <li>Collect fruit bonuses for extra points</li>
+          </ul>
+          <p>Experience the timeless arcade classic that started it all!</p>`,
+        thumbnail: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><defs><linearGradient id="pacmanBg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23000080;stop-opacity:1" /><stop offset="50%" style="stop-color:%23000040;stop-opacity:1" /><stop offset="100%" style="stop-color:%23000000;stop-opacity:1" /></linearGradient></defs><rect width="300" height="200" fill="url(%23pacmanBg)"/><circle cx="80" cy="100" r="25" fill="%23ffff00"/><path d="M 80 100 L 105 85 A 25 25 0 0 1 105 115 Z" fill="url(%23pacmanBg)"/><circle cx="130" cy="100" r="3" fill="%23ffff00"/><circle cx="150" cy="100" r="3" fill="%23ffff00"/><circle cx="170" cy="100" r="3" fill="%23ffff00"/><circle cx="190" cy="100" r="3" fill="%23ffff00"/><circle cx="210" cy="100" r="3" fill="%23ffff00"/><circle cx="230" cy="90" r="12" fill="%23ff0000"/><circle cx="228" cy="86" r="2" fill="white"/><circle cx="232" cy="86" r="2" fill="white"/><rect x="70" y="60" width="4" height="20" fill="%230000ff"/><rect x="80" y="60" width="4" height="20" fill="%230000ff"/><rect x="90" y="60" width="4" height="20" fill="%230000ff"/><rect x="70" y="120" width="4" height="20" fill="%230000ff"/><rect x="80" y="120" width="4" height="20" fill="%230000ff"/><rect x="90" y="120" width="4" height="20" fill="%230000ff"/><text x="150" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="%23ffff00" text-anchor="middle">PAC-MAN</text><text x="150" y="180" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="%23ffff00" text-anchor="middle">Classic Arcade</text></svg>',
+        screenshots: [],
+        tags: ['Arcade', 'Classic', 'Retro'],
+        author: 'WebGameMulti Team',
+        version: '1.0.0',
+        controls: 'Use arrow keys to move Pacman through the maze. Eat all dots to complete the level while avoiding the colorful ghosts.',
+        createdAt: '2024-01-20',
+        lastUpdated: '2024-01-20',
+        gameUrl: '/games/pacman/index.html'
       },
       'crazy-cattle-3d': {
         id: 'crazy-cattle-3d',

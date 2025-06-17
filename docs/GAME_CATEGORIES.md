@@ -72,4 +72,5 @@ Easy-to-learn games suitable for all ages and skill levels.
 | Bike Racing | Sports | Racing, Action |
 | RPG Demo | Adventure | Fantasy, Strategy |
 | Circle Path | Arcade | Casual, Action |
-| Endless Run | Action | Running, Casual | 
+| Endless Run | Action | Running, Casual |
+| Pacman | Arcade | Classic, Retro | 
