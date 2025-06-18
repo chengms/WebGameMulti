@@ -1,0 +1,15 @@
+{
+  "name": "Endless Run",
+  "description": "Run as far as you can in this exciting endless running adventure! Jump over obstacles, collect coins, and beat your high score in this fast-paced arcade game.",
+  "author": "WebXinXin Games",
+  "version": "1.0.0",
+  "tags": ["Action", "Running", "Casual"],
+  "thumbnail": "image/cover.png",
+  "controls": "Use spacebar or click to jump over obstacles. Collect coins and power-ups to boost your score and keep running!",
+  "minWidth": 800,
+  "minHeight": 600,
+  "isExternal": true,
+  "externalUrl": "http://game.webxinxin.com/run/",
+  "createdAt": "2024-01-15",
+  "updatedAt": "2024-01-15"
+} 

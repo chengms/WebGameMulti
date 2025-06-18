@@ -17,8 +17,16 @@ export default defineConfig({
         target: 'http://localhost:3000',
         changeOrigin: true
       }
+    },
+    // 配置静态文件服务
+    fs: {
+      allow: ['..']
     }
   },
+  // 配置公共目录
+  publicDir: 'public',
+  // 配置额外的静态资源目录
+  assetsInclude: ['**/*.html'],
   resolve: {
     extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json']
   },

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Racing - GameTime Bar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #ff6b35 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            max-width: 95vw;
+            max-height: 95vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b35, #1e3c72, #2a5298, #ff6b35);
+            background-size: 200% 100%;
+            animation: raceGradient 2s ease-in-out infinite;
+        }
+
+        @keyframes raceGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-title {
+            color: #1e3c72;
+            font-size: 2.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(45deg, #1e3c72, #ff6b35);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .game-subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .loading-message {
+            color: #ff6b35;
+            font-style: italic;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .game-iframe {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            height: 700px;
+            min-height: 600px;
+            max-width: 1000px;
+            background: #f8f9fa;
+        }
+
+        .controls-info {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f4ff, #fff5f0);
+            border-radius: 12px;
+            text-align: center;
+            max-width: 800px;
+            border: 2px solid rgba(30, 60, 114, 0.2);
+        }
+
+        .controls-info h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .controls-info p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(30, 60, 114, 0.3);
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #1e3c72;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 60, 114, 0.3);
+            border-color: rgba(30, 60, 114, 0.5);
+        }
+
+        .bike-decorations {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bike-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: race 8s linear infinite;
+        }
+
+        .bike-icon:nth-child(1) { top: 15%; animation-delay: 0s; }
+        .bike-icon:nth-child(2) { top: 30%; animation-delay: 2s; }
+        .bike-icon:nth-child(3) { bottom: 20%; animation-delay: 4s; }
+
+        @keyframes race {
+            0% { left: -5%; transform: rotate(0deg); }
+            100% { left: 105%; transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .game-title {
+                font-size: 2.2rem;
+            }
+            
+            .game-iframe {
+                height: 600px;
+                min-height: 500px;
+            }
+            
+            .game-container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .back-button {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-iframe {
+                height: 500px;
+                min-height: 400px;
+            }
+            
+            .game-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="javascript:history.back()" class="back-button">
+        ← Back to Games
+    </a>
+
+    <div class="game-container">
+        <div class="bike-decorations">
+            <div class="bike-icon">🏍️</div>
+            <div class="bike-icon">🚴</div>
+            <div class="bike-icon">🏁</div>
+        </div>
+
+        <div class="game-header">
+            <h1 class="game-title">🏍️ Bike Racing</h1>
+            <p class="game-subtitle">Thrilling Motorcycle Racing Adventure</p>
+            <p class="loading-message">Starting engines... Please wait</p>
+        </div>
+
+        <iframe 
+            src="http://game.webxinxin.com/bike"
+            class="game-iframe"
+            allowfullscreen
+            allow="autoplay; encrypted-media; fullscreen"
+            title="Bike Racing Game"
+            onload="document.querySelector('.loading-message').style.display='none'"
+            onerror="document.querySelector('.loading-message').textContent='Error loading game. Please try again later.'"
+        ></iframe>
+
+        <div class="controls-info">
+            <h3>🎮 Game Controls</h3>
+            <p>Use arrow keys or WASD to control your bike. Balance carefully to avoid crashes and maintain speed through challenging tracks!</p>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            const iframe = document.querySelector('.game-iframe');
+            const loadingMessage = document.querySelector('.loading-message');
+            
+            setTimeout(function() {
+                if (loadingMessage.style.display !== 'none') {
+                    loadingMessage.textContent = 'Game loaded! Start racing!';
+                    setTimeout(function() {
+                        loadingMessage.style.display = 'none';
+                    }, 2000);
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html> 
