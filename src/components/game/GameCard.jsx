@@ -29,7 +29,7 @@ const GameCard = memo(({ game, onClick }) => {
   const displayTags = tags ? tags.slice(0, 3) : [];
 
   return (
-    <Link to={`/game/${game.id}`} className="game-card-link" onClick={onClick}>
+    <Link to={`/games/${game.id}`} className="game-card-link" onClick={onClick}>
       <div className="game-card">
         <div className="game-card-image-container">
           {!imageLoaded && (
