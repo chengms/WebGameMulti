@@ -1,112 +1,233 @@
+/* GameCard 组件样式 - 性能优化版本 */
+
+.game-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  /* 启用硬件加速 */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
 .game-card {
-  background-color: var(--color-background);
-  border-radius: 8px;
-  box-shadow: var(--shadow-small);
+  background: var(--card-background, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color var(--transition-speed);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
   height: 100%;
   display: flex;
   flex-direction: column;
+  /* 启用GPU加速 */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .game-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-medium);
+  transform: translateY(-4px) translateZ(0);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-.game-card__image-container {
+.game-card-image-container {
+  position: relative;
   width: 100%;
-  height: 180px;
+  height: 200px;
   overflow: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.game-card__image {
+.game-card-image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  z-index: 1;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.game-card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  /* 优化图片渲染 */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
-.game-card:hover .game-card__image {
-  transform: scale(1.05);
+.game-card-image.loaded {
+  opacity: 1;
 }
 
-.game-card__content {
+.game-card-content {
   padding: 16px;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  gap: 12px;
 }
 
-.game-card__title {
-  font-size: 1.2rem;
+.game-card-title {
+  font-size: 1.25rem;
   font-weight: 600;
-  margin: 0 0 10px 0;
-  color: var(--color-text);
+  margin: 0;
+  color: var(--text-primary, #2d3748);
+  line-height: 1.3;
+  /* 防止文本重排 */
+  word-break: break-word;
+  hyphens: auto;
 }
 
-.game-card__description {
-  font-size: 0.9rem;
-  color: var(--color-text-secondary);
-  margin-bottom: 12px;
-  line-height: 1.4;
-  flex-grow: 1;
+.game-card-description {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #718096);
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+  /* 优化文本渲染 */
+  text-rendering: optimizeSpeed;
 }
 
-.game-card__tags {
+.game-card-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 14px;
-}
-
-.game-card__tag {
-  background-color: var(--color-background-secondary);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  color: var(--color-text-secondary);
-}
-
-.game-card__footer {
   margin-top: auto;
 }
 
-.game-card__button {
-  background-color: var(--color-primary);
+.game-card-tag {
+  background: var(--tag-background, #edf2f7);
+  color: var(--tag-text, #4a5568);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  /* 防止标签引起重排 */
+  flex-shrink: 0;
+}
+
+.game-card-tag-more {
+  background: var(--tag-more-background, #cbd5e0);
+  color: var(--tag-more-text, #2d3748);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.game-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color, #e2e8f0);
+}
+
+.game-card-author {
+  font-size: 0.75rem;
+  color: var(--text-tertiary, #a0aec0);
+  flex: 1;
+}
+
+.game-card-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  border-radius: 4px;
   padding: 8px 16px;
-  font-size: 0.9rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  width: 100%;
+  transition: opacity 0.2s ease;
+  /* 防止按钮引起重排 */
+  flex-shrink: 0;
 }
 
-.game-card__button:hover {
-  background-color: var(--color-primary-dark);
+.game-card-button:hover {
+  opacity: 0.9;
 }
 
-/* Responsive styles */
+/* 响应式设计优化 */
 @media (max-width: 768px) {
-  .game-card__image-container {
+  .game-card-image-container {
     height: 160px;
   }
   
-  .game-card__title {
-    font-size: 1.1rem;
+  .game-card-content {
+    padding: 12px;
+    gap: 8px;
   }
   
-  .game-card__description {
-    font-size: 0.85rem;
+  .game-card-title {
+    font-size: 1.125rem;
+  }
+  
+  .game-card-description {
+    font-size: 0.8125rem;
   }
 }
 
-@media (max-width: 480px) {
-  .game-card__image-container {
-    height: 140px;
+/* 深色主题支持 */
+@media (prefers-color-scheme: dark) {
+  .game-card {
+    --card-background: #2d3748;
+    --text-primary: #f7fafc;
+    --text-secondary: #cbd5e0;
+    --text-tertiary: #a0aec0;
+    --tag-background: #4a5568;
+    --tag-text: #e2e8f0;
+    --tag-more-background: #718096;
+    --tag-more-text: #f7fafc;
+    --border-color: #4a5568;
+  }
+}
+
+/* 减少动画以提升性能（用户偏好） */
+@media (prefers-reduced-motion: reduce) {
+  .game-card,
+  .game-card-image,
+  .game-card-button {
+    transition: none;
+  }
+  
+  .loading-spinner {
+    animation: none;
+  }
+}
+
+/* 高对比度支持 */
+@media (prefers-contrast: high) {
+  .game-card {
+    border: 2px solid var(--text-primary, #2d3748);
+  }
+  
+  .game-card-tag,
+  .game-card-tag-more {
+    border: 1px solid var(--text-primary, #2d3748);
   }
 } 

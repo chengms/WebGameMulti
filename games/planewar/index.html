@@ -39,7 +39,11 @@
 			    }
 			}
 			this.preload=function(){
-				game.load.image('loading','assets/preloader.gif');
+				try {
+					game.load.image('loading','assets/preloader.gif');
+				} catch(e) {
+					console.error('Failed to load preloader asset:', e);
+				}
 			};
 			this.create=function(){
 				game.state.start('loader');
@@ -289,6 +293,5 @@ eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a
 		game.state.add('gameover',gameoverState);
 		game.state.start('boot');
 </script>
-<script src="http://h.api.4399.com/h5mini-2.0/h5api-interface.php"></script>
 </body>
 </html>

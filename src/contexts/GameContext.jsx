@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
+import React, { createContext, useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import { 
   loadGames,
   loadGameDetails,
@@ -18,7 +18,6 @@ const GameContext = createContext();
 export function GameProvider({ children }) {
   // State for games
   const [games, setGames] = useState([]);
-  const [filteredGames, setFilteredGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
@@ -39,7 +38,6 @@ export function GameProvider({ children }) {
         setError(null);
         const gamesData = await loadGames();
         setGames(gamesData);
-        setFilteredGames(gamesData);
       } catch (err) {
         setError(err.message);
         console.error('Failed to load games:', err);
@@ -70,17 +68,19 @@ export function GameProvider({ children }) {
     fetchCategories();
   }, []);
   
-  // Apply filters when dependencies change
-  useEffect(() => {
-    if (games.length === 0) return;
+  // 使用 useMemo 优化过滤后的游戏列表计算
+  const filteredGames = useMemo(() => {
+    if (games.length === 0) return [];
     
     // First filter by category
     let result = filterGamesByCategory(games, activeCategory);
     
     // Then apply search query
-    result = searchGames(result, searchQuery);
+    if (searchQuery.trim()) {
+      result = searchGames(result, searchQuery);
+    }
     
-    setFilteredGames(result);
+    return result;
   }, [games, activeCategory, searchQuery]);
   
   /**
@@ -112,8 +112,8 @@ export function GameProvider({ children }) {
     setSearchQuery(query);
   }, []);
   
-  // Context value
-  const value = {
+  // 使用 useMemo 优化 context value
+  const value = useMemo(() => ({
     // Games
     games,
     filteredGames,
@@ -133,7 +133,20 @@ export function GameProvider({ children }) {
     getGameDetails,
     setCategory,
     setSearch
-  };
+  }), [
+    games,
+    filteredGames,
+    loading,
+    error,
+    categories,
+    categoriesLoading,
+    categoriesError,
+    activeCategory,
+    searchQuery,
+    getGameDetails,
+    setCategory,
+    setSearch
+  ]);
   
   return (
     <GameContext.Provider value={value}>

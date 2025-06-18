@@ -91,10 +91,7 @@ PacmanGame.prototype = {
     },
 
     preload: function () {
-        //  We need this because the assets are on Amazon S3
-        //  Remove the next 2 lines if running locally
-        //this.load.baseURL = 'http://files.phaser.io.s3.amazonaws.com/codingtips/issue005/';
-        //this.load.crossOrigin = 'anonymous';
+        // Assets are loaded locally
 
         this.load.image('dot', 'assets/dot.png');
         this.load.image("pill", "assets/pill16.png");
@@ -173,7 +170,7 @@ PacmanGame.prototype = {
             var x = this.game.math.snapToFloor(Math.floor(this.input.x), this.gridsize) / this.gridsize;
             var y = this.game.math.snapToFloor(Math.floor(this.input.y), this.gridsize) / this.gridsize;
             this.debugPosition = new Phaser.Point(x * this.gridsize, y * this.gridsize);
-            console.log(x, y);
+            // Debug position: x, y
         }
     },
     
@@ -381,7 +378,7 @@ PacmanGame.prototype = {
                 } else {
                     this.sendScatterOrder();
                 }
-                console.log("new mode:", this.TIME_MODES[this.currentMode].mode, this.TIME_MODES[this.currentMode].time);
+                // New mode: this.TIME_MODES[this.currentMode].mode, this.TIME_MODES[this.currentMode].time
             }
             if (this.isPaused && this.changeModeTimer < this.time.time) {
                 this.changeModeTimer = this.time.time + this.remainingTime;
@@ -391,7 +388,7 @@ PacmanGame.prototype = {
                 } else {
                     this.sendScatterOrder();
                 }
-                console.log("new mode:", this.TIME_MODES[this.currentMode].mode, this.TIME_MODES[this.currentMode].time);
+                // New mode: this.TIME_MODES[this.currentMode].mode, this.TIME_MODES[this.currentMode].time
             }
         }
         
@@ -411,7 +408,7 @@ PacmanGame.prototype = {
         }
         this.changeModeTimer = this.time.time + this.FRIGHTENED_MODE_TIME;
         this.isPaused = true;
-        console.log(this.remainingTime);
+        // Remaining time: this.remainingTime
     },
     
     isSpecialTile: function(tile) {
