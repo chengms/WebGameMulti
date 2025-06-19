@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏加载器测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .game-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            background: #f9f9f9;
+        }
+        .game-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .game-description {
+            margin: 8px 0;
+            color: #666;
+        }
+        .game-meta {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .game-type {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .game-type.online {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        .game-type.local {
+            background: #e8f5e8;
+            color: #388e3c;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        .error {
+            color: #d32f2f;
+            background: #ffebee;
+            padding: 16px;
+            border-radius: 4px;
+            margin: 16px 0;
+        }
+        .stats {
+            background: #f5f5f5;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>GameTime Bar - 游戏加载器测试</h1>
+    
+    <div id="stats" class="stats">
+        <h3>游戏统计</h3>
+        <div id="statsContent">加载中...</div>
+    </div>
+    
+    <div id="loading" class="loading">
+        <p>正在加载游戏数据...</p>
+    </div>
+    
+    <div id="error" class="error" style="display: none;">
+        <p id="errorMessage"></p>
+    </div>
+    
+    <div id="gamesList"></div>
+
+    <script type="module">
+        // 模拟游戏加载器功能
+        async function parseGameConfig() {
+            try {
+                console.log('开始加载游戏配置...');
+                
+                const response = await fetch('/games/games-config.txt');
+                if (!response.ok) {
+                    throw new Error(`配置文件加载失败: ${response.status}`);
+                }
+                
+                const configText = await response.text();
+                const lines = configText.split('\n');
+                const games = [];
+                
+                for (const line of lines) {
+                    const trimmedLine = line.trim();
+                    
+                    // 跳过注释和空行
+                    if (!trimmedLine || trimmedLine.startsWith('#')) {
+                        continue;
+                    }
+                    
+                    // 解析游戏配置行
+                    const parts = trimmedLine.split('|');
+                    if (parts.length >= 8) {
+                        const [id, name, description, type, url, thumbnail, tags, author, priority] = parts;
+                        
+                        games.push({
+                            id: id.trim(),
+                            name: name.trim(),
+                            description: description.trim(),
+                            type: type.trim(),
+                            url: url.trim(),
+                            thumbnail: thumbnail.trim(),
+                            tags: tags.split(',').map(tag => tag.trim()),
+                            author: author.trim(),
+                            priority: parseInt(priority) || 1,
+                            isOnline: type.trim() === 'online'
+                        });
+                    }
+                }
+                
+                // 按优先级排序
+                games.sort((a, b) => {
+                    if (a.isOnline && !b.isOnline) return -1;
+                    if (!a.isOnline && b.isOnline) return 1;
+                    return b.priority - a.priority;
+                });
+                
+                console.log(`成功加载 ${games.length} 个游戏`);
+                return games;
+                
+            } catch (error) {
+                console.error('解析游戏配置时出错:', error);
+                throw error;
+            }
+        }
+
+        async function loadGames() {
+            const loadingEl = document.getElementById('loading');
+            const errorEl = document.getElementById('error');
+            const gamesListEl = document.getElementById('gamesList');
+            const statsEl = document.getElementById('statsContent');
+            
+            try {
+                loadingEl.style.display = 'block';
+                errorEl.style.display = 'none';
+                
+                const games = await parseGameConfig();
+                
+                // 显示统计信息
+                const onlineGames = games.filter(g => g.isOnline);
+                const localGames = games.filter(g => !g.isOnline);
+                
+                statsEl.innerHTML = `
+                    <p><strong>总游戏数:</strong> ${games.length}</p>
+                    <p><strong>在线游戏:</strong> ${onlineGames.length}</p>
+                    <p><strong>本地游戏:</strong> ${localGames.length}</p>
+                `;
+                
+                // 显示游戏列表
+                gamesListEl.innerHTML = games.map(game => `
+                    <div class="game-card">
+                        <div class="game-title">${game.name}</div>
+                        <div class="game-description">${game.description}</div>
+                        <div class="game-meta">
+                            <span class="game-type ${game.isOnline ? 'online' : 'local'}">
+                                ${game.isOnline ? '在线游戏' : '本地游戏'}
+                            </span>
+                            | 作者: ${game.author}
+                            | 优先级: ${game.priority}
+                            | 标签: ${game.tags.join(', ')}
+                        </div>
+                    </div>
+                `).join('');
+                
+                loadingEl.style.display = 'none';
+                
+            } catch (error) {
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                document.getElementById('errorMessage').textContent = 
+                    `加载失败: ${error.message}`;
+                console.error('加载游戏时出错:', error);
+            }
+        }
+
+        // 页面加载完成后开始加载游戏
+        document.addEventListener('DOMContentLoaded', loadGames);
+    </script>
+</body>
+</html> 

@@ -37,11 +37,97 @@
   margin-bottom: 10px;
   color: var(--color-text-secondary);
   font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .game-detail__author {
   margin-right: 16px;
   font-weight: 500;
+}
+
+.game-detail__date {
+  color: var(--color-text-secondary);
+}
+
+/* 游戏类型标识 */
+.game-detail__type {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.game-detail__type--online {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(79, 172, 254, 0.3);
+}
+
+.game-detail__type--online::before {
+  content: "🌐";
+  font-size: 0.8rem;
+}
+
+.game-detail__type--local {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(67, 233, 123, 0.3);
+}
+
+.game-detail__type--local::before {
+  content: "💾";
+  font-size: 0.8rem;
+}
+
+/* 游戏类型信息 */
+.game-detail__type-info {
+  margin: 30px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.game-detail__type-info h3 {
+  margin-bottom: 16px;
+  color: var(--color-primary);
+  font-size: 1.1rem;
+}
+
+.game-detail__online-info,
+.game-detail__local-info {
+  color: var(--color-text);
+}
+
+.game-detail__online-info p,
+.game-detail__local-info p {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.game-detail__online-info ul,
+.game-detail__local-info ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.game-detail__online-info li,
+.game-detail__local-info li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.game-detail__online-info strong,
+.game-detail__local-info strong {
+  color: var(--color-primary);
 }
 
 .game-detail__tags {

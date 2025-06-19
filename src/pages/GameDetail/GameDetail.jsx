@@ -66,10 +66,16 @@ function GameDetail() {
   
   const handleFullscreenClick = () => {
     if (game) {
-      // Use external URL if available, otherwise use game URL
-      const targetUrl = game.isExternal && game.externalUrl ? game.externalUrl : game.gameUrl;
-      window.open(targetUrl, '_blank');
+      // Use game URL directly
+      const targetUrl = game.gameUrl;
+      window.open(targetUrl, '_blank', 'width=1024,height=768,scrollbars=yes,resizable=yes');
     }
+  };
+
+  // 处理游戏加载错误
+  const handleGameLoadError = (gameUrl, isOnline) => {
+    console.error('Game load error:', { gameUrl, isOnline });
+    // 可以在这里添加错误统计或用户通知
   };
 
   return (
@@ -98,6 +104,12 @@ function GameDetail() {
             <div className="game-detail__meta">
               <span className="game-detail__author">Developer: {game.author}</span>
               <span className="game-detail__date">Updated: {game.lastUpdated}</span>
+              {game.isOnline && (
+                <span className="game-detail__type game-detail__type--online">在线游戏</span>
+              )}
+              {!game.isOnline && (
+                <span className="game-detail__type game-detail__type--local">本地游戏</span>
+              )}
             </div>
             <div className="game-detail__tags">
               {game.tags.map((tag, index) => (
@@ -132,9 +144,11 @@ function GameDetail() {
               <div className="game-detail__game-container game-detail__game-container--full">
                 <div className="game-detail__game-wrapper">
                   <GameEmbed 
-                    gameUrl={game.isExternal && game.externalUrl ? game.externalUrl : game.gameUrl} 
+                    gameUrl={game.gameUrl} 
                     title={game.name} 
                     height={iframeHeight}
+                    isOnline={game.isOnline || false}
+                    onLoadError={handleGameLoadError}
                   />
                   
                   <div className="game-detail__controls">
@@ -160,6 +174,32 @@ function GameDetail() {
                       <p>{game.controls}</p>
                     </div>
                   )}
+
+                  {/* 游戏类型说明 */}
+                  <div className="game-detail__type-info">
+                    <h3 className="game-detail__subsection-title">游戏类型</h3>
+                    {game.isOnline ? (
+                      <div className="game-detail__online-info">
+                        <p><strong>在线游戏：</strong>此游戏托管在外部服务器上，需要稳定的网络连接。</p>
+                        <ul>
+                          <li>无需下载，即开即玩</li>
+                          <li>实时更新，体验最新版本</li>
+                          <li>可能需要较长的首次加载时间</li>
+                          <li>游戏性能取决于网络状况</li>
+                        </ul>
+                      </div>
+                    ) : (
+                      <div className="game-detail__local-info">
+                        <p><strong>本地游戏：</strong>此游戏文件存储在本地服务器上，提供稳定快速的游戏体验。</p>
+                        <ul>
+                          <li>加载速度快，响应迅速</li>
+                          <li>离线可玩（在缓存后）</li>
+                          <li>稳定可靠的游戏体验</li>
+                          <li>针对本地运行优化</li>
+                        </ul>
+                      </div>
+                    )}
+                  </div>
                   
                   {game.screenshots && game.screenshots.length > 0 && (
                     <div className="game-detail__screenshots">
@@ -171,6 +211,9 @@ function GameDetail() {
                               src={screenshot} 
                               alt={`${game.name} screenshot ${index + 1}`} 
                               className="game-detail__screenshot-img"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                              }}
                             />
                           </div>
                         ))}
