@@ -25,8 +25,6 @@ export default defineConfig({
   },
   // 配置公共目录
   publicDir: 'public',
-  // 配置额外的静态资源目录
-  assetsInclude: ['**/*.html'],
   resolve: {
     extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json']
   },
@@ -39,25 +37,20 @@ export default defineConfig({
     // 优化 chunk 分割
     rollupOptions: {
       output: {
-        // 更细粒度的代码分割
-        manualChunks: {
+        // 简化代码分割，避免空chunk
+        manualChunks: (id) => {
           // React 相关库
-          'react-vendor': ['react', 'react-dom'],
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'react-vendor';
+          }
           // 路由相关
-          'router': ['react-router-dom'],
-          // 游戏相关组件
-          'game-components': [
-            './src/components/game/GameCard.jsx',
-            './src/components/game/GameEmbed.jsx'
-          ],
-          // 布局组件
-          'layout-components': [
-            './src/components/layout/Header.jsx',
-            './src/components/layout/Sidebar.jsx',
-            './src/components/layout/Layout.jsx'
-          ],
-          // 工具函数
-          'utils': ['./src/utils/gameLoader.js']
+          if (id.includes('node_modules/react-router')) {
+            return 'router';
+          }
+          // 其他第三方库
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
         },
         // 优化文件命名
         entryFileNames: 'assets/[name]-[hash].js',
@@ -76,11 +69,6 @@ export default defineConfig({
           }
           return 'assets/[name]-[hash].[ext]';
         }
-      },
-      // 外部依赖优化
-      external: (id) => {
-        // 将大型库标记为外部依赖，可以通过 CDN 加载
-        return false; // 暂时不使用外部依赖，保持打包完整性
       }
     },
     // 构建目标优化
