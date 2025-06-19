@@ -9,6 +9,13 @@
     "preview": "vite preview",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "deploy": "npm run build && echo 'Build completed. Ready for Cloudflare Pages deployment.'",
+    "deploy:cf": "wrangler pages deploy dist",
+    "deploy:cf-prod": "wrangler pages deploy dist --project-name=gametime --env=production",
+    "deploy:trigger": "node scripts/trigger-deploy.js",
+    "deploy:force": "npm run build && node scripts/trigger-deploy.js",
+    "cf:login": "wrangler auth login",
+    "cf:whoami": "wrangler auth whoami",
+    "cf:tail": "wrangler pages deployment tail",
     "build:dev": "vite build --mode development",
     "build:prod": "vite build --mode production",
     "clean": "rm -rf dist node_modules/.vite",
@@ -41,6 +48,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
-    "vite": "^4.3.2"
+    "vite": "^4.3.2",
+    "wrangler": "^3.78.0"
   }
 }

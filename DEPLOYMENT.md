@@ -64,6 +64,93 @@ npm run build
 }
 ```
 
+## 🔄 主动拉取最新Git版本的方法
+
+### 1. **自动触发部署** (推荐)
+推送代码到Git仓库会自动触发部署：
+```bash
+git add .
+git commit -m "更新内容"
+git push origin main  # 推送到主分支自动触发
+```
+
+### 2. **手动触发部署**
+在Cloudflare Dashboard中手动触发：
+1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com)
+2. 进入 **Pages** 部分
+3. 选择你的项目
+4. 点击 **"Create deployment"** 或 **"Retry deployment"**
+5. 选择要部署的分支
+6. 点击 **"Save and Deploy"**
+
+### 3. **使用Wrangler CLI**
+通过命令行工具主动触发：
+```bash
+# 安装Wrangler (如果还没安装)
+npm install -g wrangler
+
+# 登录Cloudflare
+npm run cf:login
+
+# 直接部署构建结果
+npm run deploy:cf
+
+# 生产环境部署
+npm run deploy:cf-prod
+```
+
+### 4. **使用API脚本触发**
+使用我们提供的脚本通过API触发：
+```bash
+# 设置环境变量 (参考 scripts/env.example)
+export CLOUDFLARE_ACCOUNT_ID="your-account-id"
+export CLOUDFLARE_API_TOKEN="your-api-token"
+export CLOUDFLARE_PROJECT_NAME="gametime"
+
+# 仅触发部署
+npm run deploy:trigger
+
+# 构建并触发部署
+npm run deploy:force
+```
+
+**获取API Token步骤:**
+1. 登录 Cloudflare Dashboard
+2. 点击右上角头像 -> **My Profile**
+3. 选择 **API Tokens** 标签
+4. 点击 **Create Token**
+5. 选择 **Custom token**
+6. 设置权限：
+   - Account: `Cloudflare Pages:Edit`
+   - Zone Resources: `Include - All zones`
+7. 复制生成的Token
+
+### 5. **GitHub Actions自动部署**
+设置GitHub Actions实现自动化：
+1. 在GitHub仓库中设置Secrets：
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID`
+2. 推送代码到main分支自动触发
+3. 也可以在GitHub Actions页面手动触发 (workflow_dispatch)
+
+**设置GitHub Secrets步骤:**
+1. 进入GitHub仓库页面
+2. 点击 **Settings** 标签
+3. 在左侧菜单选择 **Secrets and variables** -> **Actions**
+4. 点击 **New repository secret**
+5. 添加所需的secrets
+
+### 6. **定时自动部署**
+可以设置定时任务自动拉取最新代码并部署：
+```bash
+# 使用cron定时执行 (Linux/Mac)
+# 每天凌晨2点自动部署
+0 2 * * * cd /path/to/your/project && git pull && npm run deploy:force
+
+# Windows任务计划程序
+# 创建定时任务执行批处理文件
+```
+
 ## 部署步骤
 
 ### 1. 本地测试
@@ -115,6 +202,11 @@ git push origin main
 ### 4. CSP错误
 - 检查 `_headers` 文件中的CSP配置
 - 根据需要调整安全策略
+
+### 5. API触发失败
+- 确认API Token权限正确
+- 检查Account ID是否正确
+- 验证项目名称是否匹配
 
 ## 性能优化
 
