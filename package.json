@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "setup": "node scripts/setup.js",
     "deploy": "npm run build && echo 'Build completed. Ready for Cloudflare Pages deployment.'",
     "deploy:cf": "wrangler pages deploy dist",
     "deploy:cf-prod": "wrangler pages deploy dist --project-name=gametime --env=production",
