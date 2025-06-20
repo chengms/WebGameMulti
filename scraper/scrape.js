@@ -96,92 +96,82 @@ function formatToConfigLine(gameData) {
 // =================================================================================
 
 /**
- * 抓取 HTML5Games.com 的游戏
- * @param {string} html - 网页HTML内容
- * @param {string} baseUrl - 网站的基础URL
- * @returns {Array<string>} - 格式化后的配置行数组
+ * Scraper for HTML5Games.com
+ * @param {string} html - The HTML content of the page
+ * @param {string} baseUrl - The base URL of the site
+ * @returns {Array<object>} - An array of game data objects
  */
 function scrapeHtml5Games(html, baseUrl) {
     const $ = cheerio.load(html);
     const games = [];
-    
-    // 假设游戏都在带有特定class的链接中，这里我们尝试几种可能的选择器
-    // 根据搜索结果，游戏分布在 "Best" 和 "New" 区域
-    $('h2:contains("Best")').nextUntil('h2').find('a').each((i, el) => {
-        const gameName = $(el).text().trim();
-        if (!gameName) return;
-
-        const gameUrl = new URL($(el).attr('href'), baseUrl).href;
-        // 假设图片是链接内的第一个img元素
-        const thumbnailUrl = new URL($(el).find('img').attr('src'), baseUrl).href;
-
-        games.push({
-            id: generateId(gameName),
-            name: gameName,
-            description: `Play ${gameName} online, an exciting game from HTML5Games.`,
-            url: gameUrl,
-            thumbnail: thumbnailUrl,
-            author: 'HTML5Games.com',
-            tags: ['Online', 'Arcade']
-        });
+    // A more robust selector for game items
+    $('div.item a.teaser').each((i, el) => {
+        const link = $(el);
+        const name = link.attr('title');
+        const url = link.attr('href');
+        const img = link.find('img.teaser-img');
+        
+        if (name && url) {
+            games.push({
+                id: generateId(name),
+                name: name,
+                description: `Play ${name} online, an exciting game from HTML5Games.`,
+                url: new URL(url, baseUrl).toString(),
+                thumbnail: new URL(img.attr('data-src') || img.attr('src'), baseUrl).toString(),
+                author: 'HTML5Games.com',
+                tags: ['Online', 'Arcade']
+            });
+        }
     });
-
-    console.log(`✅ Scraped ${games.length} games from HTML5Games.com`);
-    return games.map(formatToConfigLine);
+    return games;
 }
 
 /**
- * 抓取 CrazyCattle-3D.info 的游戏
- * @param {string} html - 网页HTML内容
- * @param {string} baseUrl - 网站的基础URL
- * @returns {Array<string>} - 格式化后的配置行数组
+ * Scraper for CrazyCattle-3D.info
+ * @param {string} html - The HTML content of the page
+ * @param {string} baseUrl - The base URL of the site
+ * @returns {Array<object>} - An array of game data objects
  */
 async function scrapeCrazyCattle3D(html, baseUrl) {
     const $ = cheerio.load(html);
     const games = [];
-    // 选择所有指向游戏页面的链接
-    const gameLinks = $('a[href*="/crazy-cow-3d"], a[href*="/cheese-chompers-3d"], a[href*="/brainrot-clicker"], a[href*="/basketball-bros-unblocked"], a[href*="/pokemon-gamma-emerald"], a[href*="/crazy-chicken-3d"], a[href*="/sprunki-incredibox"], a[href*="/speed-stars"]');
+    // Target the specific section for "Hot Games" to avoid duplicates
+    const gameLinks = new Set(); // Use a Set to automatically handle duplicate URLs
 
-    console.log(`Found ${gameLinks.length} potential games on CrazyCattle-3D.info. Fetching details...`);
+    $('h2:contains("Hot Games")').next('div').find('a').each((i, el) => {
+        gameLinks.add($(el).attr('href'));
+    });
 
-    for (const element of gameLinks.get()) {
-        const link = $(element);
-        const pageUrl = new URL(link.attr('href'), baseUrl).toString();
-        const name = link.find('h2').text().trim() || link.attr('title') || 'Unknown Game';
-        
+    console.log(`Found ${gameLinks.size} unique games on CrazyCattle-3D.info.`);
+
+    for (const pagePath of gameLinks) {
         try {
-            console.log(`  Scraping details from: ${pageUrl}`);
+            const pageUrl = new URL(pagePath, baseUrl).toString();
+            // Directly construct the embed URL based on the user's provided pattern
+            const gameUrl = `${pageUrl}.embed`;
+            
+            // Fetch the detail page to get accurate metadata
             const detailHtml = await getHTML(pageUrl);
             if (!detailHtml) continue;
-
-            const $$ = cheerio.load(detailHtml);
-            // 寻找游戏 iframe，这是关键一步
-            const gameIframe = $$('iframe[src*="embed"], iframe[src*="game"], iframe#game-iframe');
             
-            let gameUrl = pageUrl; // 默认使用页面URL
-            if (gameIframe.length > 0) {
-                const embedSrc = gameIframe.attr('src');
-                if (embedSrc) {
-                    gameUrl = new URL(embedSrc, baseUrl).toString();
-                    console.log(`    Found direct game embed URL: ${gameUrl}`);
-                }
-            } else {
-                console.log(`    Could not find a direct game iframe, using page URL as fallback.`);
+            const $$ = cheerio.load(detailHtml);
+            const name = $$('h1').first().text().trim() || 'Unknown Game';
+            const description = $$('meta[name="description"]').attr('content') || `Play ${name} online.`;
+            const thumbnail = $$('meta[property="og:image"]').attr('content');
+
+            if (name !== 'Unknown Game') {
+                 games.push({
+                    id: generateId(name),
+                    name: name,
+                    description: description,
+                    url: gameUrl, // Use the direct embed URL
+                    thumbnail: new URL(thumbnail, baseUrl).toString(),
+                    author: 'CrazyCattle3D Team',
+                    tags: ['Online', '3D', 'Hot']
+                });
             }
-
-            const thumbnail = $$('meta[property="og:image"]').attr('content') || link.find('img').attr('src');
-            const description = $$('meta[property="og:description"]').attr('content') || `Play ${name} online.`;
-
-            games.push({
-                id: name.toLowerCase().replace(/\\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
-                name: name,
-                description: description,
-                url: gameUrl, // 使用找到的直接链接
-                thumbnail: new URL(thumbnail, baseUrl).toString(),
-            });
-
         } catch (error) {
-            console.error(`  Failed to scrape details for ${name}: ${error.message}`);
+            console.error(`  Failed to scrape details for ${pagePath}: ${error.message}`);
         }
     }
 
@@ -203,15 +193,18 @@ async function scrapeCrazyCattle3D(html, baseUrl) {
         const html = await getHTML(site.url);
         if (html) {
             try {
-                const results = site.scraper(html, site.url);
+                const results = await site.scraper(html, site.url);
+                
                 if (results && results.length > 0) {
                     allGeneratedLines.push(`# === Games from ${site.name} ===`);
-                    allGeneratedLines.push(...results);
+                    const formattedLines = results.map(formatToConfigLine);
+                    allGeneratedLines.push(...formattedLines);
+                    console.log(`✅ Scraped ${results.length} games from ${site.name}`);
                 } else {
                     console.log(`🟡 No games found on ${site.name}.`);
                 }
-            } catch (e) {
-                console.error(`❌ Error scraping ${site.name}: ${e.message}`);
+            } catch (error) {
+                console.error(`❌ Error scraping ${site.name}:`, error.message);
             }
         }
     }

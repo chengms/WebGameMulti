@@ -20,6 +20,31 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
   const [hasError, setHasError] = useState(false);
   const [loadStartTime, setLoadStartTime] = useState(null);
 
+  // 检查是否需要使用代理
+  const needsProxy = (url) => {
+    try {
+      const hostname = new URL(url).hostname;
+      // 在这里添加需要代理的域名
+      return ['www.crazycattle-3d.info'].includes(hostname);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  const getFinalGameUrl = () => {
+    if (isOnline && needsProxy(gameUrl)) {
+      // 如果是生产环境，使用相对路径；否则使用本地开发服务器的全路径
+      const proxyUrl = import.meta.env.PROD 
+        ? `/proxy?url=${encodeURIComponent(gameUrl)}`
+        : `http://localhost:8788/proxy?url=${encodeURIComponent(gameUrl)}`;
+      console.log(`Using proxy for ${gameUrl}: ${proxyUrl}`);
+      return proxyUrl;
+    }
+    return gameUrl;
+  };
+
+  const finalGameUrl = getFinalGameUrl();
+
   // 调整iframe大小以适应容器
   useEffect(() => {
     const adjustIframeSize = () => {
@@ -71,10 +96,10 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     const handleError = () => {
       setIsLoading(false);
       setHasError(true);
-      console.error(`Failed to load game: ${title} (${gameUrl})`);
+      console.error(`Failed to load game: ${title} (${finalGameUrl})`);
       
       if (onLoadError) {
-        onLoadError(gameUrl, isOnline);
+        onLoadError(finalGameUrl, isOnline);
       }
     };
 
@@ -85,7 +110,7 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
         setIsLoading(false);
         setHasError(true);
         if (onLoadError) {
-          onLoadError(gameUrl, isOnline);
+          onLoadError(finalGameUrl, isOnline);
         }
       }
     }, isOnline ? 15000 : 10000); // 在线游戏15秒，本地游戏10秒
@@ -98,7 +123,7 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
       iframe.removeEventListener('load', handleLoad);
       iframe.removeEventListener('error', handleError);
     };
-  }, [gameUrl, title, isOnline, onLoadError, loadStartTime]);
+  }, [finalGameUrl, title, isOnline, onLoadError, loadStartTime]);
 
   // 重新加载游戏
   const handleReload = () => {
@@ -117,48 +142,48 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
 
   return (
     <div className="game-embed-container" style={{ height }}>
-      {/* 加载状态 */}
+      {/* Loading State */}
       {isLoading && (
         <div className="game-loading-overlay">
           <div className="game-loading-spinner"></div>
           <div className="game-loading-text">
-            {isOnline ? '正在加载在线游戏...' : '正在加载游戏...'}
+            {isOnline ? 'Loading Online Game...' : 'Loading Game...'}
           </div>
           <div className="game-loading-subtitle">
-            {isOnline ? '首次加载可能需要一些时间' : '请稍候'}
+            {isOnline ? 'First load may take a moment' : 'Please wait'}
           </div>
         </div>
       )}
 
-      {/* 错误状态 */}
+      {/* Error State */}
       {hasError && (
         <div className="game-error-overlay">
           <div className="game-error-icon">⚠️</div>
-          <div className="game-error-title">游戏加载失败</div>
+          <div className="game-error-title">Failed to Load Game</div>
           <div className="game-error-message">
             {isOnline 
-              ? '在线游戏暂时无法访问，可能是网络问题或游戏服务器维护中。' 
-              : '本地游戏文件无法加载，请检查游戏文件是否存在。'
+              ? 'The online game is temporarily unavailable. This could be due to a network issue or maintenance on the game server.' 
+              : 'Could not load local game files. Please check if the game files exist.'
             }
           </div>
           <div className="game-error-actions">
             <button onClick={handleReload} className="game-error-button primary">
-              重新加载
+              Reload
             </button>
             {isOnline && (
               <button onClick={handleOpenInNewWindow} className="game-error-button secondary">
-                在新窗口打开
+                Open in New Window
               </button>
             )}
           </div>
         </div>
       )}
 
-      {/* 游戏iframe */}
+      {/* Game iframe */}
       <div className="game-embed-wrapper">
         <iframe 
           ref={iframeRef}
-          src={gameUrl} 
+          src={finalGameUrl} 
           title={title}
           allowFullScreen
           allow="gamepad; microphone; camera; midi; encrypted-media; autoplay; fullscreen"
@@ -172,12 +197,12 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
         />
       </div>
 
-      {/* 游戏控制栏 */}
+      {/* Game Controls */}
       {!hasError && (
         <div className="game-controls">
           <div className="game-info">
             <span className="game-type-badge" data-type={isOnline ? 'online' : 'local'}>
-              {isOnline ? '在线游戏' : '本地游戏'}
+              {isOnline ? 'Online' : 'Local'}
             </span>
             <span className="game-title-small">{title}</span>
           </div>
@@ -185,7 +210,7 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
             <button 
               onClick={handleReload} 
               className="game-control-button"
-              title="重新加载游戏"
+              title="Reload Game"
             >
               🔄
             </button>
@@ -193,7 +218,7 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
               <button 
                 onClick={handleOpenInNewWindow} 
                 className="game-control-button"
-                title="在新窗口打开"
+                title="Open in New Window"
               >
                 🔗
               </button>
