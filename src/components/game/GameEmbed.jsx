@@ -45,10 +45,8 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
 
     // For online games, use proxy if needed
     if (needsProxy(gameUrl)) {
-      // If in production, use relative path; otherwise, use full localhost path for dev server
-      const proxyUrl = import.meta.env.PROD 
-        ? `/proxy?url=${encodeURIComponent(gameUrl)}`
-        : `http://localhost:8788/proxy?url=${encodeURIComponent(gameUrl)}`;
+      // Always use relative path for production deployment
+      const proxyUrl = `/proxy?url=${encodeURIComponent(gameUrl)}`;
       console.log(`Using proxy for ${gameUrl}: ${proxyUrl}`);
       return proxyUrl;
     }

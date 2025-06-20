@@ -21,6 +21,8 @@
     "build:prod": "vite build --mode production",
     "clean": "rm -rf dist node_modules/.vite",
     "test:build": "npm run build && npm run preview",
+    "check:deploy": "node scripts/check-deploy.js",
+    "predeploy": "npm run check:deploy && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx vite"
   },
