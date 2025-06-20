@@ -5,8 +5,9 @@
   "main": "src/main.jsx",
   "scripts": {
     "dev": "vite build && wrangler pages dev ./dist",
-    "build": "vite build",
+    "build": "npm run sync-games && vite build",
     "preview": "vite preview",
+    "sync-games": "node scripts/sync-games.js",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "setup": "node scripts/setup.js",
     "deploy": "vite build && wrangler pages deploy ./dist",
