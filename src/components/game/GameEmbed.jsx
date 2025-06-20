@@ -116,41 +116,28 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     };
 
     // 对于在线游戏，使用更智能的加载检测
-    let loadCheckInterval;
     if (isOnline) {
       // 对于跨域iframe，load事件可能不会触发
       // 我们假设如果3秒后没有明显错误，就认为加载成功
       const optimisticTimeout = setTimeout(() => {
-        if (isLoading) {
-          console.log(`Online game presumed loaded: ${title}`);
-          setIsLoading(false);
-          setHasError(false);
-        }
+        console.log(`Online game presumed loaded: ${title}`);
+        setIsLoading(false);
+        setHasError(false);
       }, 3000);
-
-      // 清理函数
-      const cleanup = () => {
-        clearTimeout(optimisticTimeout);
-        if (loadCheckInterval) {
-          clearInterval(loadCheckInterval);
-        }
-      };
 
       // 设置更长的超时时间作为最后的安全网
       const finalTimeout = setTimeout(() => {
-        if (isLoading) {
-          console.warn(`Game loading final timeout: ${title}`);
-          setIsLoading(false);
-          // 对于在线游戏，不设置错误状态，让用户自己判断
-          // setHasError(true);
-        }
+        console.warn(`Game loading final timeout: ${title}`);
+        setIsLoading(false);
+        // 对于在线游戏，不设置错误状态，让用户自己判断
+        // setHasError(true);
       }, 30000); // 30秒超时
 
       iframe.addEventListener('load', handleLoad);
       iframe.addEventListener('error', handleError);
 
       return () => {
-        cleanup();
+        clearTimeout(optimisticTimeout);
         clearTimeout(finalTimeout);
         iframe.removeEventListener('load', handleLoad);
         iframe.removeEventListener('error', handleError);
@@ -177,7 +164,7 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
         iframe.removeEventListener('error', handleError);
       };
     }
-  }, [finalGameUrl, title, isOnline, onLoadError, loadStartTime, isLoading]);
+  }, [finalGameUrl, title, isOnline, onLoadError]);
 
   // 重新加载游戏
   const handleReload = () => {
