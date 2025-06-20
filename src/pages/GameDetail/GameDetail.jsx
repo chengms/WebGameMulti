@@ -105,10 +105,10 @@ function GameDetail() {
               <span className="game-detail__author">Developer: {game.author}</span>
               <span className="game-detail__date">Updated: {game.lastUpdated}</span>
               {game.isOnline && (
-                <span className="game-detail__type game-detail__type--online">在线游戏</span>
+                <span className="game-detail__type game-detail__type--online">Online Game</span>
               )}
               {!game.isOnline && (
-                <span className="game-detail__type game-detail__type--local">本地游戏</span>
+                <span className="game-detail__type game-detail__type--local">Local Game</span>
               )}
             </div>
             <div className="game-detail__tags">
@@ -177,25 +177,24 @@ function GameDetail() {
 
                   {/* 游戏类型说明 */}
                   <div className="game-detail__type-info">
-                    <h3 className="game-detail__subsection-title">游戏类型</h3>
+                    <h3 className="game-detail__subsection-title">Game Type</h3>
                     {game.isOnline ? (
                       <div className="game-detail__online-info">
-                        <p><strong>在线游戏：</strong>此游戏托管在外部服务器上，需要稳定的网络连接。</p>
+                        <p><strong>Online Game:</strong> This game is hosted on an external server and requires a stable network connection.</p>
                         <ul>
-                          <li>无需下载，即开即玩</li>
-                          <li>实时更新，体验最新版本</li>
-                          <li>可能需要较长的首次加载时间</li>
-                          <li>游戏性能取决于网络状况</li>
+                          <li>No download required, play instantly.</li>
+                          <li>Always up-to-date with the latest version.</li>
+                          <li>May have a longer initial loading time.</li>
+                          <li>Performance depends on network conditions.</li>
                         </ul>
                       </div>
                     ) : (
                       <div className="game-detail__local-info">
-                        <p><strong>本地游戏：</strong>此游戏文件存储在本地服务器上，提供稳定快速的游戏体验。</p>
+                        <p><strong>Local Game:</strong> This game is stored locally and can be played offline.</p>
                         <ul>
-                          <li>加载速度快，响应迅速</li>
-                          <li>离线可玩（在缓存后）</li>
-                          <li>稳定可靠的游戏体验</li>
-                          <li>针对本地运行优化</li>
+                          <li>Playable offline without an internet connection.</li>
+                          <li>Instant loading times.</li>
+                          <li>Game version is fixed until the next update.</li>
                         </ul>
                       </div>
                     )}
