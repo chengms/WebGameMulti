@@ -1,0 +1,7 @@
+feat: Optimize SEO, performance, and UI
+
+Enhance SEO with react-helmet-async for dynamic titles and descriptions.
+- Implement React.lazy and Suspense for faster page loads.
+- Improve GameCard UI with modern hover effects and transitions.
+- Fix game embedding issues by resolving local paths correctly.
+- Correct game URL for '8 Ball Billiards Classic' to prevent embedding the entire site. 

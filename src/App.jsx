@@ -1,14 +1,25 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
-import Home from './pages/Home/Home';
-import GameDetail from './pages/GameDetail/GameDetail';
-import About from './pages/About/About';
-import Settings from './pages/Settings/Settings';
-import NotFound from './pages/NotFound/NotFound';
 import { GameProvider } from './contexts/GameContext';
 import { UserSettingsProvider } from './contexts/UserSettingsContext';
 import './styles/global.css';
+
+// Lazy load page components
+const Home = lazy(() => import('./pages/Home/Home'));
+const GameDetail = lazy(() => import('./pages/GameDetail/GameDetail'));
+const About = lazy(() => import('./pages/About/About'));
+const Settings = lazy(() => import('./pages/Settings/Settings'));
+const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
+
+/**
+ * A simple loading spinner component to be shown during lazy loading
+ */
+const LoadingSpinner = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div className="home__loading-spinner"></div>
+  </div>
+);
 
 /**
  * Main App component with routing
@@ -20,13 +31,15 @@ function App() {
       <GameProvider>
         <Router>
           <Layout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/games/:gameId" element={<GameDetail />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/about" element={<About />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/games/:gameId" element={<GameDetail />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/about" element={<About />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </Layout>
         </Router>
       </GameProvider>

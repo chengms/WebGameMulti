@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGames } from '../../contexts/GameContext';
 import GameCard from '../../components/game/GameCard';
+import { Helmet } from 'react-helmet-async';
 import './Home.css';
 
 /**
@@ -25,6 +26,10 @@ function Home() {
 
   return (
     <div className="home">
+      <Helmet>
+        <title>GameTime Bar - Play Free Online Web Games</title>
+        <meta name="description" content="Discover and play a huge collection of free online games at GameTime Bar. Fun for all ages, with new games added regularly." />
+      </Helmet>
       <div className="home__header">
         <h1 className="home__title">Welcome to GameTime Bar</h1>
         <p className="home__subtitle">Your Ultimate Gaming Entertainment Hub</p>

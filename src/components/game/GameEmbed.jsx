@@ -32,14 +32,28 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
   };
 
   const getFinalGameUrl = () => {
-    if (isOnline && needsProxy(gameUrl)) {
-      // 如果是生产环境，使用相对路径；否则使用本地开发服务器的全路径
+    // For local games, resolve the path relative to the current origin
+    if (!isOnline) {
+      try {
+        // new URL() will correctly handle absolute vs relative paths
+        return new URL(gameUrl, window.location.origin).href;
+      } catch (e) {
+        console.error(`Invalid local game URL: ${gameUrl}`, e);
+        return gameUrl; // Fallback to original URL
+      }
+    }
+
+    // For online games, use proxy if needed
+    if (needsProxy(gameUrl)) {
+      // If in production, use relative path; otherwise, use full localhost path for dev server
       const proxyUrl = import.meta.env.PROD 
         ? `/proxy?url=${encodeURIComponent(gameUrl)}`
         : `http://localhost:8788/proxy?url=${encodeURIComponent(gameUrl)}`;
       console.log(`Using proxy for ${gameUrl}: ${proxyUrl}`);
       return proxyUrl;
     }
+
+    // Default case for online games without proxy
     return gameUrl;
   };
 
