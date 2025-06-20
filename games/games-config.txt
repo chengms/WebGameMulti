@@ -1,26 +1,26 @@
-# GameTime Bar 游戏配置文件
-# 格式: ID|名称|描述|类型|URL/路径|缩略图|标签|作者|优先级
-# 类型: online=在线游戏, local=本地游戏
-# 优先级: 数字越大优先级越高 (1-10)
+# GameTime Bar Game Configuration File
+# Format: ID|Name|Description|Type|URL/Path|Thumbnail|Local Thumbnail|Tags|Author|Priority
+# Type: online=Online Game, local=Local Game
+# Priority: Higher number means higher priority (1-10)
 
-# 本地游戏 (优先显示)
-snake|贪吃蛇|经典贪吃蛇游戏，使用方向键控制蛇的移动，吃食物变长，避免撞到自己或墙壁|local|/games/snake/index.html|/games/snake/image/cover.png|Arcade,Classic,Casual|GameTime Team|9
-tetris|俄罗斯方块|经典俄罗斯方块游戏，排列下落的方块形成完整行来消除方块|local|/games/tetris/index.html|/games/tetris/image/screenshot1.jpg|Puzzle,Classic,Strategy|GameTime Team|8
-2048|2048数字游戏|滑动数字瓷砖，合并相同数值的瓷砖，目标是达到2048|local|/games/2048/index.html|/games/2048/image/screenshot1.jpg|Puzzle,Strategy,Logic|GameTime Team|8
-pacman|吃豆人|经典街机游戏吃豆人，在迷宫中收集豆子，避开幽灵的追捕|local|/games/pacman/index.html|/games/pacman/image/cover.png|Arcade,Classic,Action|GameTime Team|7
-planewar|飞机大战|激烈的空战射击游戏，驾驶战机消灭敌人，收集道具升级武器|local|/games/planewar/index.html|/games/planewar/image/cover.png|Shooter,Action,Arcade|GameTime Team|7
-memory-match|记忆匹配|翻转卡片找到相同图案的配对，训练你的记忆力和专注力|local|/games/memory-match/index.html|/games/memory-match/image/cover.png|Puzzle,Memory,Casual|GameTime Team|6
-tic-tac-toe|井字棋|经典的井字棋游戏，与电脑对战，率先连成三个棋子获胜|local|/games/tic-tac-toe/index.html|/games/tic-tac-toe/image/screenshot1.jpg|Strategy,Classic,Casual|GameTime Team|5
-crazy-cattle-3d|疯狂奶牛3D|3D风格的趣味游戏，控制奶牛完成各种有趣的挑战|local|/games/crazy-cattle-3d/index.html|/games/crazy-cattle-3d/image/cover.png|3D,Fun,Casual|GameTime Team|6
-bike-racing|自行车竞速|刺激的自行车竞速游戏，在赛道上飞驰，超越对手夺取胜利|local|/games/bike-racing/index.html|/placeholder-game.png|Racing,Sports,Action|GameTime Team|5
-candy-crush|糖果消消乐|甜蜜的三消游戏，匹配相同的糖果来消除它们，完成关卡挑战|local|/games/candy-crush/index.html|/placeholder-game.png|Puzzle,Match3,Casual|GameTime Team|6
-circle-path|圆圈路径|考验反应能力的休闲游戏，控制小球在圆形路径上移动|local|/games/circle-path/index.html|/placeholder-game.png|Casual,Reflex,Minimalist|GameTime Team|4
-endless-run|无尽奔跑|永不停歇的跑酷游戏，跳跃障碍物，收集金币，挑战最高分|local|/games/endless-run/index.html|/placeholder-game.png|Runner,Arcade,Casual|GameTime Team|5
-rpg-demo|RPG演示|角色扮演游戏演示，体验经典RPG游戏的魅力和玩法|local|/games/rpg-demo/index.html|/placeholder-game.png|RPG,Adventure,Demo|GameTime Team|4
+# Local Games (Displayed First)
+snake|Snake|Classic snake game. Use arrow keys to control the snake, eat food to grow longer, and avoid hitting yourself or the walls.|local|/games/snake/index.html|/games/snake/image/cover.png|/games/snake/image/cover.png|Arcade,Classic,Casual|GameTime Team|9
+tetris|Tetris|Classic Tetris game. Arrange the falling blocks to form complete rows to clear them.|local|/games/tetris/index.html|/games/tetris/image/screenshot1.jpg|/games/tetris/image/screenshot1.jpg|Puzzle,Classic,Strategy|GameTime Team|8
+2048|2048|Slide numbered tiles to merge those with the same value, aiming to reach the 2048 tile.|local|/games/2048/index.html|/games/2048/image/screenshot1.jpg|/games/2048/image/screenshot1.jpg|Puzzle,Strategy,Logic|GameTime Team|8
+pacman|Pacman|Classic arcade game Pacman. Collect dots in a maze while avoiding the ghosts.|local|/games/pacman/index.html|/games/pacman/image/cover.png|/games/pacman/image/cover.png|Arcade,Classic,Action|GameTime Team|7
+planewar|Plane War|Intense aerial combat shooter. Pilot a fighter jet to destroy enemies and collect power-ups to upgrade weapons.|local|/games/planewar/index.html|/games/planewar/image/cover.png|/games/planewar/image/cover.png|Shooter,Action,Arcade|GameTime Team|7
+memory-match|Memory Match|Flip cards to find matching pairs, training your memory and concentration.|local|/games/memory-match/index.html|/games/memory-match/image/cover.png|/games/memory-match/image/cover.png|Puzzle,Memory,Casual|GameTime Team|6
+tic-tac-toe|Tic-Tac-Toe|Classic Tic-Tac-Toe game. Play against the computer to be the first to get three in a row.|local|/games/tic-tac-toe/index.html|/games/tic-tac-toe/image/screenshot1.jpg|/games/tic-tac-toe/image/screenshot1.jpg|Strategy,Classic,Casual|GameTime Team|5
+crazy-cattle-3d|Crazy Cattle 3D|A fun 3D-style game. Control a cow to complete various interesting challenges.|local|/games/crazy-cattle-3d/index.html|/games/crazy-cattle-3d/image/cover.png|/games/crazy-cattle-3d/image/cover.png|3D,Fun,Casual|GameTime Team|6
+bike-racing|Bike Racing|Exciting bike racing game. Speed down the track and overtake opponents to claim victory.|local|/games/bike-racing/index.html|/placeholder-game.png|/placeholder-game.png|Racing,Sports,Action|GameTime Team|5
+candy-crush|Candy Crush|A sweet match-3 game. Match identical candies to clear them and complete level challenges.|local|/games/candy-crush/index.html|/placeholder-game.png|/placeholder-game.png|Puzzle,Match3,Casual|GameTime Team|6
+circle-path|Circle Path|A casual game that tests your reflexes. Control a ball moving on a circular path.|local|/games/circle-path/index.html|/placeholder-game.png|/placeholder-game.png|Casual,Reflex,Minimalist|GameTime Team|4
+endless-run|Endless Run|A non-stop parkour game. Jump over obstacles, collect coins, and challenge the high score.|local|/games/endless-run/index.html|/placeholder-game.png|/placeholder-game.png|Runner,Arcade,Casual|GameTime Team|5
+rpg-demo|RPG Demo|A role-playing game demo. Experience the charm and gameplay of classic RPGs.|local|/games/rpg-demo/index.html|/placeholder-game.png|/placeholder-game.png|RPG,Adventure,Demo|GameTime Team|4
 
-# 在线游戏示例 (可以添加更多)
-# online-game-1|在线游戏示例|这是一个在线游戏示例，展示如何配置在线游戏|online|https://example.com/game1|/placeholder-game.png|Online,Demo|External Developer|3
-# online-game-2|HTML5游戏门户|访问丰富的HTML5游戏资源|online|https://html5games.com|/placeholder-game.png|Portal,Collection|HTML5 Games|2 
+# Online Game Examples (add more as needed)
+# online-game-1|Online Game Example|This is an example of an online game, showing how to configure it.|online|https://example.com/game1|/placeholder-game.png|/placeholder-game.png|Online,Demo|External Developer|3
+# online-game-2|HTML5 Games Portal|Access a rich collection of HTML5 games.|online|https://html5games.com|/placeholder-game.png|/placeholder-game.png|Portal,Collection|HTML5 Games|2
 
 # === Games from HTML5Games.com ===
 om-nom-run|Om Nom Run|Play Om Nom Run online, an exciting game from HTML5Games.|online|https://html5games.com/Game/Om-Nom-Run/abe80572-560a-444d-baf7-2fa4a7b2c02f|https://img.cdn.famobi.com/portal/html5games/images/tmp/OmNomRunTeaser.jpg?v=0.2-004af2e9|/placeholder-game.png|Online,Arcade|HTML5Games.com|20
