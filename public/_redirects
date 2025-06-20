@@ -1,5 +1,4 @@
 # SPA fallback for client-side routing
-/games/* /index.html 200
 /settings /index.html 200
 /about /index.html 200
-/* /index.html 200 
+/home /index.html 200 

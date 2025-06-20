@@ -1,5 +1,5 @@
 {
   "version": 1,
-  "include": ["/proxy*"],
-  "exclude": ["/assets/*", "/games/*", "/*.js", "/*.css", "/*.html", "/*.ico", "/*.png", "/*.jpg", "/*.jpeg", "/*.svg"]
+  "include": ["/proxy/*"],
+  "exclude": ["/assets/*", "/games/*", "/*.js", "/*.css", "/*.html", "/*.ico", "/*.png", "/*.jpg", "/*.jpeg", "/*.svg", "/favicon.svg"]
 } 
