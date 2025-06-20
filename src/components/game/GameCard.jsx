@@ -1,4 +1,4 @@
-import React, { memo, useState, useCallback } from 'react';
+import React, { memo, useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './GameCard.css';
@@ -11,19 +11,27 @@ import './GameCard.css';
  * @returns {JSX.Element} Game card component
  */
 const GameCard = memo(({ game, onClick }) => {
+  const [imageUrl, setImageUrl] = useState(game.thumbnail);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
+
+  useEffect(() => {
+    setImageUrl(game.thumbnail);
+    setImageLoaded(false);
+  }, [game.thumbnail]);
+
+  const handleImageError = useCallback(() => {
+    if (imageUrl === game.thumbnail && game.localThumbnail) {
+      setImageUrl(game.localThumbnail);
+    } else {
+      setImageUrl('/placeholder-game.png');
+    }
+  }, [imageUrl, game.thumbnail, game.localThumbnail]);
 
   const handleImageLoad = useCallback(() => {
     setImageLoaded(true);
   }, []);
 
-  const handleImageError = useCallback(() => {
-    setImageError(true);
-    setImageLoaded(true);
-  }, []);
-
-  const { name, description, thumbnail, tags } = game;
+  const { name, description, tags } = game;
   
   // 生成标签显示文本，限制显示数量
   const displayTags = tags ? tags.slice(0, 3) : [];
@@ -38,7 +46,7 @@ const GameCard = memo(({ game, onClick }) => {
             </div>
           )}
           <img 
-            src={imageError ? '/placeholder-game.png' : thumbnail}
+            src={imageUrl}
             alt={name}
             className={`game-card-image ${imageLoaded ? 'loaded' : ''}`}
             onLoad={handleImageLoad}
@@ -84,6 +92,7 @@ GameCard.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     thumbnail: PropTypes.string.isRequired,
+    localThumbnail: PropTypes.string,
     tags: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   onClick: PropTypes.func

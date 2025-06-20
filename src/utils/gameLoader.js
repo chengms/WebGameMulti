@@ -41,10 +41,10 @@ const parseGameConfig = async () => {
       }
       
       // 解析游戏配置行
-      // 格式: ID|名称|描述|类型|URL/路径|缩略图|标签|作者|优先级
+      // 格式: ID|名称|描述|类型|URL/路径|缩略图|本地图标|标签|作者|优先级
       const parts = trimmedLine.split('|');
-      if (parts.length >= 8) {
-        const [id, name, description, type, url, thumbnail, tags, author, priority] = parts;
+      if (parts.length >= 9) {
+        const [id, name, description, type, url, thumbnail, localThumbnail, tags, author, priority] = parts;
         
         games.push({
           id: id.trim(),
@@ -53,6 +53,7 @@ const parseGameConfig = async () => {
           type: type.trim(), // 'online' 或 'local'
           url: url.trim(),
           thumbnail: thumbnail.trim(),
+          localThumbnail: localThumbnail.trim(),
           tags: tags.split(',').map(tag => tag.trim()),
           author: author.trim(),
           priority: parseInt(priority) || 1,
@@ -92,6 +93,7 @@ const getFallbackGames = () => {
       type: 'local',
       url: '/games/snake/index.html',
       thumbnail: '/games/snake/image/cover.png',
+      localThumbnail: '/games/snake/image/cover.png',
       tags: ['Arcade', 'Classic', 'Casual'],
       author: 'GameTime Team',
       priority: 5,
@@ -104,6 +106,7 @@ const getFallbackGames = () => {
       type: 'local',
       url: '/games/tetris/index.html',
       thumbnail: '/games/tetris/image/screenshot1.jpg',
+      localThumbnail: '/games/tetris/image/screenshot1.jpg',
       tags: ['Puzzle', 'Classic', 'Strategy'],
       author: 'GameTime Team',
       priority: 4,
@@ -116,6 +119,7 @@ const getFallbackGames = () => {
       type: 'local',
       url: '/games/2048/index.html',
       thumbnail: '/games/2048/image/screenshot1.jpg',
+      localThumbnail: '/games/2048/image/screenshot1.jpg',
       tags: ['Puzzle', 'Strategy', 'Logic'],
       author: 'GameTime Team',
       priority: 4,
@@ -146,6 +150,7 @@ export const loadGames = async () => {
       name: game.name,
       description: game.description,
       thumbnail: game.thumbnail,
+      localThumbnail: game.localThumbnail,
       tags: game.tags,
       author: game.author,
       type: game.type,
@@ -195,6 +200,7 @@ export const loadGameDetails = async (gameId) => {
       description: game.description,
       fullDescription: generateFullDescription(game),
       thumbnail: game.thumbnail,
+      localThumbnail: game.localThumbnail,
       screenshots: generateScreenshots(game),
       tags: game.tags,
       author: game.author,
