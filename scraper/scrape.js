@@ -96,33 +96,188 @@ function formatToConfigLine(gameData) {
 // =================================================================================
 
 /**
+ * Extract the actual Famobi game URL from HTML5games.com game detail page
+ * @param {string} gamePageUrl - URL of the game detail page
+ * @returns {Promise<string>} - The actual Famobi game URL
+ */
+async function extractFamobiUrl(gamePageUrl) {
+    try {
+        console.log(`  Extracting Famobi URL from: ${gamePageUrl}`);
+        const html = await getHTML(gamePageUrl);
+        if (!html) return gamePageUrl;
+        
+        const $ = cheerio.load(html);
+        
+        // Method 1: Look for direct famobi.com links in the page
+        let famobiUrl = $('a[href*="play.famobi.com"]').attr('href');
+        
+        // Method 2: Look for the "Place the game link on your website!" section
+        if (!famobiUrl) {
+            const linkSection = $('h2:contains("Place the game link on your website!")').next();
+            const linkText = linkSection.text();
+            const famobiMatch = linkText.match(/https:\/\/play\.famobi\.com\/[^\s]+/);
+            if (famobiMatch) {
+                famobiUrl = famobiMatch[0];
+            }
+        }
+        
+        // Method 3: Extract from any text content containing famobi.com
+        if (!famobiUrl) {
+            const bodyText = $('body').text();
+            const famobiMatch = bodyText.match(/https:\/\/play\.famobi\.com\/[^\s]+/);
+            if (famobiMatch) {
+                famobiUrl = famobiMatch[0];
+            }
+        }
+        
+        // Method 4: Construct URL based on game name pattern
+        if (!famobiUrl) {
+            const urlMatch = gamePageUrl.match(/\/Game\/([^\/]+)\//);
+            if (urlMatch) {
+                const gameName = urlMatch[1].toLowerCase().replace(/\s+/g, '-');
+                famobiUrl = `https://play.famobi.com/wrapper/${gameName}/A1000-10`;
+                console.log(`  Constructed Famobi URL: ${famobiUrl}`);
+            }
+        }
+        
+        // Convert famobi.com URLs to wrapper format if needed
+        if (famobiUrl && famobiUrl.includes('play.famobi.com') && !famobiUrl.includes('/wrapper/')) {
+            const gameNameMatch = famobiUrl.match(/play\.famobi\.com\/([^\/\?]+)/);
+            if (gameNameMatch) {
+                const gameName = gameNameMatch[1];
+                famobiUrl = `https://play.famobi.com/wrapper/${gameName}/A1000-10`;
+            }
+        }
+        
+        return famobiUrl || gamePageUrl;
+    } catch (error) {
+        console.error(`  Error extracting Famobi URL from ${gamePageUrl}:`, error.message);
+        return gamePageUrl;
+    }
+}
+
+/**
  * Scraper for HTML5Games.com
  * @param {string} html - The HTML content of the page
  * @param {string} baseUrl - The base URL of the site
  * @returns {Array<object>} - An array of game data objects
  */
-function scrapeHtml5Games(html, baseUrl) {
+async function scrapeHtml5Games(html, baseUrl) {
     const $ = cheerio.load(html);
     const games = [];
-    // A more robust selector for game items
-    $('div.item a.teaser').each((i, el) => {
-        const link = $(el);
-        const name = link.attr('title');
-        const url = link.attr('href');
-        const img = link.find('img.teaser-img');
+    const gameLinks = new Set(); // Use Set to avoid duplicates
+    
+    // Try multiple selectors to find game links
+    console.log('Trying different selectors to find game links...');
+    
+    // Method 1: Look for any links containing "/Game/"
+    $('a[href*="/Game/"]').each((i, el) => {
+        const url = $(el).attr('href');
+        if (url) {
+            gameLinks.add(new URL(url, baseUrl).toString());
+        }
+    });
+    
+    // Method 2: Look for links with game-related classes
+    $('a.game, a.game-link, a.teaser').each((i, el) => {
+        const url = $(el).attr('href');
+        if (url && url.includes('/Game/')) {
+            gameLinks.add(new URL(url, baseUrl).toString());
+        }
+    });
+    
+    // Method 3: Look in common container elements
+    $('.game-item a, .item a, .game-card a').each((i, el) => {
+        const url = $(el).attr('href');
+        if (url && url.includes('/Game/')) {
+            gameLinks.add(new URL(url, baseUrl).toString());
+        }
+    });
+    
+    // Method 4: Broad search for any link containing game names
+    $('a').each((i, el) => {
+        const url = $(el).attr('href');
+        if (url && url.includes('/Game/') && url.includes('-')) {
+            gameLinks.add(new URL(url, baseUrl).toString());
+        }
+    });
+    
+    console.log(`Found ${gameLinks.size} game links on HTML5Games.com`);
+    
+    // If still no links found, let's debug what's on the page
+    if (gameLinks.size === 0) {
+        console.log('No game links found. Debugging page structure...');
+        console.log('All links found on page:');
+        $('a').each((i, el) => {
+            const url = $(el).attr('href');
+            if (url && i < 10) { // Show first 10 links for debugging
+                console.log(`  ${i + 1}: ${url}`);
+            }
+        });
         
-        if (name && url) {
+        // Try to find any pattern that might contain games
+        console.log('Looking for any /Game/ patterns in text...');
+        const pageText = $('body').text();
+        const gameMatches = pageText.match(/\/Game\/[^\/\s]+/g);
+        if (gameMatches) {
+            console.log('Found game patterns in text:', gameMatches.slice(0, 5));
+            gameMatches.forEach(match => {
+                gameLinks.add(new URL(match, baseUrl).toString());
+            });
+        }
+    }
+    
+    console.log(`Final game links count: ${gameLinks.size}`);
+    
+    // Process each game link (limit to first 5 for testing)
+    let processed = 0;
+    for (const gameUrl of gameLinks) {
+        if (processed >= 5) break; // Reduced limit for testing
+        
+        try {
+            console.log(`Processing game ${processed + 1}/5: ${gameUrl}`);
+            
+            // Get game detail page
+            const gameHtml = await getHTML(gameUrl);
+            if (!gameHtml) continue;
+            
+            const game$ = cheerio.load(gameHtml);
+            
+            // Extract game information
+            const name = game$('h1').first().text().trim();
+            if (!name) continue;
+            
+            const description = game$('p').first().text().trim() || `Play ${name} online, an exciting game from HTML5Games.`;
+            
+            // Extract the actual Famobi game URL
+            const actualGameUrl = await extractFamobiUrl(gameUrl);
+            
+            // Extract thumbnail
+            let thumbnail = game$('img').first().attr('src') || '/placeholder-game.png';
+            if (thumbnail && !thumbnail.startsWith('http')) {
+                thumbnail = new URL(thumbnail, baseUrl).toString();
+            }
+            
             games.push({
                 id: generateId(name),
                 name: name,
-                description: `Play ${name} online, an exciting game from HTML5Games.`,
-                url: new URL(url, baseUrl).toString(),
-                thumbnail: new URL(img.attr('data-src') || img.attr('src'), baseUrl).toString(),
+                description: description,
+                url: actualGameUrl, // Use the extracted Famobi URL
+                thumbnail: thumbnail,
                 author: 'HTML5Games.com',
                 tags: ['Online', 'Arcade']
             });
+            
+            processed++;
+            
+            // Add delay to avoid overwhelming the server
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Increased delay
+            
+        } catch (error) {
+            console.error(`  Failed to process game ${gameUrl}:`, error.message);
         }
-    });
+    }
+    
     return games;
 }
 
