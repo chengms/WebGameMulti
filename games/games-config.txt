@@ -16,7 +16,6 @@ bike-racing|Bike Racing|Exciting bike racing game. Speed down the track and over
 candy-crush|Candy Crush|A sweet match-3 game. Match identical candies to clear them and complete level challenges.|local|/games/candy-crush/index.html|/placeholder-game.png|/placeholder-game.png|Puzzle,Match3,Casual|GameTime Team|6
 circle-path|Circle Path|A casual game that tests your reflexes. Control a ball moving on a circular path.|local|/games/circle-path/index.html|/placeholder-game.png|/placeholder-game.png|Casual,Reflex,Minimalist|GameTime Team|4
 endless-run|Endless Run|A non-stop parkour game. Jump over obstacles, collect coins, and challenge the high score.|local|/games/endless-run/index.html|/placeholder-game.png|/placeholder-game.png|Runner,Arcade,Casual|GameTime Team|5
-rpg-demo|RPG Demo|A role-playing game demo. Experience the charm and gameplay of classic RPGs.|local|/games/rpg-demo/index.html|/placeholder-game.png|/placeholder-game.png|RPG,Adventure,Demo|GameTime Team|4
 
 # Online Game Examples (add more as needed)
 # online-game-1|Online Game Example|This is an example of an online game, showing how to configure it.|online|https://example.com/game1|/placeholder-game.png|/placeholder-game.png|Online,Demo|External Developer|3
