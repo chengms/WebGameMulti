@@ -35,4 +35,9 @@ logs
 
 # OS
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Scraper-specific ignores
+/scraper/node_modules
+/scraper/scraped-output.txt
+/scraper/package-lock.json 
