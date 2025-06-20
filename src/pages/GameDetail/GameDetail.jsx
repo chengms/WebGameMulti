@@ -106,8 +106,10 @@ function GameDetail() {
               <span className="game-detail__date">Updated: {game.lastUpdated}</span>
               {game.isOnline && (
                 <span className="game-detail__type game-detail__type--online">Online Game</span>
+                <span className="game-detail__type game-detail__type--online">Online Game</span>
               )}
               {!game.isOnline && (
+                <span className="game-detail__type game-detail__type--local">Local Game</span>
                 <span className="game-detail__type game-detail__type--local">Local Game</span>
               )}
             </div>
