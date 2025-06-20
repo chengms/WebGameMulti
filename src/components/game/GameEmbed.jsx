@@ -115,27 +115,69 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
       }
     };
 
-    // 设置超时处理（在线游戏可能需要更长时间）
-    const timeout = setTimeout(() => {
-      if (isLoading) {
-        console.warn(`Game loading timeout: ${title}`);
-        setIsLoading(false);
-        setHasError(true);
-        if (onLoadError) {
-          onLoadError(finalGameUrl, isOnline);
+    // 对于在线游戏，使用更智能的加载检测
+    let loadCheckInterval;
+    if (isOnline) {
+      // 对于跨域iframe，load事件可能不会触发
+      // 我们假设如果3秒后没有明显错误，就认为加载成功
+      const optimisticTimeout = setTimeout(() => {
+        if (isLoading) {
+          console.log(`Online game presumed loaded: ${title}`);
+          setIsLoading(false);
+          setHasError(false);
         }
-      }
-    }, isOnline ? 15000 : 10000); // 在线游戏15秒，本地游戏10秒
+      }, 3000);
 
-    iframe.addEventListener('load', handleLoad);
-    iframe.addEventListener('error', handleError);
+      // 清理函数
+      const cleanup = () => {
+        clearTimeout(optimisticTimeout);
+        if (loadCheckInterval) {
+          clearInterval(loadCheckInterval);
+        }
+      };
 
-    return () => {
-      clearTimeout(timeout);
-      iframe.removeEventListener('load', handleLoad);
-      iframe.removeEventListener('error', handleError);
-    };
-  }, [finalGameUrl, title, isOnline, onLoadError, loadStartTime]);
+      // 设置更长的超时时间作为最后的安全网
+      const finalTimeout = setTimeout(() => {
+        if (isLoading) {
+          console.warn(`Game loading final timeout: ${title}`);
+          setIsLoading(false);
+          // 对于在线游戏，不设置错误状态，让用户自己判断
+          // setHasError(true);
+        }
+      }, 30000); // 30秒超时
+
+      iframe.addEventListener('load', handleLoad);
+      iframe.addEventListener('error', handleError);
+
+      return () => {
+        cleanup();
+        clearTimeout(finalTimeout);
+        iframe.removeEventListener('load', handleLoad);
+        iframe.removeEventListener('error', handleError);
+      };
+    } else {
+      // 本地游戏使用传统的超时检测
+      const timeout = setTimeout(() => {
+        if (isLoading) {
+          console.warn(`Local game loading timeout: ${title}`);
+          setIsLoading(false);
+          setHasError(true);
+          if (onLoadError) {
+            onLoadError(finalGameUrl, isOnline);
+          }
+        }
+      }, 10000); // 本地游戏10秒超时
+
+      iframe.addEventListener('load', handleLoad);
+      iframe.addEventListener('error', handleError);
+
+      return () => {
+        clearTimeout(timeout);
+        iframe.removeEventListener('load', handleLoad);
+        iframe.removeEventListener('error', handleError);
+      };
+    }
+  }, [finalGameUrl, title, isOnline, onLoadError, loadStartTime, isLoading]);
 
   // 重新加载游戏
   const handleReload = () => {
@@ -145,6 +187,12 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
       setLoadStartTime(Date.now());
       iframeRef.current.src = iframeRef.current.src; // 重新加载
     }
+  };
+
+  // 手动隐藏加载界面
+  const handleHideLoading = () => {
+    setIsLoading(false);
+    setHasError(false);
   };
 
   // 在新窗口中打开游戏
@@ -164,6 +212,13 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
           <div className="game-loading-subtitle">
             {isOnline ? 'First load may take a moment' : 'Please wait'}
           </div>
+          {isOnline && (
+            <div className="game-loading-actions">
+              <button onClick={handleHideLoading} className="game-loading-button">
+                Game Already Loaded? Click Here
+              </button>
+            </div>
+          )}
         </div>
       )}
 
