@@ -1,59 +1,10 @@
-# Cloudflare Pages configuration
-name = "gametime"
-compatibility_date = "2024-01-01"
+# This is a configuration file for developing with Cloudflare Pages.
+# It's intentionally kept simple to avoid conflicts with production settings.
+# The production configuration is stored in 'wrangler.production.toml'.
 
-[build]
-command = "npm run build"
-output_directory = "dist"
-
-[build.environment]
-NODE_ENV = "production"
-
-[env.production]
-name = "gametime-prod"
-route = "gametime.bar/*"
-zone_id = "" # 需要填入你的zone_id
-usage_model = "bundled"
-compatibility_date = "2024-01-01"
-
-[env.production.build]
-command = "npm run build"
-output_directory = "dist"
-node_compat = true
-
-[env.production.vars]
-NODE_ENV = "production"
-
-[env.development]
 name = "gametime-dev"
-route = "dev.gametime.bar/*"
-usage_model = "bundled"
-compatibility_date = "2024-01-01"
+compatibility_date = "2024-06-20"
 
-[env.development.build]
-command = "npm run build:dev"
-output_directory = "dist"
-node_compat = true
-
-[env.development.vars]
-NODE_ENV = "development"
-
-# Custom domains configuration
-[[routes]]
-pattern = "gametime.bar"
-custom_domain = true
-
-[[routes]]
-pattern = "dev.gametime.bar"
-custom_domain = true
-
-# HTTP headers configuration
-[[headers]]
-pattern = "/*"
-headers = [
-  { key = "Access-Control-Allow-Origin", value = "https://gametime.bar" },
-  { key = "X-Frame-Options", value = "DENY" },
-  { key = "X-Content-Type-Options", value = "nosniff" },
-  { key = "Referrer-Policy", value = "strict-origin-when-cross-origin" },
-  { key = "Content-Security-Policy", value = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;" }
-] 
+# This tells Wrangler where to find the Functions, like our proxy.
+[functions]
+directory = "./functions" 
