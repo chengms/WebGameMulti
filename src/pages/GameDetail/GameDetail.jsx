@@ -197,7 +197,7 @@ function GameDetail() {
                     </div>
                   )}
 
-                  {/* 游戏类型说明 */}
+                  {/* Game type information */}
                   <div className="game-detail__type-info">
                     <h3 className="game-detail__subsection-title">Game Type</h3>
                     {game.isOnline ? (

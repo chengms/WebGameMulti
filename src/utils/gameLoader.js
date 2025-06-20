@@ -89,7 +89,7 @@ const getFallbackGames = () => {
     {
       id: 'snake',
       name: 'Snake',
-      description: '经典贪吃蛇游戏，使用方向键控制蛇的移动，吃食物变长',
+      description: 'Classic snake game. Use arrow keys to control the snake, eat food to grow longer, and avoid hitting yourself or the walls.',
       type: 'local',
       url: '/games/snake/index.html',
       thumbnail: '/games/snake/image/cover.png',
@@ -102,7 +102,7 @@ const getFallbackGames = () => {
     {
       id: 'tetris',
       name: 'Tetris',
-      description: '经典俄罗斯方块游戏，排列下落的方块形成完整行',
+      description: 'Classic Tetris game. Arrange the falling blocks to form complete rows to clear them.',
       type: 'local',
       url: '/games/tetris/index.html',
       thumbnail: '/games/tetris/image/screenshot1.jpg',
@@ -115,7 +115,7 @@ const getFallbackGames = () => {
     {
       id: '2048',
       name: '2048',
-      description: '滑动数字瓷砖，合并相同数值达到2048',
+      description: 'Slide numbered tiles to merge those with the same value, aiming to reach the 2048 tile.',
       type: 'local',
       url: '/games/2048/index.html',
       thumbnail: '/games/2048/image/screenshot1.jpg',
@@ -225,7 +225,7 @@ export const loadGameDetails = async (gameId) => {
 };
 
 /**
- * 生成游戏的完整描述
+ * 生成游戏的完整描述（HTML格式）
  * @param {Object} game 游戏对象
  * @returns {string} HTML格式的完整描述
  */
@@ -234,28 +234,28 @@ const generateFullDescription = (game) => {
   
   if (game.isOnline) {
     return baseDescription + `
-      <h3>在线游戏特色</h3>
+      <h3>Online Game Features</h3>
       <ul>
-        <li>无需下载，即开即玩</li>
-        <li>实时更新，体验最新版本</li>
-        <li>支持多平台访问</li>
-        <li>社区互动和排行榜</li>
+        <li>No download required, play instantly</li>
+        <li>Always up-to-date with the latest version</li>
+        <li>Multi-platform access supported</li>
+        <li>Community interaction and leaderboards</li>
       </ul>
-      <h3>游戏说明</h3>
-      <p>这是一款优质的在线游戏，由 ${game.author} 开发制作。游戏支持现代浏览器，提供流畅的游戏体验。</p>
-      <p><strong>注意：</strong>在线游戏需要稳定的网络连接，首次加载可能需要一些时间。</p>
+      <h3>Game Description</h3>
+      <p>This is a high-quality online game developed by ${game.author}. The game supports modern browsers and provides a smooth gaming experience.</p>
+      <p><strong>Note:</strong> Online games require a stable internet connection, and initial loading may take some time.</p>
     `;
   } else {
     return baseDescription + `
-      <h3>本地游戏特色</h3>
+      <h3>Local Game Features</h3>
       <ul>
-        <li>离线可玩，无需网络连接</li>
-        <li>加载速度快，响应迅速</li>
-        <li>稳定可靠，不受网络影响</li>
-        <li>优化的本地体验</li>
+        <li>Playable offline without internet connection</li>
+        <li>Fast loading and responsive gameplay</li>
+        <li>Stable and reliable, unaffected by network</li>
+        <li>Optimized local gaming experience</li>
       </ul>
-      <h3>游戏说明</h3>
-      <p>这是一款精心制作的本地游戏，由 ${game.author} 开发。游戏已针对本地运行进行优化，提供最佳的游戏体验。</p>
+      <h3>Game Description</h3>
+      <p>This is a carefully crafted local game developed by ${game.author}. The game has been optimized for local execution to provide the best gaming experience.</p>
     `;
   }
 };
@@ -290,15 +290,15 @@ const generateControls = (game) => {
   const tags = game.tags.map(tag => tag.toLowerCase());
   
   if (tags.includes('arcade') || tags.includes('action')) {
-    return '方向键或WASD控制移动，空格键执行动作，鼠标点击交互';
+    return 'Use arrow keys or WASD to move, spacebar for actions, mouse click for interactions';
   } else if (tags.includes('puzzle')) {
-    return '鼠标点击选择和移动，方向键导航，空格键确认';
+    return 'Mouse click to select and move, arrow keys to navigate, spacebar to confirm';
   } else if (tags.includes('racing') || tags.includes('sports')) {
-    return '方向键控制方向，空格键加速或刹车，鼠标控制视角';
+    return 'Arrow keys to control direction, spacebar to accelerate or brake, mouse to control camera';
   } else if (tags.includes('shooter')) {
-    return 'WASD控制移动，鼠标瞄准和射击，空格键跳跃或特殊动作';
+    return 'WASD to move, mouse to aim and shoot, spacebar to jump or perform special actions';
   } else {
-    return '使用鼠标和键盘进行游戏操作，具体控制请参考游戏内说明';
+    return 'Use mouse and keyboard to play. For specific controls, please refer to the in-game instructions';
   }
 };
 
