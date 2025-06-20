@@ -2,8 +2,12 @@
 # It's intentionally kept simple to avoid conflicts with production settings.
 # The production configuration is stored in 'wrangler.production.toml'.
 
+# Cloudflare Pages configuration for development
 name = "gametime-dev"
 compatibility_date = "2024-06-20"
+
+# Pages build configuration
+pages_build_output_dir = "dist"
 
 # This tells Wrangler where to find the Functions, like our proxy.
 [functions]
