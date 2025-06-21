@@ -92,42 +92,72 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     };
   }, []);
 
-  // 键盘事件处理 - 当游戏区域被激活时阻止方向键滚动页面
+  // 键盘事件处理 - 使用更强力的全局事件拦截
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      console.log(`🔍 Key pressed: ${event.code}, Game active: ${isGameFocused}`);
-      
-      // 当游戏区域激活时阻止方向键和空格键的默认行为
-      if (isGameFocused && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(event.code)) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-        console.log(`🎮 Blocked ${event.code} - game controls active`);
-        return false;
-      } else if (isGameFocused) {
-        console.log(`⚪ Allowed ${event.code} - not a game control key`);
-      } else {
-        console.log(`⌨️ Allowed ${event.code} - game not active, normal page scrolling`);
-      }
-    };
+    if (!isGameFocused) return;
 
-    const handleKeyUp = (event) => {
-      // 同样处理keyup事件以确保完全阻止
-      if (isGameFocused && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(event.code)) {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
+    console.log('🎮 Activating keyboard control - blocking page scroll');
+
+    // 强制阻止页面滚动的多层防护
+    const preventScroll = (e) => {
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        console.log(`🎮 Blocked ${e.code} from page scroll`);
         return false;
       }
     };
 
-    // 使用capture模式确保最高优先级
-    document.addEventListener('keydown', handleKeyDown, { passive: false, capture: true });
-    document.addEventListener('keyup', handleKeyUp, { passive: false, capture: true });
+    const preventScrollWheel = (e) => {
+      // 阻止鼠标滚轮滚动
+      if (e.target.closest('.game-embed-container')) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    };
+
+    const preventTouchScroll = (e) => {
+      // 阻止触摸滚动
+      if (e.target.closest('.game-embed-container')) {
+        e.preventDefault();
+        return false;
+      }
+    };
+
+    // 多层事件监听确保彻底阻止
+    document.addEventListener('keydown', preventScroll, { passive: false, capture: true });
+    document.addEventListener('keyup', preventScroll, { passive: false, capture: true });
+    window.addEventListener('keydown', preventScroll, { passive: false, capture: true });
+    window.addEventListener('keyup', preventScroll, { passive: false, capture: true });
+    
+    // 阻止滚轮滚动
+    document.addEventListener('wheel', preventScrollWheel, { passive: false, capture: true });
+    
+    // 阻止触摸滚动
+    document.addEventListener('touchmove', preventTouchScroll, { passive: false, capture: true });
+
+    // 临时修改body样式以防止滚动
+    const originalOverflow = document.body.style.overflow;
+    const originalHeight = document.body.style.height;
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100vh';
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown, { capture: true });
-      document.removeEventListener('keyup', handleKeyUp, { capture: true });
+      console.log('⌨️ Deactivating keyboard control - allowing page scroll');
+      
+      // 恢复事件监听
+      document.removeEventListener('keydown', preventScroll, { capture: true });
+      document.removeEventListener('keyup', preventScroll, { capture: true });
+      window.removeEventListener('keydown', preventScroll, { capture: true });
+      window.removeEventListener('keyup', preventScroll, { capture: true });
+      document.removeEventListener('wheel', preventScrollWheel, { capture: true });
+      document.removeEventListener('touchmove', preventTouchScroll, { capture: true });
+      
+      // 恢复body样式
+      document.body.style.overflow = originalOverflow;
+      document.body.style.height = originalHeight;
     };
   }, [isGameFocused]);
 
@@ -396,12 +426,21 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
         </div>
       )}
 
+      {/* Game Mode Overlay */}
+      {isGameFocused && !hasError && !isLoading && (
+        <div className="game-mode-overlay">
+          <div className="game-mode-badge">
+            🎮 GAME MODE ACTIVE
+          </div>
+        </div>
+      )}
+
       {/* Keyboard Status Indicator */}
       {!hasError && !isLoading && (
         <div className={`keyboard-status ${isGameFocused ? 'active' : ''}`}>
           {isGameFocused 
-            ? '🎮 Arrow keys control game (page scroll disabled)' 
-            : '⌨️ Click game area to activate arrow key control'
+            ? '🎮 Game Mode: Arrow keys control game • Page scroll blocked' 
+            : '⌨️ Click game area to lock keyboard control'
           }
         </div>
       )}
