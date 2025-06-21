@@ -32,11 +32,17 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
   };
 
   const getFinalGameUrl = () => {
-    // For local games, resolve the path relative to the current origin
+    // For local games, ensure proper path resolution
     if (!isOnline) {
       try {
-        // new URL() will correctly handle absolute vs relative paths
-        return new URL(gameUrl, window.location.origin).href;
+        // For local games, ensure the path starts with /
+        let localPath = gameUrl;
+        if (!localPath.startsWith('/')) {
+          localPath = '/' + localPath;
+        }
+        
+        console.log(`Local game URL: ${localPath}`);
+        return localPath; // Use relative path for local games
       } catch (e) {
         console.error(`Invalid local game URL: ${gameUrl}`, e);
         return gameUrl; // Fallback to original URL
@@ -241,8 +247,11 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
           title={title}
           allowFullScreen
           allow="gamepad; microphone; camera; midi; encrypted-media; autoplay; fullscreen"
-          sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock"
-          loading="lazy"
+          sandbox={isOnline 
+            ? "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock" 
+            : "allow-scripts allow-same-origin"
+          }
+          loading={isOnline ? "lazy" : "eager"}
           style={{ 
             display: hasError ? 'none' : 'block',
             opacity: isLoading ? 0 : 1,
