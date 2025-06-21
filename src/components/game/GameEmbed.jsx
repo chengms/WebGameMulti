@@ -16,9 +16,11 @@ import '../../styles/gameEmbed.css';
  */
 const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadError }) => {
   const iframeRef = useRef(null);
+  const containerRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [loadStartTime, setLoadStartTime] = useState(null);
+  const [isGameFocused, setIsGameFocused] = useState(false);
 
   // 检查是否需要使用代理
   const needsProxy = (url) => {
@@ -90,6 +92,63 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     };
   }, []);
 
+  // 键盘事件处理 - 防止方向键滚动页面当游戏获得焦点时
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      // 只在游戏获得焦点时阻止方向键的默认行为
+      if (isGameFocused && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(event.code)) {
+        event.preventDefault();
+        console.log(`Blocked ${event.code} from scrolling page - game has focus`);
+      }
+    };
+
+    if (isGameFocused) {
+      document.addEventListener('keydown', handleKeyDown, { passive: false });
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isGameFocused]);
+
+  // 鼠标焦点管理
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleMouseEnter = () => {
+      if (!isLoading && !hasError && iframeRef.current) {
+        iframeRef.current.focus();
+        setIsGameFocused(true);
+        console.log('Game focused - keyboard controls now for game');
+      }
+    };
+
+    const handleMouseLeave = () => {
+      setIsGameFocused(false);
+      // 将焦点返回给document body，允许页面滚动
+      document.body.focus();
+      console.log('Game unfocused - keyboard controls now for page');
+    };
+
+    const handleClick = () => {
+      if (!isLoading && !hasError && iframeRef.current) {
+        iframeRef.current.focus();
+        setIsGameFocused(true);
+      }
+    };
+
+    container.addEventListener('mouseenter', handleMouseEnter);
+    container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('click', handleClick);
+
+    return () => {
+      container.removeEventListener('mouseenter', handleMouseEnter);
+      container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('click', handleClick);
+    };
+  }, [isLoading, hasError]);
+
   // 处理iframe加载事件
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -109,6 +168,14 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
         const loadTime = Date.now() - loadStartTime;
         console.log(`Game load time: ${loadTime}ms`);
       }
+      
+      // 游戏加载完成后，让iframe获得焦点
+      setTimeout(() => {
+        if (iframeRef.current) {
+          iframeRef.current.focus();
+          setIsGameFocused(true);
+        }
+      }, 100);
     };
 
     const handleError = (event) => {
@@ -131,6 +198,13 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
         console.log(`Online game presumed loaded: ${title}`);
         setIsLoading(false);
         setHasError(false);
+        // 在线游戏加载完成后也获得焦点
+        setTimeout(() => {
+          if (iframeRef.current) {
+            iframeRef.current.focus();
+            setIsGameFocused(true);
+          }
+        }, 100);
       }, 3000);
 
       // 设置更长的超时时间作为最后的安全网
@@ -156,6 +230,13 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
         console.log(`Local game presumed loaded: ${title}`);
         setIsLoading(false);
         setHasError(false);
+        // 本地游戏加载完成后也获得焦点
+        setTimeout(() => {
+          if (iframeRef.current) {
+            iframeRef.current.focus();
+            setIsGameFocused(true);
+          }
+        }, 100);
       }, 5000); // 5秒后认为本地游戏加载成功
 
       // 设置更长的超时时间作为安全网
@@ -192,6 +273,13 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
   const handleHideLoading = () => {
     setIsLoading(false);
     setHasError(false);
+    // 手动隐藏后也获得焦点
+    setTimeout(() => {
+      if (iframeRef.current) {
+        iframeRef.current.focus();
+        setIsGameFocused(true);
+      }
+    }, 100);
   };
 
   // 在新窗口中打开游戏
@@ -200,7 +288,11 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
   };
 
   return (
-    <div className="game-embed-container" style={{ height }}>
+    <div 
+      ref={containerRef}
+      className={`game-embed-container ${isGameFocused ? 'game-focused' : ''}`} 
+      style={{ height }}
+    >
       {/* Loading State */}
       {isLoading && (
         <div className="game-loading-overlay">
@@ -256,10 +348,12 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
             : "allow-scripts allow-same-origin"
           }
           loading={isOnline ? "lazy" : "eager"}
+          tabIndex={0}
           style={{ 
             display: hasError ? 'none' : 'block',
             opacity: isLoading ? 0 : 1,
-            transition: 'opacity 0.3s ease-in-out'
+            transition: 'opacity 0.3s ease-in-out',
+            outline: isGameFocused ? '2px solid #4a6ea9' : 'none'
           }}
         />
       </div>

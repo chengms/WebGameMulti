@@ -12,6 +12,34 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.game-embed-container.game-focused {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 20px rgba(74, 110, 169, 0.4);
+  border: 2px solid #4a6ea9;
+}
+
+.game-embed-container.game-focused::before {
+  content: "🎮 Game Active - Use keyboard to control";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(74, 110, 169, 0.9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  z-index: 15;
+  pointer-events: none;
+  opacity: 0;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  20%, 80% { opacity: 1; }
 }
 
 .game-embed-wrapper {
