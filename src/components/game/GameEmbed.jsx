@@ -92,18 +92,22 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     };
   }, []);
 
-  // 键盘事件处理 - 防止方向键滚动页面当游戏获得焦点时
+  // 键盘事件处理 - 当游戏区域被激活时阻止方向键滚动页面
   useEffect(() => {
     const handleKeyDown = (event) => {
-      console.log(`Key pressed: ${event.code}, Game focused: ${isGameFocused}`);
+      console.log(`🔍 Key pressed: ${event.code}, Game active: ${isGameFocused}`);
       
-      // 只在游戏获得焦点时阻止方向键的默认行为
+      // 当游戏区域激活时阻止方向键和空格键的默认行为
       if (isGameFocused && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(event.code)) {
         event.preventDefault();
         event.stopPropagation();
         event.stopImmediatePropagation();
-        console.log(`✅ Blocked ${event.code} from scrolling page - game has focus`);
+        console.log(`🎮 Blocked ${event.code} - game controls active`);
         return false;
+      } else if (isGameFocused) {
+        console.log(`⚪ Allowed ${event.code} - not a game control key`);
+      } else {
+        console.log(`⌨️ Allowed ${event.code} - game not active, normal page scrolling`);
       }
     };
 
@@ -117,7 +121,7 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
       }
     };
 
-    // 使用capture模式以确保我们的事件处理器优先执行
+    // 使用capture模式确保最高优先级
     document.addEventListener('keydown', handleKeyDown, { passive: false, capture: true });
     document.addEventListener('keyup', handleKeyUp, { passive: false, capture: true });
 
@@ -135,20 +139,20 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     const handleMouseEnter = () => {
       if (!isLoading && !hasError) {
         setIsGameFocused(true);
-        console.log('Game focused - keyboard controls now for game');
+        console.log('🎮 Mouse entered game area - keyboard controls activated');
       }
     };
 
     const handleMouseLeave = () => {
       setIsGameFocused(false);
-      console.log('Game unfocused - keyboard controls now for page');
+      console.log('⌨️ Mouse left game area - keyboard controls for page scrolling');
     };
 
     const handleClick = (e) => {
       e.preventDefault();
       if (!isLoading && !hasError) {
         setIsGameFocused(true);
-        console.log('Game clicked - keyboard controls activated');
+        console.log('🎮 Game clicked - keyboard controls activated, page scrolling disabled');
       }
     };
 
@@ -156,7 +160,7 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     const handleDocumentClick = (e) => {
       if (container && !container.contains(e.target)) {
         setIsGameFocused(false);
-        console.log('Clicked outside game - keyboard controls for page');
+        console.log('⌨️ Clicked outside game - keyboard controls for page scrolling');
       }
     };
 
@@ -372,14 +376,6 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
             <span className="game-title-small">{title}</span>
           </div>
           <div className="game-actions">
-            {/* Keyboard Control Toggle */}
-            <button 
-              onClick={() => setIsGameFocused(!isGameFocused)}
-              className={`game-control-button keyboard-toggle ${isGameFocused ? 'active' : ''}`}
-              title={isGameFocused ? 'Disable keyboard game control (allow page scrolling)' : 'Enable keyboard game control (block page scrolling)'}
-            >
-              {isGameFocused ? '🎮' : '⌨️'}
-            </button>
             <button 
               onClick={handleReload} 
               className="game-control-button"
@@ -404,8 +400,8 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
       {!hasError && !isLoading && (
         <div className={`keyboard-status ${isGameFocused ? 'active' : ''}`}>
           {isGameFocused 
-            ? '🎮 Arrow keys control game (not page scroll)' 
-            : '⌨️ Arrow keys control page scroll - Click 🎮 to control game'
+            ? '🎮 Arrow keys control game (page scroll disabled)' 
+            : '⌨️ Click game area to activate arrow key control'
           }
         </div>
       )}
