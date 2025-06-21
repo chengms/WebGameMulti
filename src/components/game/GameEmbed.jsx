@@ -95,19 +95,35 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
   // 键盘事件处理 - 防止方向键滚动页面当游戏获得焦点时
   useEffect(() => {
     const handleKeyDown = (event) => {
+      console.log(`Key pressed: ${event.code}, Game focused: ${isGameFocused}`);
+      
       // 只在游戏获得焦点时阻止方向键的默认行为
       if (isGameFocused && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(event.code)) {
         event.preventDefault();
-        console.log(`Blocked ${event.code} from scrolling page - game has focus`);
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        console.log(`✅ Blocked ${event.code} from scrolling page - game has focus`);
+        return false;
       }
     };
 
-    if (isGameFocused) {
-      document.addEventListener('keydown', handleKeyDown, { passive: false });
-    }
+    const handleKeyUp = (event) => {
+      // 同样处理keyup事件以确保完全阻止
+      if (isGameFocused && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(event.code)) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        return false;
+      }
+    };
+
+    // 使用capture模式以确保我们的事件处理器优先执行
+    document.addEventListener('keydown', handleKeyDown, { passive: false, capture: true });
+    document.addEventListener('keyup', handleKeyUp, { passive: false, capture: true });
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keydown', handleKeyDown, { capture: true });
+      document.removeEventListener('keyup', handleKeyUp, { capture: true });
     };
   }, [isGameFocused]);
 
@@ -117,8 +133,7 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     if (!container) return;
 
     const handleMouseEnter = () => {
-      if (!isLoading && !hasError && iframeRef.current) {
-        iframeRef.current.focus();
+      if (!isLoading && !hasError) {
         setIsGameFocused(true);
         console.log('Game focused - keyboard controls now for game');
       }
@@ -126,26 +141,35 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
 
     const handleMouseLeave = () => {
       setIsGameFocused(false);
-      // 将焦点返回给document body，允许页面滚动
-      document.body.focus();
       console.log('Game unfocused - keyboard controls now for page');
     };
 
-    const handleClick = () => {
-      if (!isLoading && !hasError && iframeRef.current) {
-        iframeRef.current.focus();
+    const handleClick = (e) => {
+      e.preventDefault();
+      if (!isLoading && !hasError) {
         setIsGameFocused(true);
+        console.log('Game clicked - keyboard controls activated');
+      }
+    };
+
+    // 添加全局点击监听，点击游戏外区域时取消焦点
+    const handleDocumentClick = (e) => {
+      if (container && !container.contains(e.target)) {
+        setIsGameFocused(false);
+        console.log('Clicked outside game - keyboard controls for page');
       }
     };
 
     container.addEventListener('mouseenter', handleMouseEnter);
     container.addEventListener('mouseleave', handleMouseLeave);
     container.addEventListener('click', handleClick);
+    document.addEventListener('click', handleDocumentClick);
 
     return () => {
       container.removeEventListener('mouseenter', handleMouseEnter);
       container.removeEventListener('mouseleave', handleMouseLeave);
       container.removeEventListener('click', handleClick);
+      document.removeEventListener('click', handleDocumentClick);
     };
   }, [isLoading, hasError]);
 
@@ -169,13 +193,8 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
         console.log(`Game load time: ${loadTime}ms`);
       }
       
-      // 游戏加载完成后，让iframe获得焦点
-      setTimeout(() => {
-        if (iframeRef.current) {
-          iframeRef.current.focus();
-          setIsGameFocused(true);
-        }
-      }, 100);
+      // 游戏加载完成，但不自动获得焦点，需要用户点击
+      console.log('Game loaded - click to activate keyboard controls');
     };
 
     const handleError = (event) => {
@@ -198,13 +217,8 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
         console.log(`Online game presumed loaded: ${title}`);
         setIsLoading(false);
         setHasError(false);
-        // 在线游戏加载完成后也获得焦点
-        setTimeout(() => {
-          if (iframeRef.current) {
-            iframeRef.current.focus();
-            setIsGameFocused(true);
-          }
-        }, 100);
+        // 在线游戏加载完成，等待用户激活
+        console.log('Online game ready - click to activate keyboard controls');
       }, 3000);
 
       // 设置更长的超时时间作为最后的安全网
@@ -230,13 +244,8 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
         console.log(`Local game presumed loaded: ${title}`);
         setIsLoading(false);
         setHasError(false);
-        // 本地游戏加载完成后也获得焦点
-        setTimeout(() => {
-          if (iframeRef.current) {
-            iframeRef.current.focus();
-            setIsGameFocused(true);
-          }
-        }, 100);
+        // 本地游戏加载完成，等待用户激活
+        console.log('Local game ready - click to activate keyboard controls');
       }, 5000); // 5秒后认为本地游戏加载成功
 
       // 设置更长的超时时间作为安全网
@@ -273,13 +282,8 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
   const handleHideLoading = () => {
     setIsLoading(false);
     setHasError(false);
-    // 手动隐藏后也获得焦点
-    setTimeout(() => {
-      if (iframeRef.current) {
-        iframeRef.current.focus();
-        setIsGameFocused(true);
-      }
-    }, 100);
+    // 手动隐藏后等待用户激活键盘控制
+    console.log('Game manually activated - ready for keyboard controls');
   };
 
   // 在新窗口中打开游戏
@@ -368,6 +372,14 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
             <span className="game-title-small">{title}</span>
           </div>
           <div className="game-actions">
+            {/* Keyboard Control Toggle */}
+            <button 
+              onClick={() => setIsGameFocused(!isGameFocused)}
+              className={`game-control-button keyboard-toggle ${isGameFocused ? 'active' : ''}`}
+              title={isGameFocused ? 'Disable keyboard game control (allow page scrolling)' : 'Enable keyboard game control (block page scrolling)'}
+            >
+              {isGameFocused ? '🎮' : '⌨️'}
+            </button>
             <button 
               onClick={handleReload} 
               className="game-control-button"
@@ -385,6 +397,16 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
               </button>
             )}
           </div>
+        </div>
+      )}
+
+      {/* Keyboard Status Indicator */}
+      {!hasError && !isLoading && (
+        <div className={`keyboard-status ${isGameFocused ? 'active' : ''}`}>
+          {isGameFocused 
+            ? '🎮 Arrow keys control game (not page scroll)' 
+            : '⌨️ Arrow keys control page scroll - Click 🎮 to control game'
+          }
         </div>
       )}
     </div>
