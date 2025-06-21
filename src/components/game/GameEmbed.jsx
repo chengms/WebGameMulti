@@ -111,10 +111,12 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
       }
     };
 
-    const handleError = () => {
+    const handleError = (event) => {
       setIsLoading(false);
       setHasError(true);
-      console.error(`Failed to load game: ${title} (${finalGameUrl})`);
+      console.error(`Failed to load game: ${title} (${finalGameUrl})`, event);
+      console.error(`Game type: ${isOnline ? 'online' : 'local'}`);
+      console.error(`Current URL: ${window.location.href}`);
       
       if (onLoadError) {
         onLoadError(finalGameUrl, isOnline);
@@ -149,23 +151,27 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
         iframe.removeEventListener('error', handleError);
       };
     } else {
-      // 本地游戏使用传统的超时检测
-      const timeout = setTimeout(() => {
-        if (isLoading) {
-          console.warn(`Local game loading timeout: ${title}`);
-          setIsLoading(false);
-          setHasError(true);
-          if (onLoadError) {
-            onLoadError(finalGameUrl, isOnline);
-          }
-        }
-      }, 10000); // 本地游戏10秒超时
+      // 本地游戏使用更宽松的加载检测
+      const optimisticTimeout = setTimeout(() => {
+        console.log(`Local game presumed loaded: ${title}`);
+        setIsLoading(false);
+        setHasError(false);
+      }, 5000); // 5秒后认为本地游戏加载成功
+
+      // 设置更长的超时时间作为安全网
+      const finalTimeout = setTimeout(() => {
+        console.warn(`Local game final timeout: ${title}`);
+        setIsLoading(false);
+        // 对于本地游戏也不设置错误状态，让用户自己判断
+        // setHasError(true);
+      }, 20000); // 20秒超时
 
       iframe.addEventListener('load', handleLoad);
       iframe.addEventListener('error', handleError);
 
       return () => {
-        clearTimeout(timeout);
+        clearTimeout(optimisticTimeout);
+        clearTimeout(finalTimeout);
         iframe.removeEventListener('load', handleLoad);
         iframe.removeEventListener('error', handleError);
       };
@@ -205,13 +211,11 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
           <div className="game-loading-subtitle">
             {isOnline ? 'First load may take a moment' : 'Please wait'}
           </div>
-          {isOnline && (
-            <div className="game-loading-actions">
-              <button onClick={handleHideLoading} className="game-loading-button">
-                Game Already Loaded? Click Here
-              </button>
-            </div>
-          )}
+          <div className="game-loading-actions">
+            <button onClick={handleHideLoading} className="game-loading-button">
+              {isOnline ? 'Game Already Loaded? Click Here' : 'Skip Loading - Play Now'}
+            </button>
+          </div>
         </div>
       )}
 
