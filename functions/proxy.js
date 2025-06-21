@@ -43,10 +43,17 @@ export async function onRequest(context) {
     // 验证URL格式和安全性
     const parsedUrl = new URL(targetUrl);
     
-    // 安全检查：只允许HTTPS和特定域名
-    if (parsedUrl.protocol !== 'https:') {
-      return new Response('Only HTTPS URLs are allowed', { 
-        status: 400,
+    // 白名单检查（包含协议和域名）
+    const allowedUrls = [
+      'www.crazycattle-3d.info',  // HTTPS only
+      'play.famobi.com',         // HTTPS only  
+      'html5games.com',          // HTTPS only
+      'game.webxinxin.com'       // HTTP allowed for this domain
+    ];
+    
+    if (!allowedUrls.includes(parsedUrl.hostname)) {
+      return new Response('Domain not allowed', { 
+        status: 403,
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'text/plain'
@@ -54,16 +61,11 @@ export async function onRequest(context) {
       });
     }
     
-    // 白名单检查
-    const allowedDomains = [
-      'www.crazycattle-3d.info',
-      'play.famobi.com',
-      'html5games.com'
-    ];
-    
-    if (!allowedDomains.includes(parsedUrl.hostname)) {
-      return new Response('Domain not allowed', { 
-        status: 403,
+    // 安全检查：大部分域名只允许HTTPS，但有例外
+    const httpAllowedDomains = ['game.webxinxin.com'];
+    if (parsedUrl.protocol !== 'https:' && !httpAllowedDomains.includes(parsedUrl.hostname)) {
+      return new Response('Only HTTPS URLs are allowed for this domain', { 
+        status: 400,
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'text/plain'

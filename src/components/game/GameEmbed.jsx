@@ -26,8 +26,16 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
   const needsProxy = (url) => {
     try {
       const hostname = new URL(url).hostname;
-      // 在这里添加需要代理的域名
-      return ['www.crazycattle-3d.info'].includes(hostname);
+      
+      // 需要代理的域名列表（有iframe限制或混合内容问题）
+      const proxyDomains = [
+        'www.crazycattle-3d.info',
+        'game.webxinxin.com',  // Endless Run / Om Nom Run
+        'poki.com',
+        'friv.com'
+      ];
+      
+      return proxyDomains.includes(hostname);
     } catch (e) {
       return false;
     }
@@ -92,74 +100,52 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     };
   }, []);
 
-  // 键盘事件处理 - 使用更强力的全局事件拦截
+  // 键盘事件处理 - 智能拦截，不干扰游戏运行
   useEffect(() => {
-    if (!isGameFocused) return;
+    if (!isGameFocused || isLoading) return;
 
-    console.log('🎮 Activating keyboard control - blocking page scroll');
+    console.log('🎮 Activating smart keyboard control - blocking page scroll');
 
-    // 强制阻止页面滚动的多层防护
-    const preventScroll = (e) => {
-      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        console.log(`🎮 Blocked ${e.code} from page scroll`);
-        return false;
+    // 智能键盘事件拦截 - 只拦截会导致页面滚动的事件
+    const preventPageScroll = (e) => {
+      // 只拦截可能导致页面滚动的键
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'PageUp', 'PageDown', 'Home', 'End'].includes(e.code)) {
+        // 检查事件是否来自iframe内部，如果是则不拦截
+        if (e.target === document.body || e.target === document.documentElement || !e.target.closest('iframe')) {
+          e.preventDefault();
+          console.log(`🎮 Blocked ${e.code} from page scroll`);
+          return false;
+        }
       }
     };
 
     const preventScrollWheel = (e) => {
-      // 阻止鼠标滚轮滚动
-      if (e.target.closest('.game-embed-container')) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      }
-    };
-
-    const preventTouchScroll = (e) => {
-      // 阻止触摸滚动
-      if (e.target.closest('.game-embed-container')) {
+      // 只在游戏容器外阻止滚轮滚动
+      if (!e.target.closest('.game-embed-wrapper')) {
         e.preventDefault();
         return false;
       }
     };
 
-    // 多层事件监听确保彻底阻止
-    document.addEventListener('keydown', preventScroll, { passive: false, capture: true });
-    document.addEventListener('keyup', preventScroll, { passive: false, capture: true });
-    window.addEventListener('keydown', preventScroll, { passive: false, capture: true });
-    window.addEventListener('keyup', preventScroll, { passive: false, capture: true });
-    
-    // 阻止滚轮滚动
-    document.addEventListener('wheel', preventScrollWheel, { passive: false, capture: true });
-    
-    // 阻止触摸滚动
-    document.addEventListener('touchmove', preventTouchScroll, { passive: false, capture: true });
+    // 只在document级别监听，避免干扰iframe内部事件
+    document.addEventListener('keydown', preventPageScroll, { passive: false });
+    document.addEventListener('wheel', preventScrollWheel, { passive: false });
 
-    // 临时修改body样式以防止滚动
-    const originalOverflow = document.body.style.overflow;
-    const originalHeight = document.body.style.height;
-    document.body.style.overflow = 'hidden';
-    document.body.style.height = '100vh';
+    // 使用CSS方式温和地限制滚动
+    const originalOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
 
     return () => {
       console.log('⌨️ Deactivating keyboard control - allowing page scroll');
       
-      // 恢复事件监听
-      document.removeEventListener('keydown', preventScroll, { capture: true });
-      document.removeEventListener('keyup', preventScroll, { capture: true });
-      window.removeEventListener('keydown', preventScroll, { capture: true });
-      window.removeEventListener('keyup', preventScroll, { capture: true });
-      document.removeEventListener('wheel', preventScrollWheel, { capture: true });
-      document.removeEventListener('touchmove', preventTouchScroll, { capture: true });
+      // 清理事件监听
+      document.removeEventListener('keydown', preventPageScroll);
+      document.removeEventListener('wheel', preventScrollWheel);
       
-      // 恢复body样式
-      document.body.style.overflow = originalOverflow;
-      document.body.style.height = originalHeight;
+      // 恢复样式
+      document.documentElement.style.overflow = originalOverflow;
     };
-  }, [isGameFocused]);
+  }, [isGameFocused, isLoading]);
 
   // 鼠标焦点管理
   useEffect(() => {
@@ -167,6 +153,7 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     if (!container) return;
 
     const handleMouseEnter = () => {
+      // 只有在游戏完全加载后才激活键盘控制
       if (!isLoading && !hasError) {
         setIsGameFocused(true);
         console.log('🎮 Mouse entered game area - keyboard controls activated');
@@ -179,7 +166,7 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     };
 
     const handleClick = (e) => {
-      e.preventDefault();
+      // 不阻止默认事件，让游戏能正常响应点击
       if (!isLoading && !hasError) {
         setIsGameFocused(true);
         console.log('🎮 Game clicked - keyboard controls activated, page scrolling disabled');
@@ -246,14 +233,14 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     // 对于在线游戏，使用更智能的加载检测
     if (isOnline) {
       // 对于跨域iframe，load事件可能不会触发
-      // 我们假设如果3秒后没有明显错误，就认为加载成功
+      // 给在线游戏更多时间来加载和初始化
       const optimisticTimeout = setTimeout(() => {
         console.log(`Online game presumed loaded: ${title}`);
         setIsLoading(false);
         setHasError(false);
         // 在线游戏加载完成，等待用户激活
         console.log('Online game ready - click to activate keyboard controls');
-      }, 3000);
+      }, 8000); // 增加到8秒，给游戏更多初始化时间
 
       // 设置更长的超时时间作为最后的安全网
       const finalTimeout = setTimeout(() => {
@@ -382,7 +369,7 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
           allowFullScreen
           allow="gamepad; microphone; camera; midi; encrypted-media; autoplay; fullscreen"
           sandbox={isOnline 
-            ? "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock" 
+            ? "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock allow-presentation allow-top-navigation-by-user-activation" 
             : "allow-scripts allow-same-origin"
           }
           loading={isOnline ? "lazy" : "eager"}
@@ -426,7 +413,7 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
         </div>
       )}
 
-      {/* Game Mode Overlay */}
+      {/* Game Mode Overlay - Only show when game is loaded and focused */}
       {isGameFocused && !hasError && !isLoading && (
         <div className="game-mode-overlay">
           <div className="game-mode-badge">
