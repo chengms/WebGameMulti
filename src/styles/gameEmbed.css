@@ -14,27 +14,95 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
   cursor: pointer;
+  margin: 0 auto;
+  max-width: 1200px;
 }
 
 .game-embed-container.game-focused {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 20px rgba(74, 110, 169, 0.4);
   border: 2px solid #4a6ea9;
+  transform: scale(1.02);
+  z-index: 100;
+}
+
+/* 游戏聚焦时的全屏居中模式 */
+.game-embed-container.game-focused.game-centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.05);
+  width: 90vw;
+  height: 85vh;
+  max-width: 1400px;
+  max-height: 900px;
+  z-index: 1000;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(74, 110, 169, 0.6);
+  border: 3px solid #4a6ea9;
+}
+
+/* 背景遮罩层 */
+.game-focus-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.game-focus-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* 退出聚焦模式按钮 */
+.game-exit-focus {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1001;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.game-exit-focus:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
 }
 
 .game-embed-container.game-focused::before {
-  content: "🎮 Game Active - Use keyboard to control";
+  content: "🎮 Game Active - Use keyboard to control • Double-click for focus mode";
   position: absolute;
   top: 10px;
   left: 10px;
   background: rgba(74, 110, 169, 0.9);
   color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
   z-index: 15;
   pointer-events: none;
   opacity: 0;
-  animation: fadeInOut 3s ease-in-out;
+  animation: fadeInOut 4s ease-in-out;
+  max-width: calc(100% - 20px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @keyframes fadeInOut {
@@ -117,6 +185,12 @@
   border: none;
   background: #ffffff;
   border-radius: 12px;
+}
+
+/* 聚焦模式下的iframe样式 */
+.game-embed-container.game-centered .game-embed-wrapper iframe {
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 /* 加载状态样式 */

@@ -21,6 +21,8 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
   const [hasError, setHasError] = useState(false);
   const [loadStartTime, setLoadStartTime] = useState(null);
   const [isGameFocused, setIsGameFocused] = useState(false);
+  const [isCentered, setIsCentered] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
 
   // 检查是否需要使用代理
   const needsProxy = (url) => {
@@ -72,6 +74,47 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
   };
 
   const finalGameUrl = getFinalGameUrl();
+
+  // 聚焦模式切换功能
+  const toggleCenterMode = () => {
+    setIsCentered(prev => {
+      const newState = !prev;
+      console.log(`🎯 ${newState ? 'Entering' : 'Exiting'} focus mode`);
+      
+      if (newState) {
+        // 进入聚焦模式时禁用页面滚动
+        document.body.style.overflow = 'hidden';
+      } else {
+        // 退出聚焦模式时恢复页面滚动
+        document.body.style.overflow = '';
+      }
+      
+      return newState;
+    });
+  };
+
+  // ESC键退出聚焦模式
+  useEffect(() => {
+    const handleEscKey = (e) => {
+      if (e.key === 'Escape' && isCentered) {
+        toggleCenterMode();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+    };
+  }, [isCentered]);
+
+  // 组件卸载时清理
+  useEffect(() => {
+    return () => {
+      if (isCentered) {
+        document.body.style.overflow = '';
+      }
+    };
+  }, []);
 
   // 调整iframe大小以适应容器
   useEffect(() => {
@@ -133,7 +176,9 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
 
     // 使用CSS方式温和地限制滚动
     const originalOverflow = document.documentElement.style.overflow;
-    document.documentElement.style.overflow = 'hidden';
+    if (!isCentered) { // 只有在非聚焦模式下才设置overflow
+      document.documentElement.style.overflow = 'hidden';
+    }
 
     return () => {
       console.log('⌨️ Deactivating keyboard control - allowing page scroll');
@@ -143,11 +188,13 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
       document.removeEventListener('wheel', preventScrollWheel);
       
       // 恢复样式
-      document.documentElement.style.overflow = originalOverflow;
+      if (!isCentered) {
+        document.documentElement.style.overflow = originalOverflow;
+      }
     };
-  }, [isGameFocused, isLoading]);
+  }, [isGameFocused, isLoading, isCentered]);
 
-  // 鼠标焦点管理
+  // 鼠标焦点管理和双击检测
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -173,6 +220,15 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
       }
     };
 
+    // 双击检测
+    const handleDoubleClick = (e) => {
+      if (!isLoading && !hasError) {
+        e.preventDefault();
+        toggleCenterMode();
+        console.log('🎯 Double-clicked game - toggling focus mode');
+      }
+    };
+
     // 添加全局点击监听，点击游戏外区域时取消焦点
     const handleDocumentClick = (e) => {
       if (container && !container.contains(e.target)) {
@@ -184,12 +240,14 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
     container.addEventListener('mouseenter', handleMouseEnter);
     container.addEventListener('mouseleave', handleMouseLeave);
     container.addEventListener('click', handleClick);
+    container.addEventListener('dblclick', handleDoubleClick);
     document.addEventListener('click', handleDocumentClick);
 
     return () => {
       container.removeEventListener('mouseenter', handleMouseEnter);
       container.removeEventListener('mouseleave', handleMouseLeave);
       container.removeEventListener('click', handleClick);
+      container.removeEventListener('dblclick', handleDoubleClick);
       document.removeEventListener('click', handleDocumentClick);
     };
   }, [isLoading, hasError]);
@@ -313,125 +371,155 @@ const GameEmbed = ({ gameUrl, title, height = '80vh', isOnline = false, onLoadEr
   };
 
   return (
-    <div 
-      ref={containerRef}
-      className={`game-embed-container ${isGameFocused ? 'game-focused' : ''}`} 
-      style={{ height }}
-    >
-      {/* Loading State */}
-      {isLoading && (
-        <div className="game-loading-overlay">
-          <div className="game-loading-spinner"></div>
-          <div className="game-loading-text">
-            {isOnline ? 'Loading Online Game...' : 'Loading Game...'}
-          </div>
-          <div className="game-loading-subtitle">
-            {isOnline ? 'First load may take a moment' : 'Please wait'}
-          </div>
-          <div className="game-loading-actions">
-            <button onClick={handleHideLoading} className="game-loading-button">
-              {isOnline ? 'Game Already Loaded? Click Here' : 'Skip Loading - Play Now'}
-            </button>
-          </div>
-        </div>
+    <>
+      {/* 聚焦模式背景遮罩 */}
+      {isCentered && (
+        <div 
+          className={`game-focus-overlay ${isCentered ? 'active' : ''}`}
+          onClick={toggleCenterMode}
+        />
       )}
 
-      {/* Error State */}
-      {hasError && (
-        <div className="game-error-overlay">
-          <div className="game-error-icon">⚠️</div>
-          <div className="game-error-title">Failed to Load Game</div>
-          <div className="game-error-message">
-            {isOnline 
-              ? 'The online game is temporarily unavailable. This could be due to a network issue or maintenance on the game server.' 
-              : 'Could not load local game files. Please check if the game files exist.'
+      {/* 聚焦模式退出按钮 */}
+      {isCentered && (
+        <button 
+          className="game-exit-focus"
+          onClick={toggleCenterMode}
+          title="Exit Focus Mode (ESC)"
+        >
+          ✕
+        </button>
+      )}
+
+      <div 
+        ref={containerRef}
+        className={`game-embed-container ${isGameFocused ? 'game-focused' : ''} ${isCentered ? 'game-centered' : ''}`} 
+        style={{ height: isCentered ? 'auto' : height }}
+      >
+        {/* Loading State */}
+        {isLoading && (
+          <div className="game-loading-overlay">
+            <div className="game-loading-spinner"></div>
+            <div className="game-loading-text">
+              {isOnline ? 'Loading Online Game...' : 'Loading Game...'}
+            </div>
+            <div className="game-loading-subtitle">
+              {isOnline ? 'First load may take a moment' : 'Please wait'}
+            </div>
+            <div className="game-loading-actions">
+              <button onClick={handleHideLoading} className="game-loading-button">
+                {isOnline ? 'Game Already Loaded? Click Here' : 'Skip Loading - Play Now'}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {hasError && (
+          <div className="game-error-overlay">
+            <div className="game-error-icon">⚠️</div>
+            <div className="game-error-title">Failed to Load Game</div>
+            <div className="game-error-message">
+              {isOnline 
+                ? 'The online game is temporarily unavailable. This could be due to a network issue or maintenance on the game server.' 
+                : 'Could not load local game files. Please check if the game files exist.'
+              }
+            </div>
+            <div className="game-error-actions">
+              <button onClick={handleReload} className="game-error-button primary">
+                Reload
+              </button>
+              {isOnline && (
+                <button onClick={handleOpenInNewWindow} className="game-error-button secondary">
+                  Open in New Window
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Game iframe */}
+        <div className="game-embed-wrapper">
+          <iframe 
+            ref={iframeRef}
+            src={finalGameUrl} 
+            title={title}
+            allowFullScreen
+            allow="gamepad; microphone; camera; midi; encrypted-media; autoplay; fullscreen"
+            sandbox={isOnline 
+              ? "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock allow-presentation allow-top-navigation-by-user-activation" 
+              : "allow-scripts allow-same-origin"
+            }
+            loading={isOnline ? "lazy" : "eager"}
+            tabIndex={0}
+            style={{ 
+              display: hasError ? 'none' : 'block',
+              opacity: isLoading ? 0 : 1,
+              transition: 'opacity 0.3s ease-in-out',
+              outline: isGameFocused ? '2px solid #4a6ea9' : 'none'
+            }}
+          />
+        </div>
+
+        {/* Game Controls - 在聚焦模式下隐藏 */}
+        {!hasError && !isCentered && (
+          <div className="game-controls">
+            <div className="game-info">
+              <span className="game-type-badge" data-type={isOnline ? 'online' : 'local'}>
+                {isOnline ? 'Online' : 'Local'}
+              </span>
+              <span className="game-title-small">{title}</span>
+            </div>
+            <div className="game-actions">
+              <button 
+                onClick={handleReload} 
+                className="game-control-button"
+                title="Reload Game"
+              >
+                🔄
+              </button>
+              {isOnline && (
+                <button 
+                  onClick={handleOpenInNewWindow} 
+                  className="game-control-button"
+                  title="Open in New Window"
+                >
+                  🔗
+                </button>
+              )}
+              <button 
+                onClick={toggleCenterMode} 
+                className="game-control-button"
+                title="Focus Mode (Double-click game)"
+              >
+                🎯
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Game Mode Overlay - Only show when game is loaded and focused */}
+        {isGameFocused && !hasError && !isLoading && (
+          <div className="game-mode-overlay">
+            <div className="game-mode-badge">
+              🎮 GAME MODE ACTIVE
+            </div>
+          </div>
+        )}
+
+        {/* Keyboard Status Indicator - 在聚焦模式下修改提示文本 */}
+        {!hasError && !isLoading && (
+          <div className={`keyboard-status ${isGameFocused ? 'active' : ''}`}>
+            {isCentered 
+              ? '🎯 Focus Mode: Press ESC or click outside to exit' 
+              : isGameFocused 
+                ? '🎮 Game Mode: Arrow keys control game • Double-click for focus mode' 
+                : '⌨️ Click game area to lock keyboard control • Double-click for focus mode'
             }
           </div>
-          <div className="game-error-actions">
-            <button onClick={handleReload} className="game-error-button primary">
-              Reload
-            </button>
-            {isOnline && (
-              <button onClick={handleOpenInNewWindow} className="game-error-button secondary">
-                Open in New Window
-              </button>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Game iframe */}
-      <div className="game-embed-wrapper">
-        <iframe 
-          ref={iframeRef}
-          src={finalGameUrl} 
-          title={title}
-          allowFullScreen
-          allow="gamepad; microphone; camera; midi; encrypted-media; autoplay; fullscreen"
-          sandbox={isOnline 
-            ? "allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-pointer-lock allow-presentation allow-top-navigation-by-user-activation" 
-            : "allow-scripts allow-same-origin"
-          }
-          loading={isOnline ? "lazy" : "eager"}
-          tabIndex={0}
-          style={{ 
-            display: hasError ? 'none' : 'block',
-            opacity: isLoading ? 0 : 1,
-            transition: 'opacity 0.3s ease-in-out',
-            outline: isGameFocused ? '2px solid #4a6ea9' : 'none'
-          }}
-        />
+        )}
       </div>
-
-      {/* Game Controls */}
-      {!hasError && (
-        <div className="game-controls">
-          <div className="game-info">
-            <span className="game-type-badge" data-type={isOnline ? 'online' : 'local'}>
-              {isOnline ? 'Online' : 'Local'}
-            </span>
-            <span className="game-title-small">{title}</span>
-          </div>
-          <div className="game-actions">
-            <button 
-              onClick={handleReload} 
-              className="game-control-button"
-              title="Reload Game"
-            >
-              🔄
-            </button>
-            {isOnline && (
-              <button 
-                onClick={handleOpenInNewWindow} 
-                className="game-control-button"
-                title="Open in New Window"
-              >
-                🔗
-              </button>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Game Mode Overlay - Only show when game is loaded and focused */}
-      {isGameFocused && !hasError && !isLoading && (
-        <div className="game-mode-overlay">
-          <div className="game-mode-badge">
-            🎮 GAME MODE ACTIVE
-          </div>
-        </div>
-      )}
-
-      {/* Keyboard Status Indicator */}
-      {!hasError && !isLoading && (
-        <div className={`keyboard-status ${isGameFocused ? 'active' : ''}`}>
-          {isGameFocused 
-            ? '🎮 Game Mode: Arrow keys control game • Page scroll blocked' 
-            : '⌨️ Click game area to lock keyboard control'
-          }
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 
