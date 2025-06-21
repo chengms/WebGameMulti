@@ -1,197 +1,157 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>游戏加载器测试</title>
+    <title>Game Loader Test</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .game-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 16px;
-            margin: 16px 0;
-            background: #f9f9f9;
-        }
-        .game-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333;
-        }
-        .game-description {
-            margin: 8px 0;
-            color: #666;
-        }
-        .game-meta {
-            font-size: 0.9rem;
-            color: #888;
-        }
-        .game-type {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-        .game-type.online {
-            background: #e3f2fd;
-            color: #1976d2;
-        }
-        .game-type.local {
-            background: #e8f5e8;
-            color: #388e3c;
-        }
-        .loading {
-            text-align: center;
-            padding: 40px;
-        }
-        .error {
-            color: #d32f2f;
-            background: #ffebee;
-            padding: 16px;
-            border-radius: 4px;
-            margin: 16px 0;
-        }
-        .stats {
-            background: #f5f5f5;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .log { background: #f0f0f0; padding: 10px; margin: 10px 0; white-space: pre-wrap; }
+        .error { background: #ffe6e6; border: 1px solid #ff0000; }
+        .success { background: #e6ffe6; border: 1px solid #00ff00; }
+        .game-item { border: 1px solid #ccc; margin: 10px 0; padding: 10px; }
     </style>
 </head>
 <body>
-    <h1>GameTime Bar - 游戏加载器测试</h1>
+    <h1>GameTime Bar - Game Loader Debug Test</h1>
     
-    <div id="stats" class="stats">
-        <h3>游戏统计</h3>
-        <div id="statsContent">加载中...</div>
-    </div>
+    <button onclick="testConfigLoad()">Test Config File Load</button>
+    <button onclick="testGameDetails('crazy-cattle-3d')">Test Crazy Cattle 3D Details</button>
+    <button onclick="testGameDetails('snake')">Test Snake Details</button>
+    <button onclick="clearLogs()">Clear Logs</button>
     
-    <div id="loading" class="loading">
-        <p>正在加载游戏数据...</p>
-    </div>
-    
-    <div id="error" class="error" style="display: none;">
-        <p id="errorMessage"></p>
-    </div>
-    
-    <div id="gamesList"></div>
+    <div id="logs"></div>
+    <div id="games"></div>
 
-    <script type="module">
-        // 模拟游戏加载器功能
-        async function parseGameConfig() {
+    <script>
+        function log(message, type = 'log') {
+            const logsDiv = document.getElementById('logs');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log ${type}`;
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logsDiv.appendChild(logEntry);
+            console.log(message);
+        }
+
+        function clearLogs() {
+            document.getElementById('logs').innerHTML = '';
+            document.getElementById('games').innerHTML = '';
+        }
+
+        async function testConfigLoad() {
+            log('Testing games config file load...');
+            
             try {
-                console.log('开始加载游戏配置...');
+                const response = await fetch('/games/games-config.txt');
+                log(`Config fetch response status: ${response.status} ${response.statusText}`);
                 
+                if (!response.ok) {
+                    throw new Error(`Failed to load config file: ${response.status}`);
+                }
+                
+                const configText = await response.text();
+                log(`Config file loaded successfully. Length: ${configText.length} characters`);
+                
+                const lines = configText.split('\n');
+                log(`Total lines in config: ${lines.length}`);
+                
+                const gameLines = lines.filter(line => {
+                    const trimmed = line.trim();
+                    return trimmed && !trimmed.startsWith('#');
+                });
+                
+                log(`Game definition lines: ${gameLines.length}`);
+                
+                // Parse a few games
+                const games = [];
+                for (const line of gameLines.slice(0, 5)) {
+                    const parts = line.split('|');
+                    if (parts.length >= 9) {
+                        const [id, name, description, type] = parts;
+                        games.push({ id: id.trim(), name: name.trim(), type: type.trim() });
+                        log(`Parsed game: ${id.trim()} - ${name.trim()} (${type.trim()})`, 'success');
+                    }
+                }
+                
+                // Display games
+                const gamesDiv = document.getElementById('games');
+                gamesDiv.innerHTML = '<h3>First 5 Games Found:</h3>';
+                games.forEach(game => {
+                    const gameDiv = document.createElement('div');
+                    gameDiv.className = 'game-item';
+                    gameDiv.innerHTML = `
+                        <strong>ID:</strong> ${game.id}<br>
+                        <strong>Name:</strong> ${game.name}<br>
+                        <strong>Type:</strong> ${game.type}<br>
+                        <button onclick="testGameDetails('${game.id}')">Test Details</button>
+                    `;
+                    gamesDiv.appendChild(gameDiv);
+                });
+                
+            } catch (error) {
+                log(`Error loading config: ${error.message}`, 'error');
+                console.error('Config load error:', error);
+            }
+        }
+
+        async function testGameDetails(gameId) {
+            log(`Testing game details for: ${gameId}`);
+            
+            try {
+                // First load the config to get game info
                 const response = await fetch('/games/games-config.txt');
                 if (!response.ok) {
-                    throw new Error(`配置文件加载失败: ${response.status}`);
+                    throw new Error(`Failed to load config file: ${response.status}`);
                 }
                 
                 const configText = await response.text();
                 const lines = configText.split('\n');
-                const games = [];
                 
+                let gameFound = false;
                 for (const line of lines) {
-                    const trimmedLine = line.trim();
+                    const trimmed = line.trim();
+                    if (!trimmed || trimmed.startsWith('#')) continue;
                     
-                    // 跳过注释和空行
-                    if (!trimmedLine || trimmedLine.startsWith('#')) {
-                        continue;
-                    }
-                    
-                    // 解析游戏配置行
-                    const parts = trimmedLine.split('|');
-                    if (parts.length >= 8) {
-                        const [id, name, description, type, url, thumbnail, tags, author, priority] = parts;
+                    const parts = trimmed.split('|');
+                    if (parts.length >= 9 && parts[0].trim() === gameId) {
+                        gameFound = true;
+                        const [id, name, description, type, url] = parts;
+                        log(`Found game: ${name.trim()}`, 'success');
+                        log(`Game URL: ${url.trim()}`);
+                        log(`Game Type: ${type.trim()}`);
                         
-                        games.push({
-                            id: id.trim(),
-                            name: name.trim(),
-                            description: description.trim(),
-                            type: type.trim(),
-                            url: url.trim(),
-                            thumbnail: thumbnail.trim(),
-                            tags: tags.split(',').map(tag => tag.trim()),
-                            author: author.trim(),
-                            priority: parseInt(priority) || 1,
-                            isOnline: type.trim() === 'online'
-                        });
+                        // Test if game URL is accessible
+                        if (type.trim() === 'local') {
+                            log(`Testing local game URL access: ${url.trim()}`);
+                            try {
+                                const gameResponse = await fetch(url.trim());
+                                log(`Game URL response: ${gameResponse.status} ${gameResponse.statusText}`);
+                            } catch (urlError) {
+                                log(`Game URL access error: ${urlError.message}`, 'error');
+                            }
+                        } else {
+                            log(`Online game URL: ${url.trim()}`);
+                        }
+                        break;
                     }
                 }
                 
-                // 按优先级排序
-                games.sort((a, b) => {
-                    if (a.isOnline && !b.isOnline) return -1;
-                    if (!a.isOnline && b.isOnline) return 1;
-                    return b.priority - a.priority;
-                });
-                
-                console.log(`成功加载 ${games.length} 个游戏`);
-                return games;
+                if (!gameFound) {
+                    log(`Game with ID '${gameId}' not found in config`, 'error');
+                }
                 
             } catch (error) {
-                console.error('解析游戏配置时出错:', error);
-                throw error;
+                log(`Error testing game details: ${error.message}`, 'error');
+                console.error('Game details test error:', error);
             }
         }
 
-        async function loadGames() {
-            const loadingEl = document.getElementById('loading');
-            const errorEl = document.getElementById('error');
-            const gamesListEl = document.getElementById('gamesList');
-            const statsEl = document.getElementById('statsContent');
-            
-            try {
-                loadingEl.style.display = 'block';
-                errorEl.style.display = 'none';
-                
-                const games = await parseGameConfig();
-                
-                // 显示统计信息
-                const onlineGames = games.filter(g => g.isOnline);
-                const localGames = games.filter(g => !g.isOnline);
-                
-                statsEl.innerHTML = `
-                    <p><strong>总游戏数:</strong> ${games.length}</p>
-                    <p><strong>在线游戏:</strong> ${onlineGames.length}</p>
-                    <p><strong>本地游戏:</strong> ${localGames.length}</p>
-                `;
-                
-                // 显示游戏列表
-                gamesListEl.innerHTML = games.map(game => `
-                    <div class="game-card">
-                        <div class="game-title">${game.name}</div>
-                        <div class="game-description">${game.description}</div>
-                        <div class="game-meta">
-                            <span class="game-type ${game.isOnline ? 'online' : 'local'}">
-                                ${game.isOnline ? '在线游戏' : '本地游戏'}
-                            </span>
-                            | 作者: ${game.author}
-                            | 优先级: ${game.priority}
-                            | 标签: ${game.tags.join(', ')}
-                        </div>
-                    </div>
-                `).join('');
-                
-                loadingEl.style.display = 'none';
-                
-            } catch (error) {
-                loadingEl.style.display = 'none';
-                errorEl.style.display = 'block';
-                document.getElementById('errorMessage').textContent = 
-                    `加载失败: ${error.message}`;
-                console.error('加载游戏时出错:', error);
-            }
-        }
-
-        // 页面加载完成后开始加载游戏
-        document.addEventListener('DOMContentLoaded', loadGames);
+        // Test on page load
+        window.addEventListener('load', () => {
+            log('Page loaded. Ready for testing.');
+            log(`Current URL: ${window.location.href}`);
+            log(`Base URL: ${window.location.origin}`);
+        });
     </script>
 </body>
 </html> 
