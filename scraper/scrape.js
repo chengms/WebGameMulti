@@ -18,6 +18,11 @@ const TARGET_SITES = [
         url: 'https://www.crazycattle-3d.info/',
         scraper: scrapeCrazyCattle3D,
     },
+    {
+        name: 'SpeedStarsFree.github.io',
+        url: 'https://speedstarsfree.github.io/',
+        scraper: scrapeSpeedStarsFree,
+    },
 ];
 
 const DEFAULT_AUTHOR_MAP = {
@@ -333,6 +338,136 @@ async function scrapeCrazyCattle3D(html, baseUrl) {
     return games;
 }
 
+/**
+ * Scraper for SpeedStarsFree.github.io
+ * @param {string} html - The HTML content of the page
+ * @param {string} baseUrl - The base URL of the site
+ * @returns {Array<object>} - An array of game data objects
+ */
+async function scrapeSpeedStarsFree(html, baseUrl) {
+    const $ = cheerio.load(html);
+    const games = [];
+    
+    console.log('🎮 Scraping SpeedStarsFree.github.io...');
+    
+    // Find all game links on the page
+    const gameLinks = new Set();
+    
+    // Method 1: Look for game links in the main content area
+    $('a').each((i, el) => {
+        const href = $(el).attr('href');
+        const text = $(el).text().trim();
+        
+        // Skip empty links or navigation links
+        if (!href || !text || text.length < 3) return;
+        
+        // Skip common navigation elements
+        const skipTexts = ['Home', 'Speed Stars', 'Subway Surfers', 'Temple Run'];
+        if (skipTexts.includes(text)) return;
+        
+        // Convert relative URLs to absolute
+        let gameUrl;
+        if (href.startsWith('http')) {
+            gameUrl = href;
+        } else if (href.startsWith('/')) {
+            gameUrl = new URL(href, baseUrl).toString();
+        } else {
+            gameUrl = new URL(href, baseUrl).toString();
+        }
+        
+        // Only include game URLs that look like actual games
+        if (text && text.length > 3 && !gameUrl.includes('#')) {
+            gameLinks.add({
+                url: gameUrl,
+                name: text,
+                element: el
+            });
+        }
+    });
+    
+    console.log(`📋 Found ${gameLinks.size} potential game links`);
+    
+    // Process each game link
+    for (const gameLink of gameLinks) {
+        try {
+            const { url: gameUrl, name: gameName } = gameLink;
+            
+            // Generate game ID
+            const gameId = generateId(gameName);
+            
+            // Skip if this looks like a duplicate or invalid game
+            if (gameId.length < 3 || gameId === 'speed-stars') continue;
+            
+            // Determine if it's an external game or hosted game
+            let finalUrl = gameUrl;
+            let gameType = 'online';
+            
+            // Check if it's an external game URL
+            if (!gameUrl.includes('speedstarsfree.github.io')) {
+                // It's an external game, use the URL directly
+                finalUrl = gameUrl;
+            } else {
+                // It's a hosted game, might need to construct the proper URL
+                finalUrl = gameUrl;
+            }
+            
+            // Create game description
+            const description = `Play ${gameName} unblocked online for free! Experience exciting ${gameName.toLowerCase()} gameplay. No download needed – start playing instantly in your browser!`;
+            
+            // Determine game tags based on name
+            const tags = ['Online', 'Unblocked'];
+            const lowerName = gameName.toLowerCase();
+            
+            if (lowerName.includes('run') || lowerName.includes('runner')) {
+                tags.push('Running');
+            }
+            if (lowerName.includes('car') || lowerName.includes('racing')) {
+                tags.push('Racing');
+            }
+            if (lowerName.includes('3d')) {
+                tags.push('3D');
+            }
+            if (lowerName.includes('subway') || lowerName.includes('temple')) {
+                tags.push('Hot');
+            }
+            if (lowerName.includes('puzzle') || lowerName.includes('block')) {
+                tags.push('Puzzle');
+            }
+            if (lowerName.includes('sport') || lowerName.includes('ball')) {
+                tags.push('Sports');
+            }
+            if (lowerName.includes('shoot') || lowerName.includes('gun')) {
+                tags.push('Shooter');
+            }
+            if (lowerName.includes('adventure')) {
+                tags.push('Adventure');
+            }
+            
+            // Create game object
+            const gameData = {
+                id: gameId,
+                name: gameName,
+                description: description,
+                type: gameType,
+                url: finalUrl,
+                thumbnail: '/placeholder-game.png', // Default thumbnail
+                localThumbnail: '/placeholder-game.png',
+                tags: tags.join(','),
+                author: 'SpeedStarsFree',
+                priority: 20
+            };
+            
+            games.push(gameData);
+            console.log(`  ✅ Added: ${gameName} (${gameId})`);
+            
+        } catch (error) {
+            console.error(`  ❌ Error processing game ${gameLink.name}:`, error.message);
+        }
+    }
+    
+    console.log(`🎯 Successfully scraped ${games.length} games from SpeedStarsFree.github.io`);
+    return games;
+}
 
 // =================================================================================
 // 主函数
