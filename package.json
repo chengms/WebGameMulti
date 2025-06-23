@@ -8,6 +8,7 @@
     "build": "npm run sync-games && vite build",
     "preview": "vite preview",
     "sync-games": "node scripts/sync-games.js",
+    "generate-sitemap": "node scripts/generate-sitemap.js",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "setup": "node scripts/setup.js",
     "deploy": "vite build && wrangler pages deploy ./dist",
