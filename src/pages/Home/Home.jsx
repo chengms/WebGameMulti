@@ -27,8 +27,84 @@ function Home() {
   return (
     <div className="home">
       <Helmet>
-        <title>GameTime Bar - Play Free Online Web Games</title>
-        <meta name="description" content="Discover and play a huge collection of free online games at GameTime Bar. Fun for all ages, with new games added regularly." />
+        <title>GameTime Bar - Play Free Online Web Games | Gaming Hub</title>
+        <meta name="description" content="Discover and play a huge collection of free online games at GameTime Bar. Including Snake, Tetris, 2048, Memory Match and more. Fun for all ages!" />
+        <meta name="keywords" content="free online games, web games, HTML5 games, browser games, GameTime Bar, snake game, tetris, 2048, memory games" />
+        <link rel="canonical" href="https://gametime.bar/" />
+        
+        {/* Open Graph tags for social sharing */}
+        <meta property="og:title" content="GameTime Bar - Free Online Games Hub" />
+        <meta property="og:description" content="Play amazing free online games including Snake, Tetris, 2048 and more!" />
+        <meta property="og:image" content="https://gametime.bar/placeholder-game.png" />
+        <meta property="og:url" content="https://gametime.bar/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="GameTime Bar" />
+        
+        {/* Twitter Card tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="GameTime Bar - Free Online Games" />
+        <meta name="twitter:description" content="Play amazing free online games including Snake, Tetris, 2048 and more!" />
+        <meta name="twitter:image" content="https://gametime.bar/placeholder-game.png" />
+        
+        {/* 网站结构化数据 */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "@id": "https://gametime.bar/#website",
+            "name": "GameTime Bar",
+            "description": "Free online gaming platform with a collection of HTML5 web games",
+            "url": "https://gametime.bar/",
+            "inLanguage": "en",
+            "isAccessibleForFree": true,
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://gametime.bar/?search={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "@id": "https://gametime.bar/#organization",
+              "name": "GameTime Bar",
+              "url": "https://gametime.bar/",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://gametime.bar/favicon.svg"
+              }
+            }
+          })}
+        </script>
+        
+        {/* 游戏集合结构化数据 */}
+        {filteredGames.length > 0 && (
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              "name": "Free Online Games Collection",
+              "description": "Collection of free online HTML5 games",
+              "numberOfItems": filteredGames.length,
+              "itemListElement": filteredGames.slice(0, 10).map((game, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": {
+                  "@type": "VideoGame",
+                  "@id": `https://gametime.bar/games/${game.id}`,
+                  "name": game.name,
+                  "url": `https://gametime.bar/games/${game.id}`,
+                  "description": game.description,
+                  "image": game.imageUrl || `https://gametime.bar/games/${game.id}/image/cover.png`,
+                  "applicationCategory": "Game",
+                  "operatingSystem": "Any",
+                  "isAccessibleForFree": true
+                }
+              }))
+            })}
+          </script>
+        )}
       </Helmet>
       <div className="home__header">
         <h1 className="home__title">Welcome to GameTime Bar</h1>

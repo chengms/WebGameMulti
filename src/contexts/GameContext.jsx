@@ -30,24 +30,25 @@ export function GameProvider({ children }) {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   
+  // 使用 useCallback 创建可重用的获取游戏函数
+  const fetchGames = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const gamesData = await loadGames();
+      setGames(gamesData);
+    } catch (err) {
+      setError(err.message);
+      console.error('Failed to load games:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   // Load initial data
   useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const gamesData = await loadGames();
-        setGames(gamesData);
-      } catch (err) {
-        setError(err.message);
-        console.error('Failed to load games:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
     fetchGames();
-  }, []);
+  }, [fetchGames]);
   
   // Load categories
   useEffect(() => {
@@ -132,7 +133,8 @@ export function GameProvider({ children }) {
     // Methods
     getGameDetails,
     setCategory,
-    setSearch
+    setSearch,
+    refreshGames: fetchGames // 提供刷新游戏列表的方法
   }), [
     games,
     filteredGames,
@@ -145,7 +147,8 @@ export function GameProvider({ children }) {
     searchQuery,
     getGameDetails,
     setCategory,
-    setSearch
+    setSearch,
+    fetchGames
   ]);
   
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useGames } from '../../contexts/GameContext';
@@ -22,25 +22,98 @@ function GameDetail() {
   const [iframeHeight, setIframeHeight] = useState('85vh'); // 增加默认高度
   const [activeTab, setActiveTab] = useState('game'); // 'game', 'leaderboard', 'achievements'
   const [isFullWidth, setIsFullWidth] = useState(true); // Default to full-width (widescreen) mode
+  const [gameMessage, setGameMessage] = useState(null); // 用于显示来自游戏的消息
   
-  // Get game details
+  // Handle messages from game iframe
+  const handleGameMessage = useCallback((event) => {
+    // 安全性检查：确保消息来源是可信的
+    if (event.origin !== window.location.origin) {
+      return;
+    }
+
+    const { type, score, achievement, error: gameError } = event.data;
+    
+    switch (type) {
+      case 'score':
+        console.log('Received score from game:', score);
+        setGameMessage({ type: 'score', content: `Game Score: ${score}` });
+        // 这里可以触发分数提交表单或直接保存到排行榜
+        break;
+      case 'achievement':
+        console.log('Achievement unlocked:', achievement);
+        setGameMessage({ type: 'achievement', content: `Achievement Unlocked: ${achievement}` });
+        break;
+      case 'error':
+        console.error('Game error:', gameError);
+        setGameMessage({ type: 'error', content: `Game Error: ${gameError}` });
+        break;
+      case 'ready':
+        console.log('Game is ready');
+        setGameMessage({ type: 'success', content: 'Game loaded successfully!' });
+        break;
+      default:
+        console.log('Unknown message from game:', event.data);
+    }
+  }, []);
+
+  // Set up game message listener
+  useEffect(() => {
+    window.addEventListener('message', handleGameMessage);
+    
+    return () => {
+      window.removeEventListener('message', handleGameMessage);
+    };
+  }, [handleGameMessage]);
+
+  // Clear game messages after 5 seconds
+  useEffect(() => {
+    if (gameMessage) {
+      const timer = setTimeout(() => {
+        setGameMessage(null);
+      }, 5000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [gameMessage]);
+  
+  // Get game details with improved error handling
   useEffect(() => {
     const fetchGameDetails = async () => {
       try {
         setIsLoading(true);
         setError(null);
+        
+        // 验证gameId是否存在
+        if (!gameId) {
+          throw new Error('Game ID is required');
+        }
+        
         const gameData = await getGameDetails(gameId);
+        
+        // 验证游戏数据是否有效
+        if (!gameData) {
+          throw new Error('Game not found');
+        }
+        
         setGame(gameData);
       } catch (err) {
-        setError(err.message || 'Failed to load game data');
+        const errorMessage = err.message || 'Failed to load game data';
+        setError(errorMessage);
         console.error('Error loading game details:', err);
+        
+        // 如果是404错误，3秒后自动返回主页
+        if (err.message === 'Game not found' || err.message.includes('404')) {
+          setTimeout(() => {
+            navigate('/', { replace: true });
+          }, 3000);
+        }
       } finally {
         setIsLoading(false);
       }
     };
     
     fetchGameDetails();
-  }, [gameId, getGameDetails]);
+  }, [gameId, getGameDetails, navigate]);
   
   // Handle window resize to make iframe responsive
   useEffect(() => {
@@ -93,21 +166,84 @@ function GameDetail() {
       <div className="game-detail game-detail--full-width">
         <Helmet>
           <title>Game Not Found - GameTime Bar</title>
+          <meta name="description" content="The requested game could not be found. Browse our collection of free online games at GameTime Bar." />
+          <meta name="robots" content="noindex" />
         </Helmet>
         <div className="game-detail__error">
+          <h1>游戏未找到</h1>
           <p>{error || 'Game not found. The game you are looking for does not exist.'}</p>
+          <p>您将在3秒后自动返回主页，或者点击下面的按钮立即返回。</p>
           <button onClick={handleBackClick}>Back to GameTime Bar</button>
         </div>
       </div>
     );
   }
 
+  // 创建游戏的结构化数据
+  const gameSchema = {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "@id": `https://gametime.bar/games/${game.id}`,
+    "name": game.name,
+    "url": `https://gametime.bar/games/${game.id}`,
+    "description": game.fullDescription,
+    "image": game.imageUrl || `https://gametime.bar/games/${game.id}/image/cover.png`,
+    "applicationCategory": "Game",
+    "operatingSystem": "Any",
+    "playMode": game.isMultiplayer ? "MultiPlayer" : "SinglePlayer",
+    "gamePlatform": "PC",
+    "genre": game.tags || [],
+    "author": {
+      "@type": "Person",
+      "name": game.author || game.developer || "GameTime Bar"
+    },
+    "dateModified": game.lastUpdated || new Date().toISOString(),
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "aggregateRating": game.rating ? {
+      "@type": "AggregateRating",
+      "ratingValue": game.rating,
+      "ratingCount": game.ratingCount || 1,
+      "bestRating": 5,
+      "worstRating": 1
+    } : undefined
+  };
+
   return (
     <div className="game-detail game-detail--full-width">
       <Helmet>
-        <title>{`${game.name} - Play at GameTime Bar`}</title>
-        <meta name="description" content={`Play ${game.name} and many other free online games on GameTime Bar. ${game.fullDescription}`} />
+        <title>{`${game.name} - Play Free Online at GameTime Bar`}</title>
+        <meta name="description" content={`Play ${game.name} online for free at GameTime Bar. ${game.fullDescription ? game.fullDescription.slice(0, 150) + '...' : 'Enjoy hours of entertainment with this exciting game.'}`} />
+        <meta name="keywords" content={`${game.name}, free online game, ${game.tags ? game.tags.join(', ') : ''}, web game, GameTime Bar`} />
+        <link rel="canonical" href={`https://gametime.bar/games/${game.id}`} />
+        
+        {/* Open Graph tags for social sharing */}
+        <meta property="og:title" content={`${game.name} - Play Free Online`} />
+        <meta property="og:description" content={`Play ${game.name} online for free at GameTime Bar`} />
+        <meta property="og:image" content={game.imageUrl || `https://gametime.bar/games/${game.id}/image/cover.png`} />
+        <meta property="og:url" content={`https://gametime.bar/games/${game.id}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="GameTime Bar" />
+        
+        {/* Twitter Card tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${game.name} - Play Free Online`} />
+        <meta name="twitter:description" content={`Play ${game.name} online for free at GameTime Bar`} />
+        <meta name="twitter:image" content={game.imageUrl || `https://gametime.bar/games/${game.id}/image/cover.png`} />
+        
+        {/* 结构化数据 */}
+        <script type="application/ld+json">
+          {JSON.stringify(gameSchema)}
+        </script>
       </Helmet>
+
+      {/* 游戏消息通知 */}
+      {gameMessage && (
+        <div className={`game-detail__message game-detail__message--${gameMessage.type}`}>
+          <span>{gameMessage.content}</span>
+          <button onClick={() => setGameMessage(null)}>×</button>
+        </div>
+      )}
       
       <div className="game-detail__header">
         <button className="game-detail__back-button" onClick={handleBackClick}>
