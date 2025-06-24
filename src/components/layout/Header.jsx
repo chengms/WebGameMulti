@@ -57,6 +57,27 @@ function Header() {
           
           <nav className="header__nav">
             <Link to="/" className="header__nav-item">Home</Link>
+            <Link to="/guides" className="header__nav-item">Guides</Link>
+            <div className="header__nav-dropdown">
+              <span className="header__nav-item header__nav-item--dropdown">Collections</span>
+              <div className="header__nav-dropdown-menu">
+                <Link to="/collections/popular-puzzle-games" className="header__nav-dropdown-item">
+                  Popular Puzzle Games
+                </Link>
+                <Link to="/collections/classic-arcade-games" className="header__nav-dropdown-item">
+                  Classic Arcade Games
+                </Link>
+                <Link to="/collections/relaxing-casual-games" className="header__nav-dropdown-item">
+                  Relaxing Games
+                </Link>
+                <Link to="/collections/brain-training-games" className="header__nav-dropdown-item">
+                  Brain Training
+                </Link>
+                <Link to="/collections/quick-play-games" className="header__nav-dropdown-item">
+                  Quick Play Games
+                </Link>
+              </div>
+            </div>
             <Link to="/about" className="header__nav-item">About</Link>
             <ThemeToggle />
           </nav>

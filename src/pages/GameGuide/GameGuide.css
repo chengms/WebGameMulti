@@ -1,0 +1,387 @@
+.game-guide {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.game-guide__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.game-guide__loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f0f0f0;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.game-guide__error {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  margin: 40px 0;
+}
+
+.game-guide__error h1 {
+  color: #dc3545;
+  margin-bottom: 16px;
+}
+
+.game-guide__error button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  transition: background-color 0.2s;
+}
+
+.game-guide__error button:hover {
+  background: #0056b3;
+}
+
+.game-guide__header {
+  margin-bottom: 40px;
+}
+
+.game-guide__back-button {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 20px;
+  transition: background-color 0.2s;
+}
+
+.game-guide__back-button:hover {
+  background: #545b62;
+}
+
+.game-guide__game-info {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 30px;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.game-guide__game-image {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+
+.game-guide__game-details {
+  flex: 1;
+}
+
+.game-guide__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.game-guide__description {
+  font-size: 1.2rem;
+  margin-bottom: 24px;
+  opacity: 0.95;
+  line-height: 1.5;
+}
+
+.game-guide__game-actions {
+  margin-top: 20px;
+}
+
+.game-guide__play-button {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 2px solid rgba(255,255,255,0.3);
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.game-guide__play-button:hover {
+  background: rgba(255,255,255,0.3);
+  border-color: rgba(255,255,255,0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.game-guide__content {
+  margin: 40px 0;
+}
+
+.game-guide__section {
+  margin-bottom: 40px;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  border-left: 4px solid #007bff;
+}
+
+.game-guide__section h2 {
+  color: #2c3e50;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.game-guide__section h3 {
+  color: #495057;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 20px 0 10px 0;
+}
+
+.game-guide__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-guide__list li {
+  padding: 12px 0;
+  border-bottom: 1px solid #f8f9fa;
+  position: relative;
+  padding-left: 30px;
+}
+
+.game-guide__list li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  color: #28a745;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.game-guide__list--mistakes li:before {
+  content: "⚠";
+  color: #dc3545;
+}
+
+.game-guide__list li:last-child {
+  border-bottom: none;
+}
+
+.game-guide__strategy {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #17a2b8;
+}
+
+.game-guide__strategy h3 {
+  color: #17a2b8;
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+}
+
+.game-guide__strategy-description {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+}
+
+.game-guide__strategy-details {
+  color: #6c757d;
+  font-style: italic;
+  margin: 0;
+}
+
+.game-guide__related {
+  margin: 60px 0;
+  padding: 40px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border-radius: 12px;
+  color: white;
+}
+
+.game-guide__related h2 {
+  color: white;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.game-guide__related-games {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.game-guide__related-game {
+  position: relative;
+}
+
+.game-guide__related-guide-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+  z-index: 2;
+}
+
+.game-guide__related-guide-button:hover {
+  background: rgba(0,0,0,0.9);
+}
+
+.game-guide__cta {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  margin: 40px 0;
+}
+
+.game-guide__cta h2 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.game-guide__cta p {
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+  opacity: 0.95;
+}
+
+.game-guide__final-cta {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 2px solid rgba(255,255,255,0.3);
+  padding: 16px 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.game-guide__final-cta:hover {
+  background: rgba(255,255,255,0.3);
+  border-color: rgba(255,255,255,0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .game-guide {
+    padding: 15px;
+  }
+  
+  .game-guide__game-info {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .game-guide__game-image {
+    width: 150px;
+    height: 113px;
+    align-self: center;
+  }
+  
+  .game-guide__title {
+    font-size: 2rem;
+  }
+  
+  .game-guide__description {
+    font-size: 1.1rem;
+  }
+  
+  .game-guide__section {
+    padding: 20px;
+  }
+  
+  .game-guide__section h2 {
+    font-size: 1.5rem;
+  }
+  
+  .game-guide__related {
+    padding: 25px;
+  }
+  
+  .game-guide__related-games {
+    grid-template-columns: 1fr;
+  }
+  
+  .game-guide__cta {
+    padding: 25px;
+  }
+  
+  .game-guide__cta h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-guide__title {
+    font-size: 1.6rem;
+  }
+  
+  .game-guide__section h2 {
+    font-size: 1.3rem;
+  }
+  
+  .game-guide__list li {
+    padding-left: 25px;
+    font-size: 14px;
+  }
+  
+  .game-guide__strategy {
+    padding: 15px;
+  }
+} 

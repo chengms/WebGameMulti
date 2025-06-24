@@ -1,0 +1,222 @@
+.related-games {
+  margin: 40px 0;
+  padding: 30px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border-radius: 16px;
+  color: white;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.related-games__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.related-games__item {
+  position: relative;
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.3s ease;
+}
+
+.related-games__item:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.related-games__item .game-card {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.related-games__item .game-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.related-games__item .game-card-content {
+  padding: 15px;
+}
+
+.related-games__item .game-card-title {
+  color: white;
+  font-size: 1.1rem;
+}
+
+.related-games__item .game-card-description {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.9rem;
+}
+
+.related-games__item .game-card-tag {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.related-games__item .game-card-button {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.related-games__item .game-card-button:hover {
+  background: rgba(255,255,255,0.3);
+  border-color: rgba(255,255,255,0.5);
+}
+
+.related-games__actions {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.related-games__play-button,
+.related-games__guide-button {
+  flex: 1;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.related-games__play-button:hover,
+.related-games__guide-button:hover {
+  background: rgba(255,255,255,0.3);
+  border-color: rgba(255,255,255,0.5);
+  transform: translateY(-1px);
+}
+
+.related-games__guide-button {
+  background: rgba(255,255,255,0.1);
+}
+
+.related-games__more {
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  margin-top: 20px;
+}
+
+.related-games__more p {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.related-games__browse-button {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 2px solid rgba(255,255,255,0.3);
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.related-games__browse-button:hover {
+  background: rgba(255,255,255,0.3);
+  border-color: rgba(255,255,255,0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .related-games {
+    padding: 20px;
+    margin: 30px 0;
+  }
+  
+  .related-games__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+  }
+  
+  .related-games__item .game-card-content {
+    padding: 12px;
+  }
+  
+  .related-games__item .game-card-title {
+    font-size: 1rem;
+  }
+  
+  .related-games__item .game-card-description {
+    font-size: 0.85rem;
+  }
+  
+  .related-games__actions {
+    padding: 12px;
+    gap: 8px;
+  }
+  
+  .related-games__play-button,
+  .related-games__guide-button {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+  
+  .related-games__more {
+    padding: 15px;
+  }
+  
+  .related-games__more p {
+    font-size: 1rem;
+  }
+  
+  .related-games__browse-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .related-games {
+    padding: 15px;
+    margin: 25px 0;
+  }
+  
+  .related-games__grid {
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .related-games__actions {
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+  }
+  
+  .related-games__play-button,
+  .related-games__guide-button {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  
+  .related-games__more {
+    padding: 12px;
+  }
+  
+  .related-games__browse-button {
+    width: 100%;
+    max-width: 200px;
+  }
+} 

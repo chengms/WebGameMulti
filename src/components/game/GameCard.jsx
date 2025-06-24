@@ -47,7 +47,7 @@ const GameCard = memo(({ game, onClick }) => {
           )}
           <img 
             src={imageUrl}
-            alt={name}
+            alt={`Play ${name} - ${tags && tags[0] ? tags[0] + ' Game' : 'Free Online Game'} | GameTime Bar`}
             className={`game-card-image ${imageLoaded ? 'loaded' : ''}`}
             onLoad={handleImageLoad}
             onError={handleImageError}

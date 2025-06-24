@@ -5,6 +5,7 @@ import { useGames } from '../../contexts/GameContext';
 import Leaderboard from '../../components/leaderboard/Leaderboard';
 import AchievementList from '../../components/leaderboard/AchievementList';
 import GameEmbed from '../../components/game/GameEmbed';
+import RelatedGames from '../../components/game/RelatedGames';
 import './GameDetail.css';
 
 /**
@@ -214,14 +215,14 @@ function GameDetail() {
   return (
     <div className="game-detail game-detail--full-width">
       <Helmet>
-        <title>{`${game.name} - Play Free Online at GameTime Bar`}</title>
-        <meta name="description" content={`Play ${game.name} online for free at GameTime Bar. ${game.fullDescription ? game.fullDescription.slice(0, 150) + '...' : 'Enjoy hours of entertainment with this exciting game.'}`} />
-        <meta name="keywords" content={`${game.name}, free online game, ${game.tags ? game.tags.join(', ') : ''}, web game, GameTime Bar`} />
+        <title>{`Play ${game.name} Online for Free | ${game.tags && game.tags[0] ? game.tags[0] + ' Game' : 'Classic Game'} | GameTime Bar`}</title>
+        <meta name="description" content={`Enjoy ${game.name} - ${game.description} Play this ${game.tags && game.tags[0] ? game.tags[0].toLowerCase() : 'classic'} game online for free at GameTime Bar. No download required, instant play in your browser!`} />
+        <meta name="keywords" content={`${game.name}, free online game, ${game.tags ? game.tags.join(', ') : ''}, web game, GameTime Bar, ${game.tags && game.tags[0] ? game.tags[0].toLowerCase() + ' games' : 'browser games'}`} />
         <link rel="canonical" href={`https://gametime.bar/games/${game.id}`} />
         
         {/* Open Graph tags for social sharing */}
-        <meta property="og:title" content={`${game.name} - Play Free Online`} />
-        <meta property="og:description" content={`Play ${game.name} online for free at GameTime Bar`} />
+        <meta property="og:title" content={`Play ${game.name} Online for Free | ${game.tags && game.tags[0] ? game.tags[0] + ' Game' : 'Classic Game'}`} />
+        <meta property="og:description" content={`Enjoy ${game.name} - ${game.description} Play online for free at GameTime Bar. No download required!`} />
         <meta property="og:image" content={
           game.thumbnail 
             ? `${window.location.origin}/games/${game.id}/${game.thumbnail}` 
@@ -423,6 +424,15 @@ function GameDetail() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Related Games Section */}
+      <div className="game-detail__related-games">
+        <h2 className="game-detail__section-title">You Might Also Enjoy</h2>
+        <p className="game-detail__related-description">
+          Discover more amazing games similar to {game.name}. These games share similar gameplay mechanics or themes.
+        </p>
+        <RelatedGames currentGame={game} />
       </div>
     </div>
   );

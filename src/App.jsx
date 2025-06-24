@@ -8,6 +8,9 @@ import './styles/global.css';
 // Lazy load page components
 const Home = lazy(() => import('./pages/Home/Home'));
 const GameDetail = lazy(() => import('./pages/GameDetail/GameDetail'));
+const GameGuide = lazy(() => import('./pages/GameGuide/GameGuide'));
+const GuideList = lazy(() => import('./pages/GuideList/GuideList'));
+const GameCollection = lazy(() => import('./pages/GameCollection/GameCollection'));
 const About = lazy(() => import('./pages/About/About'));
 const Settings = lazy(() => import('./pages/Settings/Settings'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
@@ -35,6 +38,9 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/games/:gameId" element={<GameDetail />} />
+                <Route path="/guides" element={<GuideList />} />
+                <Route path="/guides/:gameId" element={<GameGuide />} />
+                <Route path="/collections/:collectionId" element={<GameCollection />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/about" element={<About />} />
                 <Route path="*" element={<NotFound />} />
