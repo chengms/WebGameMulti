@@ -1,0 +1,290 @@
+.share-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 20px 0;
+  color: white;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.share-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+}
+
+.share-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.share-header h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.share-header p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.share-platforms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.share-platform-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.share-platform-btn:hover {
+  background: var(--platform-color, rgba(255, 255, 255, 0.2));
+  border-color: var(--platform-color, rgba(255, 255, 255, 0.4));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.platform-icon {
+  font-size: 1.2rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.share-copy-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 20px;
+}
+
+.copy-url-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.copy-url-input {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+}
+
+.copy-url-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.copy-url-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.copy-btn {
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+}
+
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.copy-btn.copied {
+  background: rgba(76, 175, 80, 0.3);
+  border-color: rgba(76, 175, 80, 0.5);
+  color: #4caf50;
+}
+
+/* 紧凑模式样式 */
+.share-button-compact {
+  position: relative;
+  display: inline-block;
+}
+
+.share-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.share-toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.share-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  min-width: 280px;
+}
+
+.share-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  rotate: 45deg;
+}
+
+.share-dropdown .share-platforms {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 0;
+}
+
+.share-dropdown .share-platform-btn {
+  padding: 10px;
+  background: rgba(102, 126, 234, 0.1);
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  border-radius: 8px;
+  color: #333;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.share-dropdown .share-platform-btn:hover {
+  background: var(--platform-color, rgba(102, 126, 234, 0.2));
+  border-color: var(--platform-color, rgba(102, 126, 234, 0.4));
+  color: white;
+}
+
+.share-dropdown .platform-icon {
+  font-size: 1.4rem;
+}
+
+.share-dropdown .copy-btn:hover {
+  background: rgba(76, 175, 80, 0.2);
+  border-color: rgba(76, 175, 80, 0.4);
+  color: #2e7d32;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .share-button {
+    padding: 20px 16px;
+    margin: 16px 0;
+  }
+  
+  .share-platforms {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .share-platform-btn {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .copy-url-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .copy-url-input,
+  .copy-btn {
+    width: 100%;
+  }
+  
+  .share-dropdown {
+    min-width: 240px;
+  }
+  
+  .share-dropdown .share-platforms {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .share-platforms {
+    grid-template-columns: 1fr;
+  }
+  
+  .share-dropdown {
+    min-width: 200px;
+  }
+  
+  .share-dropdown .share-platforms {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 动画效果 */
+@keyframes shareSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.share-dropdown {
+  animation: shareSlideIn 0.3s ease-out;
+}
+
+/* 无障碍访问支持 */
+.share-platform-btn:focus,
+.copy-btn:focus,
+.share-toggle-btn:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.share-dropdown .share-platform-btn:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+} 

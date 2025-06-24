@@ -1,20 +1,67 @@
+# Robots.txt for GameTime Bar
+# Generated on 2025-06-24T09:59:49.284Z
+
 User-agent: *
 Allow: /
 
-# Sitemap
+# Sitemaps
 Sitemap: https://gametime.bar/sitemap.xml
 
-# Allow search engines to crawl all game pages
+# Optimize crawling
+Crawl-delay: 1
+
+# Allow indexing of games and guides
 Allow: /games/
+Allow: /guides/
+Allow: /collections/
 
-# Allow main pages
-Allow: /about
-Allow: /settings
-
-# Disallow admin or sensitive areas (if any)
+# Disallow admin or development paths (if any exist in future)
 Disallow: /admin/
-Disallow: /.wrangler/
+Disallow: /dev/
+Disallow: /.git/
 Disallow: /node_modules/
 
-# Crawl-delay (optional, helps prevent server overload)
-Crawl-delay: 1 
+# Allow common web assets
+Allow: *.css
+Allow: *.js
+Allow: *.png
+Allow: *.jpg
+Allow: *.jpeg
+Allow: *.gif
+Allow: *.svg
+Allow: *.ico
+Allow: *.woff
+Allow: *.woff2
+Allow: *.ttf
+Allow: *.eot
+
+# Popular search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+# Social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot  
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Game-specific crawlers (if any)
+User-agent: *
+Allow: /games/*/meta.json
+Allow: /games/*/image/

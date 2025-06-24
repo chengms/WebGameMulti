@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useGames } from '../../contexts/GameContext';
 import GameCard from '../../components/game/GameCard';
+import ShareButton from '../../components/game/ShareButton';
 import './GameCollection.css';
 
 /**
@@ -245,6 +246,15 @@ function GameCollection() {
           </div>
         </div>
       </div>
+
+      {/* Share Button */}
+      <ShareButton 
+        url={`${window.location.origin}/collections/${collectionId}`}
+        title={collection.title}
+        description={`${collection.description} - Curated collection of games at GameTime Bar`}
+        compact={true}
+        platforms={['facebook', 'twitter', 'linkedin', 'reddit']}
+      />
 
       <div className="game-collection__content">
         <section className="game-collection__about">

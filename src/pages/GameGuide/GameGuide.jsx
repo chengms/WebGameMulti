@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useGames } from '../../contexts/GameContext';
 import GameCard from '../../components/game/GameCard';
+import ShareButton from '../../components/game/ShareButton';
 import './GameGuide.css';
 
 /**
@@ -470,6 +471,14 @@ function GameGuide() {
           </div>
         </div>
       </div>
+
+      {/* Share Button */}
+      <ShareButton 
+        url={`${window.location.origin}/guides/${game.id}`}
+        title={guide.title}
+        description={`${guide.description} - Complete strategy guide for ${game.name}`}
+        platforms={['facebook', 'twitter', 'linkedin', 'reddit']}
+      />
 
       <div className="game-guide__content">
         <section className="game-guide__section">

@@ -6,6 +6,7 @@ import Leaderboard from '../../components/leaderboard/Leaderboard';
 import AchievementList from '../../components/leaderboard/AchievementList';
 import GameEmbed from '../../components/game/GameEmbed';
 import RelatedGames from '../../components/game/RelatedGames';
+import ShareButton from '../../components/game/ShareButton';
 import './GameDetail.css';
 
 /**
@@ -327,6 +328,14 @@ function GameDetail() {
                 className="game-detail__description"
                 dangerouslySetInnerHTML={{ __html: game.fullDescription }}
               ></div>
+              
+              {/* Share Button */}
+              <ShareButton 
+                url={`${window.location.origin}/games/${game.id}`}
+                title={`Play ${game.name} Online for Free`}
+                description={`${game.description} - Free online game at GameTime Bar`}
+                compact={true}
+              />
               
               <div className="game-detail__main-content">
                 <div className="game-detail__description">
