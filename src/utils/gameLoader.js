@@ -190,6 +190,52 @@ const loadGamesFromMetaFiles = async () => {
 };
 
 /**
+ * 增强配置文件中的游戏数据，尝试从meta.json读取thumbnail
+ * @param {Array} configGames - 从配置文件加载的游戏数组
+ * @returns {Promise<Array>} 增强后的游戏数组
+ */
+const enhanceGamesWithMetaData = async (configGames) => {
+  const enhancedGames = [];
+  
+  for (const game of configGames) {
+    let enhancedGame = { ...game };
+    
+    // 如果是本地游戏，尝试从meta.json读取更多信息
+    if (!game.isOnline) {
+      try {
+        const response = await fetch(`/games/${game.id}/meta.json`);
+        if (response.ok) {
+          const meta = await response.json();
+          
+          // 使用meta.json中的thumbnail，如果存在的话
+          if (meta.thumbnail) {
+            enhancedGame.thumbnail = `/games/${game.id}/${meta.thumbnail}`;
+          }
+          
+          // 可以从meta.json中获取更多信息
+          if (meta.controls) enhancedGame.controls = meta.controls;
+          if (meta.version) enhancedGame.version = meta.version;
+          if (meta.createdAt) enhancedGame.createdAt = meta.createdAt;
+          if (meta.lastUpdated || meta.updatedAt) {
+            enhancedGame.lastUpdated = meta.lastUpdated || meta.updatedAt;
+          }
+          if (meta.minWidth) enhancedGame.minWidth = meta.minWidth;
+          if (meta.minHeight) enhancedGame.minHeight = meta.minHeight;
+          
+          console.log(`Enhanced ${game.id} with meta.json data`);
+        }
+      } catch (error) {
+        console.log(`Could not load meta.json for ${game.id}, using config data`);
+      }
+    }
+    
+    enhancedGames.push(enhancedGame);
+  }
+  
+  return enhancedGames;
+};
+
+/**
  * Load all games metadata
  * @returns {Promise<Array>} Array of game metadata objects
  */
@@ -200,30 +246,33 @@ export const loadGames = async () => {
       return gamesCache;
     }
 
-    console.log('Loading games data...');
+    console.log('Loading games data from configuration...');
     
-    // 首先尝试从meta.json文件加载
-    let games = await loadGamesFromMetaFiles();
+    // 优先从配置文件加载（保持原有流程）
+    const configGames = await parseGameConfig();
     
-    // 如果meta.json加载失败或没有数据，尝试配置文件方式
+    // 转换为标准格式并增强本地游戏的元数据
+    let games = configGames.map(game => ({
+      id: game.id,
+      name: game.name,
+      description: game.description,
+      thumbnail: game.thumbnail,
+      localThumbnail: game.localThumbnail,
+      tags: game.tags,
+      author: game.author,
+      type: game.type,
+      gameUrl: game.url,
+      isOnline: game.isOnline,
+      priority: game.priority
+    }));
+    
+    // 增强本地游戏的数据（从meta.json读取thumbnail等信息）
+    games = await enhanceGamesWithMetaData(games);
+    
+    // 如果配置文件加载失败，尝试从meta.json文件加载
     if (games.length === 0) {
-      console.log('Falling back to configuration file loading...');
-      const configGames = await parseGameConfig();
-      
-      // 转换为标准格式（兼容现有代码）
-      games = configGames.map(game => ({
-        id: game.id,
-        name: game.name,
-        description: game.description,
-        thumbnail: game.thumbnail,
-        localThumbnail: game.localThumbnail,
-        tags: game.tags,
-        author: game.author,
-        type: game.type,
-        gameUrl: game.url,
-        isOnline: game.isOnline,
-        priority: game.priority
-      }));
+      console.log('Config file failed, trying meta.json files...');
+      games = await loadGamesFromMetaFiles();
     }
     
     // 如果都失败了，使用备用游戏列表
@@ -265,51 +314,7 @@ export const loadGameDetails = async (gameId) => {
       return gameDetailsCache.get(gameId);
     }
 
-    // 首先尝试从meta.json文件直接加载
-    try {
-      const response = await fetch(`/games/${gameId}/meta.json`);
-      if (response.ok) {
-        const meta = await response.json();
-        
-        const gameDetails = {
-          id: meta.id || gameId,
-          name: meta.name,
-          description: meta.description,
-          fullDescription: meta.fullDescription || generateFullDescription({
-            description: meta.description,
-            author: meta.author,
-            isOnline: meta.isExternal || false
-          }),
-          thumbnail: meta.thumbnail, // 保持相对路径，在使用时动态构建完整路径
-          screenshots: generateScreenshots({
-            id: gameId,
-            thumbnail: meta.thumbnail,
-            isOnline: meta.isExternal || false
-          }),
-          tags: meta.tags || [],
-          author: meta.author || 'GameTime Bar Team',
-          version: meta.version || '1.0.0',
-          controls: meta.controls || generateControls({ tags: meta.tags || [] }),
-          createdAt: meta.createdAt || new Date().toISOString().split('T')[0],
-          lastUpdated: meta.lastUpdated || meta.updatedAt || new Date().toISOString().split('T')[0],
-          gameUrl: meta.gameUrl || `/games/${gameId}/index.html`,
-          type: meta.isExternal ? 'online' : 'local',
-          isOnline: meta.isExternal || false,
-          externalUrl: meta.externalUrl,
-          minWidth: meta.minWidth,
-          minHeight: meta.minHeight,
-          priority: 1
-        };
-        
-        // 缓存详情
-        gameDetailsCache.set(gameId, gameDetails);
-        return gameDetails;
-      }
-    } catch (metaError) {
-      console.warn(`Could not load meta.json for ${gameId}, falling back to game list:`, metaError);
-    }
-
-    // 如果meta.json加载失败，使用游戏列表中的基本信息
+    // 获取基本游戏信息（优先从配置文件）
     const games = await loadGames();
     const game = games.find(g => g.id === gameId);
     
@@ -323,7 +328,9 @@ export const loadGameDetails = async (gameId) => {
       name: game.name,
       description: game.description,
       fullDescription: generateFullDescription(game),
-      thumbnail: game.thumbnail?.replace(`/games/${gameId}/`, '') || 'image/cover.png', // 保持相对路径
+      thumbnail: game.thumbnail?.includes('/games/') 
+        ? game.thumbnail.replace(`/games/${gameId}/`, '') 
+        : game.thumbnail || 'image/cover.png', // 确保相对路径
       screenshots: generateScreenshots(game),
       tags: game.tags,
       author: game.author,
@@ -394,15 +401,28 @@ const generateFullDescription = (game) => {
 const generateScreenshots = (game) => {
   if (game.isOnline) {
     // 在线游戏使用缩略图作为截图
-    return [game.thumbnail];
+    return [game.thumbnail].filter(Boolean);
   } else {
     // 本地游戏尝试查找多个截图
-    const baseUrl = game.url.replace('/index.html', '');
-    return [
-      game.thumbnail,
-      `${baseUrl}/image/screenshot1.jpg`,
-      `${baseUrl}/image/screenshot2.jpg`
-    ].filter(Boolean);
+    const gameId = game.id;
+    const screenshots = [];
+    
+    // 添加主缩略图
+    if (game.thumbnail) {
+      if (game.thumbnail.startsWith('/games/')) {
+        screenshots.push(game.thumbnail);
+      } else {
+        screenshots.push(`/games/${gameId}/${game.thumbnail}`);
+      }
+    }
+    
+    // 尝试添加其他截图
+    screenshots.push(
+      `/games/${gameId}/image/screenshot1.jpg`,
+      `/games/${gameId}/image/screenshot2.jpg`
+    );
+    
+    return screenshots.filter(Boolean);
   }
 };
 

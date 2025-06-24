@@ -49,37 +49,51 @@ Open Graph 和 Twitter Card 标签也使用相同的动态路径：
 
 ### 3. 游戏加载器优化
 
-#### 新增 meta.json 文件加载机制
-`gameLoader.js` 现在优先从 meta.json 文件加载游戏信息：
+#### 混合加载机制
+`gameLoader.js` 现在采用混合方式加载游戏，既保持了配置文件的完整性，又增强了本地游戏的元数据：
 
 ```javascript
-const loadGamesFromMetaFiles = async () => {
-  const gameDirectories = [
-    'snake', 'tetris', '2048', 'memory-match', 'tic-tac-toe',
-    'pacman', 'planewar', 'bike-racing', 'candy-crush', 
-    'circle-path', 'endless-run'
-  ];
+const enhanceGamesWithMetaData = async (configGames) => {
+  const enhancedGames = [];
   
-  for (const gameId of gameDirectories) {
-    const response = await fetch(`/games/${gameId}/meta.json`);
-    if (response.ok) {
-      const meta = await response.json();
-      
-      const game = {
-        id: meta.id || gameId,
-        name: meta.name,
-        thumbnail: `/games/${gameId}/${meta.thumbnail}`, // 构建完整路径
-        // ... 其他字段
-      };
+  for (const game of configGames) {
+    let enhancedGame = { ...game };
+    
+    // 如果是本地游戏，尝试从meta.json读取更多信息
+    if (!game.isOnline) {
+      try {
+        const response = await fetch(`/games/${game.id}/meta.json`);
+        if (response.ok) {
+          const meta = await response.json();
+          
+          // 使用meta.json中的thumbnail，如果存在的话
+          if (meta.thumbnail) {
+            enhancedGame.thumbnail = `/games/${game.id}/${meta.thumbnail}`;
+          }
+          // ... 其他增强信息
+        }
+      } catch (error) {
+        console.log(`Could not load meta.json for ${game.id}, using config data`);
+      }
     }
+    
+    enhancedGames.push(enhancedGame);
   }
+  
+  return enhancedGames;
 };
 ```
 
-#### 多级回退机制
-1. **优先**: 从 meta.json 文件加载
-2. **备用**: 从配置文件加载
-3. **最后**: 使用硬编码的备用游戏列表
+#### 多级加载策略
+1. **主要**: 从配置文件（games-config.txt）加载所有游戏
+2. **增强**: 对本地游戏，从 meta.json 文件读取额外信息（如自定义thumbnail）
+3. **备用**: 如果配置文件失败，尝试 meta.json 文件加载
+4. **最后**: 使用硬编码的备用游戏列表
+
+#### 优势
+- **保持兼容性**: 配置文件仍然是主要数据源，包含所有在线游戏
+- **增强灵活性**: 本地游戏可以通过 meta.json 自定义 thumbnail
+- **最佳性能**: 单次请求配置文件，按需加载 meta.json
 
 ### 4. 受影响的组件
 

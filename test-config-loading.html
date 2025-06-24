@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Config Loading Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .game-card {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .game-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .game-info {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0;
+        }
+        .game-thumbnail {
+            max-width: 200px;
+            max-height: 120px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .stats {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 Game Configuration Loading Test</h1>
+        
+        <div id="stats" class="stats">
+            <div>Status: <span id="status" class="loading">Loading...</span></div>
+            <div>Total Games: <span id="totalGames">-</span></div>
+            <div>Local Games: <span id="localGames">-</span></div>
+            <div>Online Games: <span id="onlineGames">-</span></div>
+            <div>Games with Meta.json Enhancement: <span id="enhancedGames">-</span></div>
+        </div>
+        
+        <div id="games-container">
+            <div class="loading">Loading games from configuration...</div>
+        </div>
+    </div>
+
+    <script>
+        // 简化版的游戏加载器函数，用于测试
+        const parseGameConfig = async () => {
+            try {
+                console.log('Loading games configuration from text file...');
+                
+                const response = await fetch('/games/games-config.txt');
+                if (!response.ok) {
+                    throw new Error(`Failed to load config file: ${response.status}`);
+                }
+                
+                const configText = await response.text();
+                const lines = configText.split('\n');
+                const games = [];
+                
+                for (const line of lines) {
+                    const trimmedLine = line.trim();
+                    
+                    // 跳过注释和空行
+                    if (!trimmedLine || trimmedLine.startsWith('#')) {
+                        continue;
+                    }
+                    
+                    // 解析游戏配置行
+                    const parts = trimmedLine.split('|');
+                    if (parts.length >= 9) {
+                        const [id, name, description, type, url, thumbnail, localThumbnail, tags, author, priority] = parts;
+                        
+                        games.push({
+                            id: id.trim(),
+                            name: name.trim(),
+                            description: description.trim(),
+                            type: type.trim(),
+                            url: url.trim(),
+                            thumbnail: thumbnail.trim(),
+                            localThumbnail: localThumbnail.trim(),
+                            tags: tags.split(',').map(tag => tag.trim()),
+                            author: author.trim(),
+                            priority: parseInt(priority) || 1,
+                            isOnline: type.trim() === 'online'
+                        });
+                    }
+                }
+                
+                return games;
+            } catch (error) {
+                console.error('Error parsing game config:', error);
+                throw error;
+            }
+        };
+
+        // 增强游戏数据，尝试从meta.json读取thumbnail
+        const enhanceGamesWithMetaData = async (configGames) => {
+            const enhancedGames = [];
+            let enhancedCount = 0;
+            
+            for (const game of configGames) {
+                let enhancedGame = { ...game };
+                enhancedGame.enhanced = false;
+                
+                // 如果是本地游戏，尝试从meta.json读取更多信息
+                if (!game.isOnline) {
+                    try {
+                        const response = await fetch(`/games/${game.id}/meta.json`);
+                        if (response.ok) {
+                            const meta = await response.json();
+                            
+                            // 使用meta.json中的thumbnail，如果存在的话
+                            if (meta.thumbnail) {
+                                enhancedGame.thumbnail = `/games/${game.id}/${meta.thumbnail}`;
+                                enhancedGame.enhanced = true;
+                                enhancedCount++;
+                            }
+                            
+                            // 其他增强信息
+                            if (meta.controls) enhancedGame.controls = meta.controls;
+                            if (meta.version) enhancedGame.version = meta.version;
+                        }
+                    } catch (error) {
+                        console.log(`Could not load meta.json for ${game.id}`);
+                    }
+                }
+                
+                enhancedGames.push(enhancedGame);
+            }
+            
+            return { games: enhancedGames, enhancedCount };
+        };
+
+        // 渲染游戏列表
+        const renderGames = (games, enhancedCount) => {
+            const container = document.getElementById('games-container');
+            
+            // 更新统计信息
+            document.getElementById('status').textContent = 'Loaded Successfully';
+            document.getElementById('status').className = 'success';
+            document.getElementById('totalGames').textContent = games.length;
+            document.getElementById('localGames').textContent = games.filter(g => !g.isOnline).length;
+            document.getElementById('onlineGames').textContent = games.filter(g => g.isOnline).length;
+            document.getElementById('enhancedGames').textContent = enhancedCount;
+            
+            // 按优先级排序
+            games.sort((a, b) => {
+                if (a.isOnline && !b.isOnline) return 1;
+                if (!a.isOnline && b.isOnline) return -1;
+                return (b.priority || 1) - (a.priority || 1);
+            });
+            
+            container.innerHTML = games.map(game => `
+                <div class="game-card">
+                    <div class="game-title">
+                        ${game.name} 
+                        ${game.enhanced ? '✨' : ''} 
+                        ${game.isOnline ? '🌐' : '💻'}
+                    </div>
+                    <div class="game-info">ID: ${game.id}</div>
+                    <div class="game-info">Type: ${game.type}</div>
+                    <div class="game-info">Author: ${game.author}</div>
+                    <div class="game-info">Priority: ${game.priority}</div>
+                    <div class="game-info">Tags: ${game.tags.join(', ')}</div>
+                    <div class="game-info">Thumbnail: ${game.thumbnail}</div>
+                    ${game.enhanced ? '<div class="game-info success">✅ Enhanced with meta.json</div>' : ''}
+                    ${game.description ? `<div class="game-info">${game.description}</div>` : ''}
+                    ${game.thumbnail && !game.thumbnail.includes('placeholder') ? 
+                        `<img src="${game.thumbnail}" alt="${game.name}" class="game-thumbnail" onerror="this.style.display='none'">` : 
+                        ''
+                    }
+                </div>
+            `).join('');
+        };
+
+        // 错误处理
+        const showError = (error) => {
+            document.getElementById('status').textContent = `Error: ${error.message}`;
+            document.getElementById('status').className = 'error';
+            
+            document.getElementById('games-container').innerHTML = `
+                <div class="error">
+                    <h3>Loading Failed</h3>
+                    <p>${error.message}</p>
+                    <p>Please check if the games-config.txt file exists and is accessible.</p>
+                </div>
+            `;
+        };
+
+        // 主加载函数
+        const loadAndTestGames = async () => {
+            try {
+                console.log('Starting game configuration test...');
+                
+                // 1. 从配置文件加载
+                const configGames = await parseGameConfig();
+                console.log(`Loaded ${configGames.length} games from config file`);
+                
+                // 2. 增强本地游戏数据
+                const { games, enhancedCount } = await enhanceGamesWithMetaData(configGames);
+                console.log(`Enhanced ${enhancedCount} games with meta.json data`);
+                
+                // 3. 渲染结果
+                renderGames(games, enhancedCount);
+                
+                console.log('Test completed successfully!');
+                
+            } catch (error) {
+                console.error('Test failed:', error);
+                showError(error);
+            }
+        };
+
+        // 页面加载时开始测试
+        document.addEventListener('DOMContentLoaded', loadAndTestGames);
+    </script>
+</body>
+</html> 
