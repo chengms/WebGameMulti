@@ -95,9 +95,11 @@ function Home() {
                   "@id": `https://gametime.bar/games/${game.id}`,
                   "name": game.name,
                   "url": `https://gametime.bar/games/${game.id}`,
-                  "description": game.description,
-                  "image": game.imageUrl || `https://gametime.bar/games/${game.id}/image/cover.png`,
-                  "applicationCategory": "Game",
+                                     "description": game.description,
+                   "image": game.thumbnail 
+                     ? `${window.location.origin}/games/${game.id}/${game.thumbnail}` 
+                     : `${window.location.origin}/games/${game.id}/image/cover.png`,
+                   "applicationCategory": "Game",
                   "operatingSystem": "Any",
                   "isAccessibleForFree": true
                 }

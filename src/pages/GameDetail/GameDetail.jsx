@@ -187,7 +187,9 @@ function GameDetail() {
     "name": game.name,
     "url": `https://gametime.bar/games/${game.id}`,
     "description": game.fullDescription,
-    "image": game.imageUrl || `https://gametime.bar/games/${game.id}/image/cover.png`,
+    "image": game.thumbnail 
+      ? `${window.location.origin}/games/${game.id}/${game.thumbnail}` 
+      : `${window.location.origin}/games/${game.id}/image/cover.png`,
     "applicationCategory": "Game",
     "operatingSystem": "Any",
     "playMode": game.isMultiplayer ? "MultiPlayer" : "SinglePlayer",
@@ -220,7 +222,11 @@ function GameDetail() {
         {/* Open Graph tags for social sharing */}
         <meta property="og:title" content={`${game.name} - Play Free Online`} />
         <meta property="og:description" content={`Play ${game.name} online for free at GameTime Bar`} />
-        <meta property="og:image" content={game.imageUrl || `https://gametime.bar/games/${game.id}/image/cover.png`} />
+        <meta property="og:image" content={
+          game.thumbnail 
+            ? `${window.location.origin}/games/${game.id}/${game.thumbnail}` 
+            : `${window.location.origin}/games/${game.id}/image/cover.png`
+        } />
         <meta property="og:url" content={`https://gametime.bar/games/${game.id}`} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="GameTime Bar" />
@@ -229,7 +235,11 @@ function GameDetail() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${game.name} - Play Free Online`} />
         <meta name="twitter:description" content={`Play ${game.name} online for free at GameTime Bar`} />
-        <meta name="twitter:image" content={game.imageUrl || `https://gametime.bar/games/${game.id}/image/cover.png`} />
+        <meta name="twitter:image" content={
+          game.thumbnail 
+            ? `${window.location.origin}/games/${game.id}/${game.thumbnail}` 
+            : `${window.location.origin}/games/${game.id}/image/cover.png`
+        } />
         
         {/* 结构化数据 */}
         <script type="application/ld+json">

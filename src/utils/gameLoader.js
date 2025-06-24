@@ -129,6 +129,67 @@ const getFallbackGames = () => {
 };
 
 /**
+ * Load game metadata from meta.json files
+ * @returns {Promise<Array>} Array of game metadata objects
+ */
+const loadGamesFromMetaFiles = async () => {
+  try {
+    console.log('Loading games from meta.json files...');
+    
+    // 已知的游戏目录列表
+    const gameDirectories = [
+      'snake', 'tetris', '2048', 'memory-match', 'tic-tac-toe',
+      'pacman', 'planewar', 'bike-racing', 'candy-crush', 
+      'circle-path', 'endless-run'
+    ];
+    
+    const games = [];
+    
+    for (const gameId of gameDirectories) {
+      try {
+        const response = await fetch(`/games/${gameId}/meta.json`);
+        if (response.ok) {
+          const meta = await response.json();
+          
+          // 构建完整的游戏对象
+          const game = {
+            id: meta.id || gameId,
+            name: meta.name,
+            description: meta.description,
+            thumbnail: `/games/${gameId}/${meta.thumbnail}`, // 构建完整的thumbnail路径
+            tags: meta.tags || [],
+            author: meta.author || 'GameTime Bar Team',
+            version: meta.version || '1.0.0',
+            controls: meta.controls || 'Use mouse and keyboard to play',
+            createdAt: meta.createdAt || new Date().toISOString().split('T')[0],
+            lastUpdated: meta.lastUpdated || meta.updatedAt || new Date().toISOString().split('T')[0],
+            gameUrl: meta.gameUrl || `/games/${gameId}/index.html`,
+            isOnline: meta.isExternal || false,
+            externalUrl: meta.externalUrl,
+            type: meta.isExternal ? 'online' : 'local',
+            minWidth: meta.minWidth,
+            minHeight: meta.minHeight,
+            priority: 1
+          };
+          
+          games.push(game);
+          console.log(`Loaded game: ${game.name} (${gameId})`);
+        } else {
+          console.warn(`Failed to load meta.json for game: ${gameId}`);
+        }
+      } catch (error) {
+        console.error(`Error loading meta.json for game ${gameId}:`, error);
+      }
+    }
+    
+    return games;
+  } catch (error) {
+    console.error('Error loading games from meta files:', error);
+    return [];
+  }
+};
+
+/**
  * Load all games metadata
  * @returns {Promise<Array>} Array of game metadata objects
  */
@@ -139,25 +200,44 @@ export const loadGames = async () => {
       return gamesCache;
     }
 
-    console.log('Loading games data from configuration...');
+    console.log('Loading games data...');
     
-    // 解析配置文件
-    const configGames = await parseGameConfig();
+    // 首先尝试从meta.json文件加载
+    let games = await loadGamesFromMetaFiles();
     
-    // 转换为标准格式（兼容现有代码）
-    const games = configGames.map(game => ({
-      id: game.id,
-      name: game.name,
-      description: game.description,
-      thumbnail: game.thumbnail,
-      localThumbnail: game.localThumbnail,
-      tags: game.tags,
-      author: game.author,
-      type: game.type,
-      url: game.url,
-      isOnline: game.isOnline,
-      priority: game.priority
-    }));
+    // 如果meta.json加载失败或没有数据，尝试配置文件方式
+    if (games.length === 0) {
+      console.log('Falling back to configuration file loading...');
+      const configGames = await parseGameConfig();
+      
+      // 转换为标准格式（兼容现有代码）
+      games = configGames.map(game => ({
+        id: game.id,
+        name: game.name,
+        description: game.description,
+        thumbnail: game.thumbnail,
+        localThumbnail: game.localThumbnail,
+        tags: game.tags,
+        author: game.author,
+        type: game.type,
+        gameUrl: game.url,
+        isOnline: game.isOnline,
+        priority: game.priority
+      }));
+    }
+    
+    // 如果都失败了，使用备用游戏列表
+    if (games.length === 0) {
+      console.log('Using fallback games...');
+      games = getFallbackGames();
+    }
+    
+    // 按优先级和类型排序
+    games.sort((a, b) => {
+      if (a.isOnline && !b.isOnline) return 1; // 本地游戏优先
+      if (!a.isOnline && b.isOnline) return -1;
+      return (b.priority || 1) - (a.priority || 1);
+    });
     
     // 缓存数据
     gamesCache = games;
@@ -185,7 +265,51 @@ export const loadGameDetails = async (gameId) => {
       return gameDetailsCache.get(gameId);
     }
 
-    // 获取基本游戏信息
+    // 首先尝试从meta.json文件直接加载
+    try {
+      const response = await fetch(`/games/${gameId}/meta.json`);
+      if (response.ok) {
+        const meta = await response.json();
+        
+        const gameDetails = {
+          id: meta.id || gameId,
+          name: meta.name,
+          description: meta.description,
+          fullDescription: meta.fullDescription || generateFullDescription({
+            description: meta.description,
+            author: meta.author,
+            isOnline: meta.isExternal || false
+          }),
+          thumbnail: meta.thumbnail, // 保持相对路径，在使用时动态构建完整路径
+          screenshots: generateScreenshots({
+            id: gameId,
+            thumbnail: meta.thumbnail,
+            isOnline: meta.isExternal || false
+          }),
+          tags: meta.tags || [],
+          author: meta.author || 'GameTime Bar Team',
+          version: meta.version || '1.0.0',
+          controls: meta.controls || generateControls({ tags: meta.tags || [] }),
+          createdAt: meta.createdAt || new Date().toISOString().split('T')[0],
+          lastUpdated: meta.lastUpdated || meta.updatedAt || new Date().toISOString().split('T')[0],
+          gameUrl: meta.gameUrl || `/games/${gameId}/index.html`,
+          type: meta.isExternal ? 'online' : 'local',
+          isOnline: meta.isExternal || false,
+          externalUrl: meta.externalUrl,
+          minWidth: meta.minWidth,
+          minHeight: meta.minHeight,
+          priority: 1
+        };
+        
+        // 缓存详情
+        gameDetailsCache.set(gameId, gameDetails);
+        return gameDetails;
+      }
+    } catch (metaError) {
+      console.warn(`Could not load meta.json for ${gameId}, falling back to game list:`, metaError);
+    }
+
+    // 如果meta.json加载失败，使用游戏列表中的基本信息
     const games = await loadGames();
     const game = games.find(g => g.id === gameId);
     
@@ -199,18 +323,20 @@ export const loadGameDetails = async (gameId) => {
       name: game.name,
       description: game.description,
       fullDescription: generateFullDescription(game),
-      thumbnail: game.thumbnail,
-      localThumbnail: game.localThumbnail,
+      thumbnail: game.thumbnail?.replace(`/games/${gameId}/`, '') || 'image/cover.png', // 保持相对路径
       screenshots: generateScreenshots(game),
       tags: game.tags,
       author: game.author,
-      version: '1.0.0',
-      controls: generateControls(game),
-      createdAt: new Date().toISOString().split('T')[0],
-      lastUpdated: new Date().toISOString().split('T')[0],
-      gameUrl: game.url,
+      version: game.version || '1.0.0',
+      controls: game.controls || generateControls(game),
+      createdAt: game.createdAt || new Date().toISOString().split('T')[0],
+      lastUpdated: game.lastUpdated || new Date().toISOString().split('T')[0],
+      gameUrl: game.gameUrl,
       type: game.type,
       isOnline: game.isOnline,
+      externalUrl: game.externalUrl,
+      minWidth: game.minWidth,
+      minHeight: game.minHeight,
       priority: game.priority
     };
     

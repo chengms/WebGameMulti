@@ -5,6 +5,7 @@
   "tags": ["Action", "Shooter", "Arcade"],
   "author": "WebGameMulti Team",
   "version": "1.0.0",
+  "thumbnail": "image/cover.png",
   "controls": "Drag your plane to move around the screen. Your plane automatically shoots at enemies. Collect power-ups to upgrade your weapons and health.",
   "createdAt": "2024-01-20",
   "lastUpdated": "2024-01-20",

@@ -5,6 +5,7 @@
   "tags": ["Arcade", "Classic", "Retro"],
   "author": "WebGameMulti Team",
   "version": "1.0.0",
+  "thumbnail": "image/cover.png",
   "controls": "Use arrow keys to move Pacman through the maze. Eat all dots to complete the level while avoiding the colorful ghosts.",
   "createdAt": "2024-01-20",
   "lastUpdated": "2024-01-20",
