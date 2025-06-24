@@ -9,6 +9,6 @@ compatibility_date = "2024-06-20"
 # Pages build configuration
 pages_build_output_dir = "dist"
 
-# This tells Wrangler where to find the Functions, like our proxy.
-[functions]
-directory = "./functions" 
+# Cloudflare Functions configuration
+# Note: Functions directory is automatically detected
+# The functions directory is expected to be at the project root 
